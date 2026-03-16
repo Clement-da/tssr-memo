@@ -1,0 +1,45 @@
+---
+import '../styles/main.css';
+import '../styles/layout.css';
+import '../styles/components.css';
+
+const { title = "TSSR Memo - Plateforme de Révision" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content="Plateforme de révision interactive pour Techniciens Systèmes et Réseaux (TSSR)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <div class="header__logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">TSSR<strong>Memo</strong></span>
+            </div>
+            <nav class="header__nav" aria-label="Navigation principale">
+                <a href="/" class="nav-btn">Tableau de Bord</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="app-content">
+            <slot />
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 TSSR Memo - Devenir Expert en Systèmes et Réseaux</p>
+        </div>
+    </footer>
+</body>
+</html>

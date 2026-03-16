@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Quiz from '../../components/Quiz.jsx';
+import { MODULES } from '../../data/modules_index.js';
+
+export function getStaticPaths() {
+  return MODULES.map(mod => ({
+    params: { moduleId: mod.id }
+  }));
+}
+
+const { moduleId } = Astro.params;
+---
+
+<Layout title={`Quiz - ${moduleId}`}>
+    <Quiz client:load moduleId={moduleId} />
+</Layout>

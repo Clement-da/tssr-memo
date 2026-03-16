@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Flashcards from '../../components/Flashcards.jsx';
+import { MODULES } from '../../data/modules_index.js';
+
+export function getStaticPaths() {
+  return MODULES.map(mod => ({
+    params: { moduleId: mod.id }
+  }));
+}
+
+const { moduleId } = Astro.params;
+---
+
+<Layout title={`Flashcards - ${moduleId}`}>
+    <Flashcards client:load moduleId={moduleId} />
+</Layout>
