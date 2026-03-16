@@ -32,19 +32,17 @@ export default function Quiz({ moduleId }) {
             setSelectedOption(null);
             setIsAnswered(false);
         } else {
-            // Save score
+            // Save score if it's the best one
             const prevQuiz = state.quizzes[mod.id];
-            if (!prevQuiz || (score + (selectedOption === questionObj.correctIndex ? 1 : 0)) > prevQuiz.score) {
-                // We need the final score here
-                const finalScore = score + (selectedOption === questionObj.correctIndex ? 1 : 0);
-                updateQuizScore(mod.id, finalScore, mod.quiz.length);
+            if (!prevQuiz || score > prevQuiz.score) {
+                updateQuizScore(mod.id, score, mod.quiz.length);
             }
             setShowResults(true);
         }
     };
 
     if (showResults) {
-        const finalScore = state.quizzes[mod.id]?.score ?? score;
+        const finalScore = score;
         const percentage = Math.round((finalScore / mod.quiz.length) * 100);
         const passed = percentage >= 70;
 
