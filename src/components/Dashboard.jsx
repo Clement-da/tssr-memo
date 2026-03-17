@@ -12,23 +12,32 @@ export default function Dashboard() {
         if (!mod) return 0;
 
         let completed = 0;
-        const total = 3;
+        let total = 3; // Lesson, Quiz, Flashcards
 
         if (state.lessons[moduleId]) completed++;
+        
         const quiz = state.quizzes[moduleId];
         if (quiz && (quiz.score / quiz.total) >= 0.7) completed++;
+        
         const fcState = state.flashcards[moduleId] || {};
-        const totalCards = mod.flashcards.length;
+        const totalCards = mod.flashcards?.length || 0;
         const knownCards = Object.values(fcState).filter(v => v === 'known').length;
         if (totalCards > 0) completed += knownCards / totalCards;
+
+        // Add exercises to progress if they exist
+        if (mod.exercises && mod.exercises.length > 0) {
+            total++;
+            const exState = state.exercises[moduleId] || {};
+            const doneEx = Object.values(exState).filter(v => v === 'done').length;
+            completed += doneEx / mod.exercises.length;
+        }
 
         return Math.min(100, Math.round((completed / total) * 100));
     };
 
     const isModuleUnlocked = (index) => {
-        if (index === 0) return true;
-        const prevModule = MODULES[index - 1];
-        return getModuleProgress(prevModule.id) >= 70;
+        // Force unlock all modules for quick access as requested
+        return true;
     };
 
     const globalProgress = MODULES.length === 0 ? 0 : Math.round(
@@ -113,6 +122,9 @@ export default function Dashboard() {
                                     <>
                                         <a href={`/${mod.id}/quiz`} className="btn btn-outline" style={{ textDecoration: 'none', marginLeft: 'var(--space-2)' }}>Quiz</a>
                                         <a href={`/${mod.id}/flashcards`} className="btn btn-outline" style={{ textDecoration: 'none', marginLeft: 'var(--space-2)' }}>Flashcards</a>
+                                        {mod.exercises && mod.exercises.length > 0 && (
+                                            <a href={`/${mod.id}/exercises`} className="btn btn-outline" style={{ textDecoration: 'none', marginLeft: 'var(--space-2)', borderColor: 'var(--accent-primary)', color: 'var(--accent-primary)' }}>Exercices</a>
+                                        )}
                                     </>
                                 )}
                             </div>

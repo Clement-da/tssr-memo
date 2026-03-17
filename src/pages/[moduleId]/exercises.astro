@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Exercises from '../../components/Exercises.jsx';
+import { MODULES } from '../../data/modules_index.js';
+
+export function getStaticPaths() {
+  return MODULES.map((mod) => ({
+    params: { moduleId: mod.id },
+    props: { module: mod },
+  }));
+}
+
+const { module } = Astro.props;
+---
+
+<Layout title={`Exercices - ${module.title}`}>
+  <main class="container">
+    <header class="lesson-header">
+      <a href="/" class="btn-back">← Retour Dashboard</a>
+      <h1>Pratique : {module.title}</h1>
+      <p>Mettez en pratique vos connaissances avec des exercices concrets.</p>
+    </header>
+
+    <Exercises client:load module={module} />
+  </main>
+</Layout>
+
+<style>
+  .container {
+    padding: var(--space-8) var(--space-4);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .lesson-header {
+    margin-bottom: var(--space-8);
+  }
+  .btn-back {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .btn-back:hover {
+    text-decoration: underline;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-2);
+  }
+</style>

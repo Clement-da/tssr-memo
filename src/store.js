@@ -4,11 +4,12 @@ import { MODULES } from './data/modules_index.js';
 const STATE_KEY = 'tssr_revision_state';
 
 function buildDefaultState() {
-    const state = { lessons: {}, quizzes: {}, flashcards: {} };
+    const state = { lessons: {}, quizzes: {}, flashcards: {}, exercises: {} };
     MODULES.forEach(mod => {
         state.lessons[mod.id] = false;
         state.quizzes[mod.id] = null;
         state.flashcards[mod.id] = {};
+        state.exercises[mod.id] = {};
     });
     return state;
 }
@@ -24,7 +25,8 @@ function loadInitialState() {
         return {
             lessons:    { ...defaults.lessons,    ...parsed.lessons },
             quizzes:    { ...defaults.quizzes,    ...parsed.quizzes },
-            flashcards: { ...defaults.flashcards, ...parsed.flashcards }
+            flashcards: { ...defaults.flashcards, ...parsed.flashcards },
+            exercises:  { ...defaults.exercises,  ...parsed.exercises }
         };
     } catch (e) {
         console.error('Error loading state', e);
@@ -57,3 +59,10 @@ export function updateFlashcard(moduleId, cardId, status) {
     const modFlashcards = { ...current.flashcards[moduleId], [cardId]: status };
     appStore.setKey('flashcards', { ...current.flashcards, [moduleId]: modFlashcards });
 }
+
+export function updateExerciseStatus(moduleId, exerciseId, status) {
+    const current = appStore.get();
+    const modExercises = { ...current.exercises[moduleId], [exerciseId]: status };
+    appStore.setKey('exercises', { ...current.exercises, [moduleId]: modExercises });
+}
+
