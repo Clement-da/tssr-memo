@@ -4,7 +4,7 @@ title: "Base des réseaux"
 icon: "🌐"
 ---
 
-<!-- SOMMAIRE FLOTTANT (hover sur le côté droit) -->
+<!-- SOMMAIRE FLOTTANT -->
 <nav class="lesson-toc" aria-label="Sommaire de la leçon">
     <div class="lesson-toc__tab" aria-hidden="true">
         <span class="lesson-toc__tab-icon">📋</span>
@@ -15,362 +15,233 @@ icon: "🌐"
         <ol class="lesson-toc__list">
             <li><a href="#osi">1. Le modèle OSI</a>
                 <ol>
-                    <li><a href="#encapsulation">Encapsulation</a></li>
-                    <li><a href="#7couches">Les 7 couches</a></li>
-                    <li><a href="#detail-couches">Détail couche par couche</a></li>
-                    <li><a href="#exemple-osi">Exemple complet</a></li>
-                    <li><a href="#diag-osi">Astuce diagnostic</a></li>
+                    <li><a href="#osi-logic">Théorie & Pourquoi 7 couches ?</a></li>
+                    <li><a href="#encapsulation">Encapsulation & PDU</a></li>
+                    <li><a href="#7couches">Les 7 couches en détail</a></li>
+                    <li><a href="#diag-osi">Diagnostic par couches</a></li>
                 </ol>
             </li>
-            <li><a href="#unites">2. Unités informatiques</a></li>
+            <li><a href="#unites">2. Unités informatiques</a>
+                <ol>
+                    <li><a href="#bit-octet">Bit vs Octet</a></li>
+                    <li><a href="#debit-stockage">Débit vs Stockage</a></li>
+                </ol>
+            </li>
             <li><a href="#ipv4">3. Adressage IPv4</a>
                 <ol>
-                    <li><a href="#adresses-speciales">Adresses spéciales</a></li>
-                    <li><a href="#adresses-privees">Adresses privées</a></li>
+                    <li><a href="#ip-structure">Structure (Réseau + Hôte)</a></li>
+                    <li><a href="#masque-cidr">Masque & Notation CIDR</a></li>
+                    <li><a href="#adresses-speciales">Adresses spéciales & Privées</a></li>
                 </ol>
             </li>
-            <li><a href="#calcul">4. Calcul de sous-réseaux</a></li>
+            <li><a href="#calcul">4. Calcul de sous-réseaux</a>
+                <ol>
+                    <li><a href="#calcul-method">Méthodologie du calcul</a></li>
+                    <li><a href="#exemple-calcul">Exemple pas à pas</a></li>
+                </ol>
+            </li>
             <li><a href="#communication">5. Communication réseau</a>
                 <ol>
-                    <li><a href="#broadcast">Domaine broadcast</a></li>
-                    <li><a href="#lan">Communication LAN</a></li>
-                    <li><a href="#routage">Le routage</a></li>
-                    <li><a href="#surreseau">Le surréseau</a></li>
+                    <li><a href="#comm-lan">Communication LAN (MAC/ARP)</a></li>
+                    <li><a href="#comm-wan">Communication WAN (Passerelle)</a></li>
+                    <li><a href="#routage">Théorie du routage</a></li>
                 </ol>
             </li>
             <li><a href="#commandes">6. Commandes réseau</a></li>
-            <li><a href="#ipv6">7. IPv6</a></li>
+            <li><a href="#ipv6">7. IPv6</a>
+                <ol>
+                    <li><a href="#ipv6-theory">Pourquoi l'IPv6 ?</a></li>
+                    <li><a href="#ipv6-format">Format & Simplification</a></li>
+                    <li><a href="#ipv6-types">Types d'adresses IPv6</a></li>
+                </ol>
+            </li>
             <li><a href="#subnet-tool">8. 🧮 Calculateur</a></li>
         </ol>
     </div>
 </nav>
 
-<!-- ==================== SECTION 1 : OSI ==================== -->
-<h2 id="osi">1. Le modèle OSI</h2>
-<p>Le modèle OSI (<em>Open Systems Interconnection</em>) est un modèle théorique créé par l'ISO. Il décrit comment deux systèmes communiquent à travers un réseau en divisant la communication en <strong>7 couches indépendantes mais coopérantes</strong>.</p>
-<p>Chaque couche a un rôle bien défini, utilise des protocoles spécifiques, et ne communique qu'avec la couche directement au-dessus et en dessous d'elle.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;"><strong>But :</strong> standardiser la communication entre ordinateurs, quel que soit le fabricant ou le système d'exploitation.</blockquote>
+<section id="osi-content">
+<h2 id="osi">1. Le modèle OSI (Open Systems Interconnection)</h2>
 
-<h3 id="encapsulation">Encapsulation / Désencapsulation</h3>
-<p>Quand un PC <strong>envoie</strong> des données, chaque couche ajoute ses propres informations (en-têtes, ports, adresses...). C'est l'<strong>encapsulation</strong>.</p>
-<p>Quand le destinataire <strong>reçoit</strong> les données, il fait le processus inverse couche par couche. C'est la <strong>désencapsulation</strong>.</p>
-<pre><code>Encapsulation (envoi) :
-Données → Segment (Transport) → Paquet (Réseau) → Trame (Liaison) → Bits (Physique)
+<h3 id="osi-logic">1. Théorie : Pourquoi un modèle en 7 couches ?</h3>
 
-Désencapsulation (réception) :
-Bits → Trame → Paquet → Segment → Données</code></pre>
+Avant le modèle OSI (créé par l'ISO), chaque constructeur (IBM, Apple, Microsoft) utilisait ses propres protocoles incompatibles. Le modèle OSI a standardisé la communication pour permettre l'interopérabilité.
 
-<p><strong>Exemple — envoi d'un e-mail :</strong></p>
-<ul>
-    <li><strong>Application</strong> : le message rédigé par l'utilisateur</li>
-    <li><strong>Transport</strong> : TCP ajoute le port SMTP (25)</li>
-    <li><strong>Réseau</strong> : IP ajoute l'adresse IP du serveur mail</li>
-    <li><strong>Liaison</strong> : ajout des adresses MAC source et destination</li>
-    <li><strong>Physique</strong> : conversion en signaux électriques ou ondes radio</li>
-</ul>
+**L'intérêt majeur :**
+- **Abstraire la complexité** : Un développeur web n'a pas besoin de savoir comment la fibre optique transporte les photons (Couche 1) pour coder en HTML (Couche 7).
+- **Faciliter le diagnostic** : Isoler si une panne est matérielle (L1/L2) ou applicative (L7).
 
-<h3 id="7couches">Les 7 couches OSI</h3>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;"><strong>Moyen mnémotechnique (de bas en haut) :</strong> <em>«&nbsp;Pour Les Réseaux Très Solides, Pensez Application&nbsp;»</em></blockquote>
-<table>
-    <thead>
-        <tr><th>Couche</th><th>Nom</th><th>Rôle</th><th>Matériel</th><th>Protocoles</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>7</td><td>Application</td><td>Interface avec l'utilisateur et les services réseau</td><td>PC, serveur applicatif</td><td>HTTP, HTTPS, FTP, SMTP, DNS</td></tr>
-        <tr><td>6</td><td>Présentation</td><td>Formatage, chiffrement, compression</td><td>(logiciel)</td><td>SSL/TLS, JPEG, MPEG, ASCII</td></tr>
-        <tr><td>5</td><td>Session</td><td>Établissement, gestion et fermeture des sessions</td><td>(logiciel)</td><td>NetBIOS, RPC, RDP</td></tr>
-        <tr><td>4</td><td>Transport</td><td>Fiabilité, segmentation, ports</td><td>Routeur, firewall</td><td>TCP, UDP</td></tr>
-        <tr><td>3</td><td>Réseau</td><td>Routage, adressage logique (IP)</td><td>Routeur, pare-feu L3</td><td>IPv4, IPv6, ICMP, OSPF, RIP</td></tr>
-        <tr><td>2</td><td>Liaison de données</td><td>Transmission entre machines d'un même LAN (MAC, trames)</td><td>Switch, carte réseau</td><td>Ethernet, Wi-Fi, ARP, PPP</td></tr>
-        <tr><td>1</td><td>Physique</td><td>Transmission brute des bits (signaux électriques, optiques, radio)</td><td>Câbles, hub, répéteur</td><td>RJ45, fibre optique, DSL</td></tr>
-    </tbody>
-</table>
-<ul>
-    <li>Couches 1–3 → communication <strong>réseau</strong> (physique, liaison, routage)</li>
-    <li>Couches 4–7 → communication <strong>applicative</strong> (transport, session, présentation, application)</li>
-    <li>TCP/UDP = couche Transport &nbsp;|&nbsp; IP = couche Réseau &nbsp;|&nbsp; MAC = couche Liaison</li>
-</ul>
+<h3 id="encapsulation">2. Encapsulation & Notion de PDU</h3>
 
-<h3 id="detail-couches">Détail de chaque couche</h3>
+Chaque couche ajoute ses propres informations (Header) aux données reçues de la couche supérieure. On appelle l'ensemble de la donnée à une couche précise un **PDU (Protocol Data Unit)**.
 
-<p><strong>Couche 1 — Physique :</strong> convertit les données en bits transmis sous forme de signaux. Matériel : câbles RJ45, fibre optique, hub.</p>
-<ul>
-    <li><strong>U/UTP</strong> : non blindé, le plus courant en entreprise</li>
-    <li><strong>S/FTP</strong> : double blindage, haute protection contre les interférences EM</li>
-</ul>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : une panne de câble est un problème de couche 1.</blockquote>
+- **Données** (Couches 5, 6, 7)
+- **Segment** (Couche 4 - Transport) : Ajout des Ports (TCP/UDP).
+- **Paquet** (Couche 3 - Réseau) : Ajout des adresses IP.
+- **Trame** (Couche 2 - Liaison) : Ajout des adresses MAC.
+- **Bits** (Couche 1 - Physique) : Conversion en signaux.
 
-<p><strong>Couche 2 — Liaison :</strong> connexion fiable entre deux nœuds adjacents dans un même LAN. Utilise les adresses <strong>MAC</strong> et gère la détection d'erreurs (CRC). Protocoles : Ethernet, ARP, DHCP, VLAN. Matériel : switch, carte réseau.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : si ton PC ne connaît pas l'adresse MAC de la box, il envoie une requête ARP en broadcast.</blockquote>
+<h3 id="7couches">3. Les 7 couches en détail</h3>
 
-<p><strong>Couche 3 — Réseau :</strong> adressage logique (IP) et routage entre réseaux différents. Protocoles : IPv4, IPv6, ICMP (utilisé par ping), OSPF, RIP. Matériel : routeur.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : ton PC (192.168.1.10) contacte Google (8.8.8.8) → le routeur décide du meilleur chemin.</blockquote>
+> **Moyen mnémotechnique (bas vers haut) :** **P**our **L**es **R**éseaux **T**rès **S**olides, **P**ensez **A**pplication
 
-<p><strong>Couche 4 — Transport :</strong> communication de bout en bout entre applications.</p>
-<table>
-    <thead><tr><th>Protocole</th><th>Caractéristique</th><th>Usage typique</th></tr></thead>
-    <tbody>
-        <tr><td>TCP</td><td>Fiable — accusé de réception, retransmission</td><td>HTTPS (443), SMTP (25), FTP (21)</td></tr>
-        <tr><td>UDP</td><td>Rapide, sans garantie de livraison</td><td>DNS (53), streaming, VoIP</td></tr>
-    </tbody>
-</table>
+| Couche | Nom | Unité (PDU) | Rôle Principal | Exemple |
+| :--- | :--- | :--- | :--- | :--- |
+| **7** | **Application** | Données | Interface utilisateur / Services reseau | HTTP, DNS, SMTP |
+| **6** | **Présentation** | Données | Traduction, Chiffrement, Compression | SSL/TLS, JPEG |
+| **5** | **Session** | Données | Gestion du dialogue entre applications | NetBIOS, RPC |
+| **4** | **Transport** | **Segment** | Fiabilité et ports (Source/Dest) | **TCP, UDP** |
+| **3** | **Réseau** | **Paquet** | Adressage logique et Routage | **IP, ICMP** |
+| **2** | **Liaison** | **Trame** | Accès au média (MAC), Détection erreurs | **Ethernet, Wi-Fi** |
+| **1** | **Physique** | **Bits** | Transmission électrique, optique, radio | Câble RJ45, Fibre |
 
-<p><strong>Couche 5 — Session :</strong> ouverture, synchronisation et fermeture des sessions. Protocoles : NetBIOS, RPC, RDP.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : lors d'une connexion Bureau à distance (RDP), la couche session maintient la connexion ouverte.</blockquote>
+<h3 id="diag-osi">4. Diagnostic par couches (La méthode TSSR)</h3>
 
-<p><strong>Couche 6 — Présentation :</strong> traduit, compresse et chiffre les données. Protocoles : SSL/TLS, JPEG, MPEG, ASCII/Unicode.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : HTTPS chiffre les données grâce à TLS avant leur envoi.</blockquote>
+| Étape | Question | Couche suspectée |
+| :--- | :--- | :--- |
+| **1** | Le câble est-il branché ? La LED du switch clignote-t-elle ? | **1 - Physique** |
+| **2** | La carte réseau est-elle active ? L'adresse MAC est-elle vue ? | **2 - Liaison** |
+| **3** | Puis-je pinguer ma passerelle (Routeur) ? | **3 - Réseau** |
+| **4** | Le port (ex: 80) est-il ouvert ? Le service répond-il ? | **4 à 7 - Applicatif** |
 
-<p><strong>Couche 7 — Application :</strong> interface entre l'utilisateur et les services réseau. Protocoles : HTTP (80), HTTPS (443), FTP (21), SMTP (25), SSH (22), DNS (53).</p>
+</section>
 
-<h3 id="exemple-osi">Exemple complet — Accès à www.qwant.com</h3>
-<ol>
-    <li><strong>Application</strong> : le navigateur envoie une requête HTTPS</li>
-    <li><strong>Présentation</strong> : chiffrement des données via TLS</li>
-    <li><strong>Session</strong> : établissement d'une session entre client et serveur</li>
-    <li><strong>Transport</strong> : création d'un segment TCP avec le port destination 443</li>
-    <li><strong>Réseau</strong> : ajout des adresses IP source (ton PC) et destination (serveur Qwant)</li>
-    <li><strong>Liaison</strong> : ajout des adresses MAC du PC et de la box</li>
-    <li><strong>Physique</strong> : conversion en signaux électriques ou ondes Wi-Fi</li>
-</ol>
-<p>À la réception, le serveur effectue la <strong>désencapsulation inverse</strong> pour traiter la requête.</p>
-
-<h3 id="diag-osi">Astuce diagnostic réseau (TSSR)</h3>
-<table>
-    <thead><tr><th>Symptôme</th><th>Couche suspectée</th></tr></thead>
-    <tbody>
-        <tr><td>Pas de signal, câble débranché</td><td>Couche 1 — Physique</td></tr>
-        <tr><td>Problème ARP ou VLAN</td><td>Couche 2 — Liaison</td></tr>
-        <tr><td>Mauvais routage IP</td><td>Couche 3 — Réseau</td></tr>
-        <tr><td>Ping OK mais pas de page web</td><td>Couches 4 à 7</td></tr>
-    </tbody>
-</table>
-
-<!-- ==================== SECTION 2 : UNITÉS ==================== -->
+<section id="unites-content">
 <h2 id="unites">2. Les unités informatiques</h2>
 
-<p><strong>Le bit (b)</strong> est la plus petite unité d'information. Il ne peut valoir que <strong>0</strong> ou <strong>1</strong> (état logique OFF/ON). C'est l'unité de base pour mesurer les débits réseau.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : une trame réseau est transmise bit par bit sur un câble Ethernet.</blockquote>
+<h3 id="bit-octet">1. Bit vs Octet</h3>
 
-<p><strong>L'octet (B)</strong> est un groupe de <strong>8 bits</strong>. Il permet de représenter un caractère.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple : le caractère 'A' = 01000001 en binaire = 1 octet.</blockquote>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;"><strong>Règle importante :</strong> les débits réseau s'expriment en <strong>bits/s</strong> (ex : 100 Mb/s), les capacités de stockage en <strong>octets</strong> (ex : 500 Go).</blockquote>
+- **Bit (b)** : L'unité atomique (0 ou 1).
+- **Octet (B / Byte)** : Un groupe de **8 bits**. Il permet de coder un caractère (ex: via le code ASCII).
 
-<h3>Unités décimales vs binaires</h3>
-<p>Les constructeurs de disques durs utilisent les unités <strong>décimales</strong> (base 10), tandis que les OS utilisent les unités <strong>binaires</strong> (base 2). C'est la source du décalage affiché.</p>
-<table>
-    <thead><tr><th>Unité décimale (constructeurs)</th><th>Valeur</th><th>Unité binaire (OS)</th><th>Valeur</th></tr></thead>
-    <tbody>
-        <tr><td>1 Ko</td><td>1 000 octets</td><td>1 Kio</td><td>1 024 octets</td></tr>
-        <tr><td>1 Mo</td><td>1 000 000 octets</td><td>1 Mio</td><td>1 048 576 octets</td></tr>
-        <tr><td>1 Go</td><td>1 000 000 000 octets</td><td>1 Gio</td><td>1 073 741 824 octets</td></tr>
-    </tbody>
-</table>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Exemple concret : un disque vendu «&nbsp;500 Go&nbsp;» affiche 465 Gio dans Windows — c'est normal, pas un bug.</blockquote>
+<h3 id="debit-stockage">2. Débit vs Stockage</h3>
 
-<!-- ==================== SECTION 3 : IPv4 ==================== -->
+C'est l'erreur la plus commune :
+- **Débit réseau** : On compte en **Bits par seconde** (b/s). Exemple : Fibre 1 Gb/s.
+- **Capacité de stockage** : On compte en **Octets** (B). Exemple : Disque Dur 500 Go.
+
+> **Astuce de calcul rapide :** Pour savoir combien de temps prendra le téléchargement d'un fichier, divisez le débit par 8. (100 Mb/s $\approx$ 12,5 Mo/s).
+
+</section>
+
+<section id="ipv4-content">
 <h2 id="ipv4">3. L'adressage IPv4</h2>
-<p>Une adresse IPv4 identifie chaque interface réseau. C'est une <strong>adresse logique</strong> (non physique, contrairement à l'adresse MAC).</p>
-<ul>
-    <li>Format : <strong>32 bits</strong> répartis en <strong>4 octets</strong> séparés par des points</li>
-    <li>Exemple : <code>192.168.1.10</code></li>
-    <li>Composée d'une <strong>partie réseau</strong> et d'une <strong>partie hôte</strong></li>
-</ul>
-<p>Le <strong>masque de sous-réseau</strong> (ou notation CIDR <code>/xx</code>) détermine où s'arrête la partie réseau.</p>
 
-<h3 id="adresses-speciales">Adresses spéciales</h3>
-<table>
-    <thead><tr><th>Type</th><th>Adresse</th><th>Usage</th><th>Utilité pratique</th></tr></thead>
-    <tbody>
-        <tr><td>Adresse réseau</td><td>192.168.1.0 (ex)</td><td>Identifie le réseau lui-même</td><td>Apparaît dans les tables de routage</td></tr>
-        <tr><td>Broadcast</td><td>192.168.1.255 (ex)</td><td>Envoi à tous les hôtes du réseau</td><td>Utilisé par ARP, DHCP, Wake-on-LAN</td></tr>
-        <tr><td>Loopback</td><td>127.0.0.1</td><td>Adresse de test local (localhost)</td><td>Tester la pile réseau sans carte ni câble</td></tr>
-        <tr><td>APIPA</td><td>169.254.x.x /16</td><td>Attribuée auto si le DHCP échoue</td><td>Un poste en 169.254.x.x = problème DHCP !</td></tr>
-    </tbody>
-</table>
+<h3 id="ip-structure">1. Structure d'une adresse IP</h3>
 
-<h3 id="adresses-privees">Adresses privées (non routables sur Internet)</h3>
-<table>
-    <thead><tr><th>Plage</th><th>Classe</th><th>Usage typique</th></tr></thead>
-    <tbody>
-        <tr><td>10.0.0.0 — 10.255.255.255 /8</td><td>A</td><td>Grandes entreprises</td></tr>
-        <tr><td>172.16.0.0 — 172.31.255.255 /12</td><td>B</td><td>Entreprises moyennes</td></tr>
-        <tr><td>192.168.0.0 — 192.168.255.255 /16</td><td>C</td><td>Réseaux domestiques, petites structures</td></tr>
-    </tbody>
-</table>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Ces adresses ne sont pas routées sur Internet. Un routeur avec NAT est nécessaire pour permettre aux machines internes d'accéder à Internet.</blockquote>
+Une adresse IPv4 (32 bits) est toujours composée de deux parties :
+1. **La partie Réseau (Network ID)** : Identifie la "rue" (le sous-réseau).
+2. **La partie Hôte (Host ID)** : Identifie le "numéro de maison" (l'équipement).
 
-<!-- ==================== SECTION 4 : CALCUL ==================== -->
-<h2 id="calcul">4. Calcul d'adresses et sous-réseaux</h2>
+<h3 id="masque-cidr">2. Le Masque de sous-réseau & Notation CIDR</h3>
 
-<h3>Structure d'une adresse IPv4 en binaire</h3>
-<p>Prenons l'adresse <code>192.168.1.10</code> avec le masque <code>/24</code> :</p>
-<pre><code>Adresse IP  : 11000000.10101000.00000001.00001010
-Masque /24  : 11111111.11111111.11111111.00000000
+Le masque indique au système où s'arrête le réseau et où commence l'hôte.
+- **Format décimal** : 255.255.255.0
+- **Format CIDR** : `/24` (signifie que les 24 premiers bits de l'adresse sont occupés par le réseau).
 
-Partie réseau : 192.168.1   (les 24 premiers bits)
-Partie hôte   : .10         (les 8 derniers bits)
+<h3 id="adresses-speciales">3. Adresses spéciales & Adresses privées</h3>
 
-Adresse réseau  : tous les bits hôte à 0 → 192.168.1.0
-Adresse broadcast: tous les bits hôte à 1 → 192.168.1.255
-Plage d'hôtes   : 192.168.1.1 à 192.168.1.254
-Nombre d'hôtes  : 2⁸ - 2 = 254</code></pre>
+**Adresses réservées :**
+- `127.0.0.1` (**Loopback**) : Pour tester sa propre machine.
+- `169.254.x.x` (**APIPA**) : Attribuée quand le serveur DHCP ne répond pas (Alerte panne !).
 
-<h3>Exemple 1 — Créer des sous-réseaux (emprunt de bits)</h3>
-<p><strong>Objectif :</strong> diviser le réseau <code>192.168.1.0/24</code> en <strong>4 sous-réseaux</strong>.</p>
-<p><strong>Raisonnement :</strong> pour 4 sous-réseaux, il faut 2 bits (2² = 4). On passe de /24 à <strong>/26</strong> (24 + 2). Chaque sous-réseau a 2⁶ - 2 = <strong>62 hôtes</strong>.</p>
-<table>
-    <thead><tr><th>Sous-réseau</th><th>Adresse réseau</th><th>Plage hôtes</th><th>Broadcast</th></tr></thead>
-    <tbody>
-        <tr><td>SR 1</td><td>192.168.1.0/26</td><td>.1 à .62</td><td>192.168.1.63</td></tr>
-        <tr><td>SR 2</td><td>192.168.1.64/26</td><td>.65 à .126</td><td>192.168.1.127</td></tr>
-        <tr><td>SR 3</td><td>192.168.1.128/26</td><td>.129 à .190</td><td>192.168.1.191</td></tr>
-        <tr><td>SR 4</td><td>192.168.1.192/26</td><td>.193 à .254</td><td>192.168.1.255</td></tr>
-    </tbody>
-</table>
+**Adresses Privées (Règle RFC 1918) :**
+Ces adresses ne sont pas autorisées sur Internet. Elles s'utilisent uniquement en interne :
+- **Classe A** : 10.0.0.0 à 10.255.255.255
+- **Classe B** : 172.16.0.0 à 172.31.255.255
+- **Classe C** : 192.168.0.0 à 192.168.255.255
 
-<h3>Exemple 2 — Partir du nombre d'hôtes souhaité</h3>
-<p><strong>Objectif :</strong> au moins <strong>20 hôtes</strong> par sous-réseau dans <code>192.168.1.0/24</code>.</p>
-<p><strong>Raisonnement :</strong> 2⁵ = 32 → 32 - 2 = <strong>30 hôtes</strong>. 5 bits pour la partie hôte → masque = 32 - 5 = <strong>/27</strong>. On obtient 2³ = <strong>8 sous-réseaux</strong>.</p>
-<table>
-    <thead><tr><th>Sous-réseau</th><th>Adresse réseau</th><th>Plage hôtes</th><th>Broadcast</th></tr></thead>
-    <tbody>
-        <tr><td>SR 1</td><td>192.168.1.0/27</td><td>.1 à .30</td><td>192.168.1.31</td></tr>
-        <tr><td>SR 2</td><td>192.168.1.32/27</td><td>.33 à .62</td><td>192.168.1.63</td></tr>
-        <tr><td>SR 3</td><td>192.168.1.64/27</td><td>.65 à .94</td><td>192.168.1.95</td></tr>
-        <tr><td>SR 8</td><td>192.168.1.224/27</td><td>.225 à .254</td><td>192.168.1.255</td></tr>
-    </tbody>
-</table>
+</section>
 
-<!-- ==================== SECTION 5 : COMMUNICATION ==================== -->
+<section id="calcul-content">
+<h2 id="calcul">4. Calcul de sous-réseaux</h2>
+
+### 1. Méthodologie : La règle des bits
+
+Pour découper un réseau, on "emprunte" des bits à la partie hôte pour les donner à la partie réseau.
+- **Nombre de réseaux créés** : 2 ^ (Nombre de bits empruntés)
+- **Nombre d'hôtes par réseau** : 2 ^ (Nombre de bits hôtes restants) - 2 (On retire l'adresse Réseau et le Broadcast).
+
+<h3 id="exemple-calcul">2. Exemple : Découper un /24 en 4 sous-réseaux</h3>
+
+Réseau de départ : `192.168.1.0/24`
+1. Pour faire 4 réseaux, j'ai besoin de 2 bits (2² = 4).
+2. Mon nouveau masque sera : 24 + 2 = **/26** (ou 255.255.255.192).
+3. Nombre d'hôtes : 32 - 26 = 6 bits restants. 2⁶ - 2 = **62** machines par réseau.
+
+| Sous-réseau | Réseau | Plage utilisable | Broadcast |
+| :--- | :--- | :--- | :--- |
+| **SR 1** | 192.168.1.0/26 | .1 à .62 | 192.168.1.63 |
+| **SR 2** | 192.168.1.64/26 | .65 à .126 | 192.168.1.127 |
+| **...** | ... | ... | ... |
+
+</section>
+
+<section id="communication-content">
 <h2 id="communication">5. La communication réseau</h2>
 
-<h3 id="broadcast">Le domaine de diffusion (Broadcast)</h3>
-<p>Le domaine de diffusion est l'ensemble des machines qui reçoivent une trame broadcast (<code>FF:FF:FF:FF:FF:FF</code>). Utilisé par : ARP, DHCP, Wake-on-LAN.</p>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;"><strong>Important :</strong> le broadcast <strong>ne traverse pas un routeur</strong>. Le routeur est la frontière du domaine de diffusion. 1 réseau IP = 1 domaine de diffusion.</blockquote>
+<h3 id="comm-lan">1. Communication en interne (LAN)</h3>
 
-<h3 id="lan">Communication dans un même réseau (LAN)</h3>
-<p>Si deux machines sont dans le <strong>même réseau logique</strong>, elles communiquent directement sans passer par un routeur.</p>
-<ol>
-    <li>La machine source vérifie que la destination est dans le même réseau</li>
-    <li>Elle envoie une requête ARP pour obtenir l'adresse MAC de la destination</li>
-    <li>La trame Ethernet est envoyée directement via le switch</li>
-</ol>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">PC A (192.168.1.10) vers PC B (192.168.1.20) → communication directe via switch, pas de routeur.</blockquote>
+Dans un LAN, les machines communiquent via leurs **adresses MAC** (Couche 2).
+1. PC1 veut parler à PC2 (même IP reseau).
+2. PC1 crie en **Broadcast ARP** : "Qui a l'IP 192.168.1.2 ? Donnez-moi votre MAC !".
+3. PC2 répond. PC1 enregistre la MAC dans son **cache ARP** et envoie la trame.
 
-<p><strong>Communication entre réseaux différents :</strong> la machine source envoie les données à sa <strong>passerelle par défaut</strong> (l'adresse IP du routeur local), qui route le paquet vers le réseau destination.</p>
+<h3 id="comm-wan">2. Communication vers l'extérieur (WAN)</h3>
 
-<h3 id="routage">Le routage</h3>
-<p>Le routage achemine un paquet IP d'un réseau source vers un réseau destination via un <strong>routeur</strong> qui s'appuie sur une <strong>table de routage</strong>.</p>
+Si la destination n'est pas dans le même réseau :
+1. Le PC envoie son paquet à sa **Passerelle par défaut** (Default Gateway), qui est l'adresse IP du routeur.
+2. Le routeur prend le relais pour acheminer le paquet.
 
-<p><strong>Route statique</strong> — configurée manuellement, fixe, ne s'adapte pas aux pannes.</p>
-<pre><code>! Syntaxe Cisco
-ip route [réseau destination] [masque] [passerelle]
+<h3 id="routage">3. Théorie : Le Routage Statique vs Dynamique</h3>
 
-! Exemple — 4 routeurs en série (R1 → R2 → R3 → R4)
-! R1 pour atteindre LAN D (10.0.4.0/24) via R2
-ip route 10.0.4.0 255.255.255.0 10.0.12.2
+- **Routage Statique** : On écrit manuellement la route dans le routeur. Fiable mais fastidieux si le réseau change.
+- **Routage Dynamique** : Les routeurs se parlent entre eux (OSPF, RIP) pour mettre à jour leurs chemins automatiquement en cas de panne.
 
-! R4 route de retour vers LAN A (10.0.1.0/24)
-ip route 10.0.1.0 255.255.255.0 10.0.34.1</code></pre>
+</section>
 
-<p><strong>Route dynamique (RIP v2)</strong> — apprise automatiquement. Maximum 15 sauts.</p>
-<pre><code>router rip
- version 2
- no auto-summary
- network 10.0.0.0</code></pre>
-
-<table>
-    <thead><tr><th>Critère</th><th>Route statique</th><th>Route dynamique</th></tr></thead>
-    <tbody>
-        <tr><td>Configuration</td><td>Manuelle</td><td>Automatique</td></tr>
-        <tr><td>Adaptation aux pannes</td><td>Non</td><td>Oui</td></tr>
-        <tr><td>Scalabilité</td><td>Faible</td><td>Élevée</td></tr>
-        <tr><td>Usage</td><td>Petit réseau</td><td>Réseau d'entreprise</td></tr>
-    </tbody>
-</table>
-
-<h3 id="surreseau">Le surréseau (supernetting)</h3>
-<p>Le surréseau regroupe plusieurs réseaux IP contigus sous une seule route avec un masque moins restrictif. Objectif : simplifier le routage.</p>
-<pre><code>192.168.0.0/24 + 192.168.1.0/24
-→ Regroupement : 192.168.0.0/23
-
-Adresse réseau : 192.168.0.0 | Broadcast : 192.168.1.255 | Hôtes : 510</code></pre>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">Utilisé principalement sur les backbones, chez les FAI et dans les grandes entreprises.</blockquote>
-
-<!-- ==================== SECTION 6 : COMMANDES ==================== -->
+<section id="commandes-content">
 <h2 id="commandes">6. Commandes réseau essentielles</h2>
-<table>
-    <thead><tr><th>Rôle</th><th>Windows</th><th>Linux</th><th>Utilité</th></tr></thead>
-    <tbody>
-        <tr><td>Résolution IP → MAC</td><td>arp -a</td><td>arp -n / ip neigh</td><td>Afficher le cache ARP</td></tr>
-        <tr><td>Tester la connectivité</td><td>ping</td><td>ping</td><td>Vérifier qu'une machine est joignable (ICMP)</td></tr>
-        <tr><td>Afficher la config IP</td><td>ipconfig</td><td>ip addr</td><td>Vérifier l'adresse IP, le masque et les interfaces</td></tr>
-        <tr><td>Config IP complète</td><td>ipconfig /all</td><td>ip addr show</td><td>Vérifier DHCP, DNS, adresse MAC</td></tr>
-        <tr><td>Connexions réseau</td><td>netstat -an</td><td>ss -an</td><td>Voir connexions actives et ports ouverts</td></tr>
-        <tr><td>Chemin réseau</td><td>tracert</td><td>traceroute</td><td>Identifier les routeurs traversés</td></tr>
-    </tbody>
-</table>
 
-<!-- ==================== SECTION 7 : IPv6 ==================== -->
-<h2 id="ipv6">7. IPv6</h2>
+En tant que technicien, ces outils sont vos yeux :
 
-<h3>Pourquoi IPv6 ?</h3>
-<p>IPv4 offre environ 4,3 milliards d'adresses (2³²). Avec la multiplication des objets connectés, ce pool est épuisé. IPv6 répond à cet épuisement.</p>
-<table>
-    <thead><tr><th>Critère</th><th>IPv4</th><th>IPv6</th></tr></thead>
-    <tbody>
-        <tr><td>Taille de l'adresse</td><td>32 bits</td><td>128 bits</td></tr>
-        <tr><td>Nombre d'adresses</td><td>~4,3 milliards</td><td>~340 undécillions</td></tr>
-        <tr><td>Notation</td><td>Décimale pointée</td><td>Hexadécimale</td></tr>
-        <tr><td>NAT nécessaire</td><td>Souvent</td><td>Rarement</td></tr>
-    </tbody>
-</table>
+| Rôle | Windows | Linux / Cisco |
+| :--- | :--- | :--- |
+| **Afficher sa config IP** | `ipconfig` | `ip addr` / `sh ip int bri` |
+| **Tester la route/sauts** | `tracert` | `traceroute` |
+| **Vérifier le cache ARP** | `arp -a` | `ip neigh` |
+| **DNS Lookup** | `nslookup` | `dig` |
 
-<h3>Structure d'une adresse IPv6</h3>
-<p>Une adresse IPv6 est composée de <strong>128 bits</strong>, soit <strong>8 blocs de 16 bits</strong> en hexadécimal séparés par <code>:</code>.</p>
-<pre><code>Exemple complet : 2001:0db8:0000:0000:0000:0042:0000:0001</code></pre>
+</section>
 
-<h3>Règles de simplification</h3>
-<p><strong>Règle 1</strong> — Supprimer les zéros non significatifs à gauche de chaque bloc :</p>
-<pre><code>0db8 → db8  |  0042 → 42  |  0000 → 0</code></pre>
-<p><strong>Règle 2</strong> — Remplacer une suite de blocs entièrement à zéro par <code>::</code> (une seule fois par adresse) :</p>
-<pre><code>2001:0db8:0000:0000:0000:0042:0000:0001
- \_________________/
-      3 blocs à 0
-→ 2001:db8::42:0:1</code></pre>
+<section id="ipv6-content">
+<h2 id="ipv6">7. IPv6 : Le futur (déjà là)</h2>
 
-<table>
-    <thead><tr><th>Adresse complète</th><th>Adresse simplifiée</th></tr></thead>
-    <tbody>
-        <tr><td>2001:0db8:0000:0000:0000:0000:0000:0001</td><td>2001:db8::1</td></tr>
-        <tr><td>fe80:0000:0000:0000:0a00:27ff:fe4e:66a1</td><td>fe80::a00:27ff:fe4e:66a1</td></tr>
-        <tr><td>0000:0000:0000:0000:0000:0000:0000:0001</td><td>::1 (loopback IPv6)</td></tr>
-    </tbody>
-</table>
+<h3 id="ipv6-theory">1. Pourquoi l'IPv6 ?</h3>
 
-<h3>Types d'adresses IPv6 courants</h3>
-<table>
-    <thead><tr><th>Type</th><th>Préfixe</th><th>Équivalent IPv4</th><th>Usage</th></tr></thead>
-    <tbody>
-        <tr><td>Unicast global</td><td>2000::/3</td><td>Adresse publique</td><td>Communication sur Internet</td></tr>
-        <tr><td>Unicast lien-local</td><td>fe80::/10</td><td>169.254.x.x</td><td>Communication sur le lien local uniquement</td></tr>
-        <tr><td>Loopback</td><td>::1</td><td>127.0.0.1</td><td>Test local</td></tr>
-        <tr><td>Multicast</td><td>ff00::/8</td><td>Broadcast (approx.)</td><td>Envoi à un groupe de machines</td></tr>
-    </tbody>
-</table>
-<blockquote style="background: var(--bg-card); padding: var(--space-4); border-left: 4px solid var(--primary-main); border-radius: 4px;">En IPv6, il n'y a plus de broadcast. Il est remplacé par le <strong>multicast</strong>, plus efficace car seules les machines concernées reçoivent le message.</blockquote>
+Le stock d'adresses IPv4 (4 milliards) est épuisé. IPv6 offre un nombre d'adresses quasi infini ($3,4 \times 10^{38}$).
+**Avantages :** Plus de NAT nécessaire, configuration automatique des adresses, sécurité intégrée.
 
-<h3>Points clés IPv6 à retenir</h3>
-<ul>
-    <li>IPv4 = 32 bits | IPv6 = 128 bits</li>
-    <li>Une adresse IPv6 = 8 blocs hexadécimaux de 16 bits</li>
-    <li>Simplification : supprimer les zéros gauches + <code>::</code> pour une suite de blocs nuls</li>
-    <li>IPv6 supprime le besoin de NAT (chaque équipement a une adresse publique unique)</li>
-    <li>Le broadcast est remplacé par le multicast en IPv6</li>
-</ul>
+<h3 id="ipv6-format">2. Format & Simplification</h3>
 
-<!-- ==================== SECTION 8 : SUBNET CALCULATOR ==================== -->
+Une adresse IPv6 fait **128 bits** (8 blocs de 16 bits en hexadécimal).
+*Exemple : `2001:0db8:0000:0000:0000:0042:0000:0001`*
+
+**Règles de simplification :**
+1. On peut supprimer les zéros à gauche d'un bloc (`0db8` $\rightarrow$ `db8`).
+2. On peut remplacer une suite de blocs "0000" par `::` (**une seule fois** par adresse).
+*Simplifié : `2001:db8::42:0:1`*
+
+<h3 id="ipv6-types">3. Types d'adresses IPv6 à connaître</h3>
+
+- **Unicast Global** (`2000::/3`) : Équivalent de l'IP publique.
+- **Lien-Local** (`fe80::/10`) : Utilisée pour la communication interne au segment (ne sort pas du routeur).
+- **Multicast** (`ff00::/8`) : Remplace le Broadcast (plus efficace).
+
+</section>
+
+<section id="subnet-tool">
 <h2 id="subnet-tool">8. 🧮 Exercice : Calculateur de sous-réseau</h2>
-<p>Une IP et un masque aléatoires sont générés. Calculez mentalement l'adresse réseau, le broadcast et le nombre d'hôtes, puis vérifiez vos réponses.</p>
+<p>Utilisez cet outil pour vous entraîner au calcul de masques et de plages d'adresses.</p>
 <div id="subnet-calculator-container"></div>
+</section>
