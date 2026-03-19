@@ -4,15 +4,14 @@ import { appStore, updateLessonStatus } from '../store.js';
 import { MODULES } from '../data/modules_index.js';
 import SubnetCalculator from './SubnetCalculator.jsx';
 
-export default function Lesson({ moduleId }) {
+export default function Lesson({ moduleId, title, showSubnetCalc, children }) {
     const state = useStore(appStore);
-    const mod = MODULES.find(m => m.id === moduleId) ?? MODULES[0];
-    const isCompleted = state.lessons[mod.id] === true;
+    const isCompleted = state.lessons?.[moduleId] === true;
     const [notification, setNotification] = useState(null);
 
     const handleComplete = () => {
-        if (!state.lessons[mod.id]) {
-            updateLessonStatus(mod.id, true);
+        if (!state.lessons?.[moduleId]) {
+            updateLessonStatus(moduleId, true);
             setNotification({
                 type: 'success',
                 message: 'Excellent ! Leçon terminée. Passez au quiz pour tester vos connaissances.'
@@ -20,19 +19,20 @@ export default function Lesson({ moduleId }) {
         }
     };
 
-    // Check if we should render the subnet calculator (usually in networking lessons)
-    const showSubnetCalc = mod.lessonHTML.includes('id="subnet-calculator-container"') || moduleId === 'mod2';
+    // showSubnetCalc is now managed by the parent via props
 
     return (
         <div className="lesson-container">
             <div className="lesson-header">
-                <h2>{mod.title}</h2>
+                <h2>{title}</h2>
                 {isCompleted && (
                     <span className="lesson-badge lesson-badge--done" aria-label="Leçon terminée">✓ Terminé</span>
                 )}
             </div>
 
-            <article className="lesson-content" aria-label="Contenu de la leçon" dangerouslySetInnerHTML={{ __html: mod.lessonHTML }} />
+            <article className="lesson-content" aria-label="Contenu de la leçon">
+                {children}
+            </article>
 
             {showSubnetCalc && (
                 <div style={{ margin: 'var(--space-8) 0' }}>
@@ -44,7 +44,7 @@ export default function Lesson({ moduleId }) {
                 <div className={`lesson-notification lesson-notification--${notification.type}`} role="alert" aria-live="assertive">
                     <strong>{notification.type === 'success' ? 'Excellent !' : ''}</strong> {notification.message}
                     {notification.type === 'success' && (
-                        <a href={`/${mod.id}/quiz`} className="btn btn-primary btn-sm" style={{ marginLeft: 'var(--space-4)', textDecoration: 'none' }}>
+                        <a href={`/${moduleId}/quiz`} className="btn btn-primary btn-sm" style={{ marginLeft: 'var(--space-4)', textDecoration: 'none' }}>
                             Aller au Quiz →
                         </a>
                     )}

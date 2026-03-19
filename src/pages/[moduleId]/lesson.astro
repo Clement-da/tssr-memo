@@ -1,17 +1,33 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Lesson from '../../components/Lesson.jsx';
-import { MODULES } from '../../data/modules_index.js';
+import { getCollection, getEntry, render } from 'astro:content';
 
-export function getStaticPaths() {
-  return MODULES.map(mod => ({
-    params: { moduleId: mod.id }
+export async function getStaticPaths() {
+  const entries = await getCollection('modules');
+  return entries.map(entry => ({
+    params: { moduleId: entry.id }
   }));
 }
 
 const { moduleId } = Astro.params;
+const entry = await getEntry('modules', moduleId);
+
+if (!entry) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await render(entry);
+const showSubnetCalc = (entry.body && entry.body.includes('id="subnet-calculator-container"')) || moduleId === 'infra_reseaux';
 ---
 
-<Layout title={`Leçon - ${moduleId}`}>
-    <Lesson client:load moduleId={moduleId} />
+<Layout title={`Leçon - ${entry.data.title}`}>
+    <Lesson 
+        client:load 
+        moduleId={moduleId} 
+        title={entry.data.title} 
+        showSubnetCalc={showSubnetCalc}
+    >
+        <Content />
+    </Lesson>
 </Layout>

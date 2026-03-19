@@ -314,6 +314,10 @@
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
+.lesson-content blockquote p {
+    margin: 0;
+}
+
 .lesson-content pre {
     background-color: #000;
     padding: var(--space-4);
