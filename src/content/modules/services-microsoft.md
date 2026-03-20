@@ -1,6 +1,6 @@
 ---
 id: "services-microsoft"
-title: "Services Microsoft (AD, DNS, DHCP)"
+title: "Services Microsoft"
 icon: "🪟"
 ---
 
@@ -8,271 +8,266 @@ icon: "🪟"
 <nav class="lesson-toc" aria-label="Sommaire de la leçon">
     <div class="lesson-toc__tab" aria-hidden="true">
         <span class="lesson-toc__tab-icon">📋</span>
-        Plan du cours
+        Plan
     </div>
     <div class="lesson-toc__body">
         <h3 class="lesson-toc__title">Sommaire</h3>
         <ol class="lesson-toc__list">
-            <li><a href="#admin-windows">1. Administration Windows Server</a>
+            <li><a href="#unite1">1. Administration Windows Server</a>
                 <ol>
-                    <li><a href="#admin-versions">Versions et éditions</a></li>
-                    <li><a href="#admin-modes">Modes d'installation</a></li>
-                    <li><a href="#admin-roles">Rôles et fonctionnalités</a></li>
+                    <li><a href="#srv-theory">Théorie : Le rôle du serveur</a></li>
+                    <li><a href="#srv-concept">Concepts : Éditions et Modes</a></li>
+                    <li><a href="#srv-context">Le choix du socle technique</a></li>
                 </ol>
             </li>
-            <li><a href="#stockage">2. Gestion du stockage</a>
+            <li><a href="#unite2">2. Active Directory (AD DS)</a>
                 <ol>
-                    <li><a href="#stockage-mbr">Table de partition : MBR ou GPT</a></li>
-                    <li><a href="#stockage-base">Disque dynamique</a></li>
+                    <li><a href="#ad-theory">Théorie : L'annuaire centralisé</a></li>
+                    <li><a href="#ad-concept">Architecture et Maîtres d'opérations</a></li>
+                    <li><a href="#ad-context">L'enjeu de la haute disponibilité</a></li>
                 </ol>
             </li>
-            <li><a href="#ad">3. L'Active Directory (AD DS)</a>
+            <li><a href="#unite3">3. Utilisateurs, Groupes et AGDLP</a>
                 <ol>
-                    <li><a href="#ad-proto">Protocoles fondamentaux</a></li>
-                    <li><a href="#ad-foret">Forêt et domaines</a></li>
-                    <li><a href="#ad-fsmo">Contrôleurs et FSMO</a></li>
+                    <li><a href="#agdlp-theory">Théorie : Gestion des identités</a></li>
+                    <li><a href="#agdlp-logic">La stratégie AGDLP</a></li>
+                    <li><a href="#agdlp-context">Pourquoi appliquer AGDLP ?</a></li>
                 </ol>
             </li>
-            <li><a href="#objets-ad">4. Objets et groupes AD</a>
+            <li><a href="#unite4">4. Stratégies de Groupe (GPO)</a>
                 <ol>
-                    <li><a href="#objets-utilisateurs">Utilisateurs et ordinateurs</a></li>
-                    <li><a href="#objets-groupes">Les groupes</a></li>
-                    <li><a href="#objets-ou">Unités d'Organisation</a></li>
+                    <li><a href="#gpo-theory">Théorie : Administration centralisée</a></li>
+                    <li><a href="#gpo-logic">Ordre de priorité (LSDOU)</a></li>
+                    <li><a href="#gpo-context">L'intérêt des GPO en entreprise</a></li>
                 </ol>
             </li>
-            <li><a href="#agdlp">5. Méthode AGDLP et NTFS</a>
+            <li><a href="#unite5">5. Le Service DHCP</a>
                 <ol>
-                    <li><a href="#ntfs-partage">NTFS vs Partage</a></li>
+                    <li><a href="#dhcp-theory">Théorie : Adressage automatique</a></li>
+                    <li><a href="#dhcp-concept">Mécanique DORA et Options</a></li>
+                    <li><a href="#dhcp-context">Architectures et Haute Disponibilité</a></li>
                 </ol>
             </li>
-            <li><a href="#impression">6. Serveur d'impression</a>
+            <li><a href="#unite6">6. Le Service DNS</a>
                 <ol>
-                    <li><a href="#impression-pool">Pool d'imprimantes</a></li>
+                    <li><a href="#dns-theory">Théorie : La résolution de noms</a></li>
+                    <li><a href="#dns-concept">Hiérarchie, Zones et Records</a></li>
+                    <li><a href="#dns-context">Diagnostic et Performance DNS</a></li>
                 </ol>
             </li>
-            <li><a href="#gpo">7. Stratégies de groupe (GPO)</a>
+            <li><a href="#unite7">7. Gestion des Impressions</a>
                 <ol>
-                    <li><a href="#gpo-ciblage">Liaison et ciblage</a></li>
-                </ol>
-            </li>
-            <li><a href="#dhcp">8. Service DHCP</a>
-                <ol>
-                    <li><a href="#dhcp-dora">Le processus DORA</a></li>
-                    <li><a href="#dhcp-excl">Exclusions et réservations</a></li>
-                </ol>
-            </li>
-            <li><a href="#dns">9. Service DNS</a>
-                <ol>
-                    <li><a href="#dns-hierarchie">La hiérarchie DNS</a></li>
-                    <li><a href="#dns-enregistrements">Enregistrements DNS</a></li>
-                    <li><a href="#dns-serveurs">Serveur primaire et secondaire</a></li>
+                    <li><a href="#print-theory">Théorie : Centralisation des flux</a></li>
+                    <li><a href="#print-concept">Optimisation des spouleurs</a></li>
+                    <li><a href="#print-context">Maintenance et continuité d'impression</a></li>
                 </ol>
             </li>
         </ol>
     </div>
 </nav>
 
-<section id="admin-windows-content">
-<h2 id="admin-windows">1. Administration Windows Server</h2>
+<section id="unite1-content">
+<h2 id="unite1">1. Administration Windows Server</h2>
 
-Les environnements Microsoft distinguent les systèmes clients des systèmes serveurs. Un système client (Windows 10/11) est conçu pour l'utilisateur final : ergonomie et réactivité. Un système serveur (Windows Server 2022) privilégie la stabilité, la sécurité et la disponibilité continue.
+<h3 id="srv-theory">Théorie : Le rôle du système serveur</h3>
+<p>Contrairement à un système client (Windows 10/11) optimisé pour l'usage quotidien d'un utilisateur, Windows Server est conçu pour héberger des services critiques et fournir des ressources partagées. Sa priorité absolue est la <strong>disponibilité (uptime)</strong>, la <strong>sécurité</strong> et la <strong>stabilité</strong> sous forte charge.</p>
 
-> Un serveur peut fonctionner sans interface graphique, sans écran et sans clavier, mais pas sans connexion réseau.
+| Critère | Système client | Système serveur |
+|---|---|---|
+| **Public cible** | Utilisateur final | Techniciens / Services réseau |
+| **Interface** | Graphique (Desktop) | Optionnelle (Server Core) |
+| **Ressources** | Consommateur | **Fournisseur (Producteur)** |
 
-<h3 id="admin-versions">Versions et éditions</h3>
-Les versions (2016, 2019, 2022) marquent l'évolution dans le temps. Les éditions définissent les droits d'utilisation :
+<h3 id="srv-concept">Concepts : Éditions et Modes d'installation</h3>
+<p>Le déploiement d'un serveur Windows repose sur deux choix stratégiques qui impactent les coûts et la maintenance.</p>
 
-- **Standard** : couvre la majorité des besoins réseau (AD, DNS, DHCP, fichiers).
-- **Datacenter** : orientée virtualisation massive, avec un nombre illimité de machines virtuelles.
+- **Édition Standard** : La plus fréquente, idéale pour les serveurs de fichiers ou AD. Elle permet d'exécuter jusqu'à **deux instances virtuelles** sur une machine physique.
+- **Édition Datacenter** : Conçue pour la virtualisation massive (Cloud privé, Hyper-V clusters). Elle offre un nombre illimité de machines virtuelles.
+- **Server Core** : Version sans interface graphique (GUI). Elle est plus légère, nécessite moins de mises à jour et réduit considérablement la surface d'attaque.
 
-<h3 id="admin-modes">Modes d'installation</h3>
+<h3 id="srv-context">Le choix du socle technique en entreprise</h3>
+<p>En tant qu'administrateur TSSR, choisir le bon socle est la première étape d'une infrastructure robuste :</p>
 
-- **Server Core** : installation minimale sans interface graphique. Plus sécurisée, moins gourmande en ressources. C'est le standard en production.
-- **Interface graphique (GUI)** : confort visuel habituel. Recommandée pour l'apprentissage.
-
-<h3 id="admin-roles">Rôles et fonctionnalités</h3>
-Windows Server fonctionne de manière modulaire :
-
-- Un **rôle** est un service majeur rendu au réseau (ex : Active Directory, DNS, serveur de fichiers).
-- Une **fonctionnalité** est un composant secondaire ou un outil de support (ex : client Telnet, sauvegarde Windows Server).
-
-> **Bonne pratique :** n'installer que les rôles strictement nécessaires à la mission du serveur.
-
-</section>
-
-<section id="stockage-content">
-<h2 id="stockage">2. Gestion du stockage : partitionnement et volumes</h2>
-
-<h3 id="stockage-mbr">Table de partition : MBR ou GPT</h3>
-
-| Caractéristique | MBR | GPT |
-| --- | --- | --- |
-| **Partitions max** | 4 principales (ou 3 + 1 étendue) | Jusqu'à 128 principales |
-| **Standard** | Ancien | Moderne, recommandé |
-| **Tolérance aux pannes** | Faible | Améliorée |
-
-> Les lecteurs logiques MBR servent au stockage de données, mais ne peuvent pas héberger un système d'exploitation. GPT est aujourd'hui la norme.
-
-<h3 id="stockage-base">Disque de base vs disque dynamique</h3>
-
-- **Disque de base** : fonctionne avec MBR ou GPT. Stable, adapté aux installations standards.
-- **Disque dynamique** : remplace les partitions par des volumes. Permet le RAID logiciel natif Windows et l'extension d'un espace sur plusieurs disques physiques.
-
-> En environnement serveur, le système de fichiers standard est NTFS.
+- **Uptime et Stabilité** : Utiliser **Server Core** en production permet de réduire les redémarrages liés aux patchs de sécurité de l'interface graphique. L'administration se fait à distance via les consoles **RSAT** ou PowerShell.
+- **Pérennité du stockage** : L'utilisation systématique de la table de partition **GPT** (GUID Partition Table) est indispensable pour supporter les volumes de stockage supérieurs à 2 To et garantir la compatibilité avec les systèmes UEFI modernes.
+- **Modularité** : Windows Server fonctionne par **Rôles** (service rendu : AD, DNS) et **Fonctionnalités** (outils de support : .NET Framework, Backup). La règle d'or est de n'installer que le strict nécessaire pour limiter les failles.
 
 </section>
 
-<section id="ad-content">
-<h2 id="ad">3. L'Active Directory (AD DS)</h2>
+<section id="unite2-content">
+<h2 id="unite2">2. Active Directory Domain Services (AD DS)</h2>
 
-L'Active Directory est un service d'annuaire qui centralise l'authentification et l'administration d'un réseau Microsoft. Sans AD, chaque machine doit être gérée individuellement.
+<h3 id="ad-theory">Théorie : L'annuaire et ses protocoles</h3>
+<p>L'Active Directory est l'épine dorsale des réseaux Microsoft. Il centralise les identités (utilisateurs, ordinateurs) dans une base de données unique, permettant une authentification unique (**Single Sign-On**) sur l'ensemble du parc.</p>
 
-<h3 id="ad-proto">Les trois protocoles fondamentaux</h3>
+Ces mécanismes s'appuient sur trois protocoles standard :
+- **LDAP** : Pour la communication et la recherche dans l'annuaire.
+- **DNS** : Pour la résolution de noms (Si le DNS tombe, l'authentification échoue).
+- **Kerberos** : Pour la sécurité des échanges via un système de tickets.
 
-- **DNS** : permet de localiser les services et les contrôleurs de domaine. Sans DNS, l'AD ne fonctionne pas.
-- **LDAP** : organise et interroge les objets de la base de données.
-- **Kerberos** : protocole d'authentification basé sur des tickets chiffrés.
+<h3 id="ad-concept">Architecture et Maîtres d'opérations (FSMO)</h3>
+<p>L'AD est organisé hiérarchiquement en <strong>Forêts</strong>, <strong>Domaines</strong> et <strong>Unités d'Organisation (OU)</strong>. Pour éviter les conflits lors de modifications critiques, cinq rôles spécifiques, appelés <strong>FSMO</strong>, sont répartis sur les contrôleurs de domaine.</p>
 
-> **Prérequis avant d'installer l'AD :** nom de machine définitif, adresse IP fixe, service DNS opérationnel.
+| Rôle FSMO | Niveau | Mission critique |
+| :--- | :--- | :--- |
+| **Émulateur PDC** | Domaine | Gestion du temps, des mots de passe et priorité GPO. |
+| **Maître RID** | Domaine | Attribution d'identifiants uniques (SID) aux objets. |
+| **Infrastructure** | Domaine | Mise à jour des liens entre objets de domaines différents. |
+| **Maître de Schéma** | Forêt | Modification de la structure même de la base AD. |
+| **Nommage** | Forêt | Ajout ou suppression de domaines dans la forêt. |
 
-<h3 id="ad-foret">Forêt et domaines</h3>
+<h3 id="ad-context">L'enjeu de la haute disponibilité Active Directory</h3>
+<p>En entreprise, l'Active Directory ne doit jamais reposer sur un seul serveur. La perte de l'annuaire signifie l'arrêt total des accès aux fichiers et aux applications.</p>
 
-- Le **domaine** regroupe machines, utilisateurs et stratégies de sécurité partageant la même base de données.
-- La **forêt** est le niveau le plus large : elle contient un ou plusieurs domaines.
-
-![Composant d'un domaine](../../../image/Service%20microsoft/composant-domaine.png)
-
-<h3 id="ad-fsmo">Contrôleurs de domaine et rôles FSMO</h3>
-Les contrôleurs de domaine (DC) hébergent l'AD et valident les connexions. Dans un grand réseau, cinq rôles uniques appelés FSMO sont attribués à des DC spécifiques :
-
-| Rôle | Portée | Fonction principale |
-| --- | --- | --- |
-| **Maître de schéma** | Forêt | Autorise les modifications de la structure de la base AD |
-| **Maître d'attribution de noms** | Forêt | Gère l'ajout/suppression de domaines dans la forêt |
-| **Maître RID** | Domaine | Distribue des blocs d'identifiants (SID) aux DC |
-| **Maître d'infrastructure** | Domaine | Synchronise les références entre domaines |
-| **Émulateur PDC** | Domaine | Gère les mots de passe, les GPO et l'heure réseau (NTP) |
-
-> L'émulateur PDC est le rôle FSMO le plus critique au quotidien. Un décalage d'horloge peut bloquer l'authentification Kerberos.
+- **Redondance des contrôleurs (DC)** : On déploie systématiquement au moins deux contrôleurs de domaine. La réplication se charge de synchroniser les données entre eux.
+- **Continuité de service** : En cas de panne prolongée d'un serveur détenant un rôle FSMO (notamment le PDC), le technicien doit savoir "se saisir" (**Seize**) manuellement du rôle pour le transférer sur un serveur sain et rétablir l'administration.
+- **Sécurisation DNS** : Les contrôleurs de domaine étant leurs propres serveurs DNS, la vérification de la zone `_msdcs` (qui contient les enregistrements SRV des services) est l'étape numéro 1 de tout diagnostic de connexion.
 
 </section>
 
-<section id="objets-ad-content">
-<h2 id="objets-ad">4. Objets et groupes AD</h2>
+<section id="unite3-content">
+<h2 id="unite3">3. Utilisateurs, Groupes et AGDLP</h2>
 
-<h3 id="objets-utilisateurs">Utilisateurs et ordinateurs</h3>
-Chaque utilisateur et chaque machine du réseau possède un compte dans l'AD, identifié par un identifiant unique mondial appelé SID.
+<h3 id="agdlp-theory">Théorie : Gestion des identités et accès</h3>
+<p>L'administration d'un parc de centaines d'utilisateurs rend impossible l'attribution de droits individuels. Le technicien utilise des groupes pour appliquer une politique de sécurité cohérente et évolutive.</p>
 
-<h3 id="objets-groupes">Les groupes</h3>
+<h3 id="agdlp-logic">Concepts : Le modèle AGDLP</h3>
+<p>La règle d'or de Microsoft pour la gestion des droits est la méthode <strong>AGDLP</strong>. Elle sépare le métier de l'utilisateur de la configuration technique de la ressource.</p>
 
-- **Groupes de sécurité** : regroupent les utilisateurs par rôle ou département. Ils permettent d'attribuer ou de restreindre les droits d'accès à des ressources (dossiers partagés, etc.).
-- **Groupes de distribution** : utilisés uniquement pour la messagerie (listes d'envoi d'e-mails). Ils n'ont aucun effet sur les permissions réseau.
+<div style="display: flex; align-items: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+        <ul>
+            <li><strong>A</strong> (Accounts) : Utilisateurs.</li>
+            <li><strong>G</strong> (Global Group) : Groupes <strong>métiers</strong> (ex: GG_RH, GG_COMMERCIAL).</li>
+            <li><strong>DL</strong> (Domain Local) : Groupes de <strong>ressources</strong> (ex: DL_DATA_READ, DL_DATA_MODIFY).</li>
+            <li><strong>P</strong> (Permissions) : Droits réels appliqués sur le dossier (NTFS).</li>
+        </ul>
+        <p>La logique est simple : <strong>Accounts</strong> vont dans un <strong>Global Group</strong>, qui va dans un <strong>Domain Local</strong>, qui possède les <strong>Permissions</strong>.</p>
+    </div>
+    <div style="flex: 1; min-width: 300px; display: flex; justify-content: center;">
+        <img src="../../../image/Service%20microsoft/privilege.png" alt="Privilèges et Groupes" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
+    </div>
+</div>
 
-> **Bonne pratique :** on n'accorde jamais de droits directement à un utilisateur. On l'ajoute dans un groupe, et c'est le groupe qui reçoit les droits.
+<h3 id="agdlp-context">Pourquoi appliquer la stratégie AGDLP ?</h3>
+<p>Le déploiement de cette méthode répond à des besoins de maintenance et d'audit critiques pour un administrateur réseau :</p>
 
-<h3 id="objets-ou">Unités d'Organisation (OU)</h3>
-Une OU est un conteneur hiérarchique dans l'annuaire AD. Elle permet de trier les objets (utilisateurs, machines) par département ou fonction, et de leur appliquer des GPO (stratégies de groupe).
-
-![Unité d'organisation](../../../image/Service%20microsoft/unite-organisation.png)
-</section>
-
-<section id="agdlp-content">
-<h2 id="agdlp">5. Méthode AGDLP et NTFS</h2>
-
-AGDLP est la méthode recommandée par Microsoft pour structurer les accès à un serveur de fichiers :
-
-- **A — Account** : les comptes utilisateurs individuels (ex : alice.martin).
-- **G — Groupe Global** : regroupe les utilisateurs par rôle métier à l'échelle de l'entreprise (ex : GG_Comptabilite).
-- **DL — Groupe de Domaine Local** : représente une action sur une ressource précise (ex : GDL_ProjetX_Modification). Le groupe global y est ajouté.
-- **P — Permissions** : le groupe DL reçoit les permissions NTFS sur le dossier cible.
-
-![Privilège](../../../image/Service%20microsoft/privilege.png)
-
-<h3 id="ntfs-partage">NTFS vs Partage : la règle du plus restrictif</h3>
-Un dossier partagé est soumis à deux niveaux de permissions :
-1. Les permissions de partage (réseau)
-2. Les permissions NTFS (disque)
-
-> Quand un utilisateur accède à un dossier à distance, Windows applique les deux niveaux et retient la permission la plus restrictive. Un refus explicite écrase tous les autres droits, même un contrôle total.
+- **Évolutivité (Scalability)** : Si un utilisateur change de service, vous ne modifiez pas les dossiers. Vous changez simplement son appartenance au groupe Global (G). Les droits sur les ressources (DL) suivent automatiquement.
+- **Simplicité d'Audit** : En regardant les membres d'un groupe DL (ex: "Accès Compta Lecture"), on voit immédiatement quels services (groupes G) ont accès à la donnée, sans avoir à analyser chaque fichier manuellement.
+- **Performance de réplication** : L'imbrication de groupes réduit le trafic de réplication dans les environnements multi-sites par rapport à l'ajout successif d'utilisateurs individuels.
 
 </section>
 
-<section id="impression-content">
-<h2 id="impression">6. Serveur d'impression</h2>
+<section id="unite4-content">
+<h2 id="unite4">4. Stratégies de Groupe (GPO)</h2>
 
-Un serveur d'impression centralise la gestion des imprimantes du réseau. Il gère les pilotes, les files d'attente (spools) et le déploiement automatique vers les postes clients, sans intervention manuelle sur chaque machine.
+<h3 id="gpo-theory">Théorie : Administration centralisée du parc</h3>
+<p>Les <strong>GPO (Group Policy Objects)</strong> permettent d'uniformiser la configuration des postes de travail et de renforcer la sécurité sans intervention physique de la part du technicien. Elles agissent comme un script de configuration massif et dynamique.</p>
 
-<h3 id="impression-pool">Pool d'imprimantes</h3>
-Un pool d'imprimantes relie plusieurs imprimantes identiques sous une seule icône partagée. Les utilisateurs voient une seule imprimante, mais le serveur répartit automatiquement les tâches sur les équipements disponibles. Utile dans les environnements à fort volume d'impression.
+<h3 id="gpo-logic">Concepts : Hiérarchie d'application (LSDOU)</h3>
+<p>Windows applique les GPO dans un ordre précis. En cas de conflit de paramètres, la règle de la dernière appliquée est celle qui gagne.</p>
+
+**Ordre d'application :** Local ➔ Site ➔ Domaine ➔ Unité d'Organisation (OU)
+
+- **L**ocale : Stratégie propre au poste (la plus faible).
+- **S**ite : Liée au site physique AD (rare).
+- **D**omaine : Paramètres globaux (ex: stratégie de mots de passe).
+- **O**U (Unité d'Organisation) : Paramètres ciblés. S'il y a des sous-OU, c'est l'**OU la plus proche** de l'objet qui gagne.
+
+<h3 id="gpo-context">L'intérêt des GPO en entreprise</h3>
+<p>Le déploiement des GPO permet de répondre à des enjeux de sécurité et d'automatisation majeurs :</p>
+
+- **Conformité & Durcissement (Hardening)** : Verrouiller les ports USB, désactiver le panneau de configuration ou imposer une complexité de mot de passe sur tout le parc en une seule opération.
+- **Expérience Utilisateur** : Mapper automatiquement les lecteurs réseau (M:, S:) et les imprimantes dès l'ouverture de session, assurant que l'utilisateur retrouve son environnement sur n'importe quel poste du domaine.
+- **Maintenance à distance** : Forcer la mise à jour des paramètres avec la commande `gpupdate /force` ou auditer les conflits avec `gpresult /r` pour diagnostiquer pourquoi une règle ne s'applique pas.
+
 </section>
 
-<section id="gpo-content">
-<h2 id="gpo">7. Stratégies de groupe (GPO)</h2>
+<section id="unite5-content">
+<h2 id="unite5">5. Le Service DHCP (Adressage Dynamique)</h2>
 
-Un GPO (Group Policy Object) est un ensemble de paramètres appliqués automatiquement à un ensemble de machines ou d'utilisateurs. Il est géré depuis la console GPMC.
+<h3 id="dhcp-theory">Théorie : L'automatisation de la configuration IP</h3>
+<p>Le DHCP (Dynamic Host Configuration Protocol) est le service qui distribue automatiquement les paramètres réseau aux machines. Sans lui, chaque poste devrait être configuré manuellement, ce qui est impossible à gérer sur un parc d'entreprise.</p>
 
-Exemples de ce qu'un GPO peut faire :
+Il transmet quatre informations vitales :
+1. **Adresse IP** et **Masque de sous-réseau**.
+2. **Passerelle par défaut** (Routeur).
+3. **Serveurs DNS** (pour la résolution de noms).
+4. **Suffixe DNS** (nom du domaine local).
 
-- Imposer un fond d'écran
-- Bloquer l'accès aux ports USB
-- Déployer des applications au démarrage
+<h3 id="dhcp-concept">Mécanique DORA et Concepts Clés</h3>
 
-<h3 id="gpo-ciblage">Liaison et ciblage</h3>
-Un GPO est créé indépendamment, puis lié à une OU. Il s'applique alors à tous les objets contenus dans cette OU (utilisateurs, machines), quel que soit leur nombre.
+**Le Processus DORA**
+C'est le dialogue en quatre étapes entre le client et le serveur :
+- **D**iscover ➔ **O**ffer ➔ **R**equest ➔ **A**cknowledge.
+
+| Concept | Définition technique |
+| :--- | :--- |
+| **Bail (Lease)** | Durée pendant laquelle l'IP est prêtée (par défaut 8 jours). Le client doit la renouveler à 50% du temps. |
+| **Étendue (Scope)** | Plage d'adresses distribuables (ex: 192.168.1.50 à .200). |
+| **Éxclusions** | Adresses dans l'étendue qu'on ne donne jamais (réservées aux serveurs en IP fixe). |
+| **Réservations** | On force une IP spécifique pour une machine (via son **adresse MAC**). |
+
+<h3 id="dhcp-context">Architectures et Haute Disponibilité</h3>
+<p>En tant qu'administrateur, la panne du DHCP paralyse l'arrivée de nouveaux postes sur le réseau. Deux solutions sont privilégiées :</p>
+
+- **Relais DHCP (DHCP Relay Agent)** : Comme le DHCP fonctionne par "broadcast" (diffusion), il ne traverse pas les routeurs. On configure un relais sur le routeur pour transmettre les requêtes vers un serveur central situé dans un autre réseau.
+- **Basculement DHCP (Failover)** : Depuis Windows Server 2012, on synchronise deux serveurs. Si l'un tombe, le second prend le relais de manière transparente, garantissant qu'aucun client ne se retrouve en IP APIPA (169.254.x.x).
+- **Options DHCP** : On utilise les options pour pousser des configurations spécifiques (Option 3 pour le Routeur, Option 6 pour le DNS). Cela permet de modifier la passerelle de tout un service en une seule modification sur le serveur.
+
 </section>
 
-<section id="dhcp-content">
-<h2 id="dhcp">8. Service DHCP</h2>
+<section id="unite6-content">
+<h2 id="unite6">6. Le Service DNS (Résolution de Noms)</h2>
 
-Le DHCP (Dynamic Host Configuration Protocol) distribue automatiquement les paramètres réseau (adresse IP, masque, passerelle, DNS) aux machines qui se connectent. Cela évite toute configuration manuelle.
+<h3 id="dns-theory">Théorie : L'annuaire du réseau</h3>
+<p>Le DNS (Domain Name System) traduit les noms compréhensibles par l'humain (ex: <code>srv-ad01.labo.local</code>) en adresses IP utilisées par les machines. C'est le service le plus critique : <strong>si le DNS est en panne, l'Active Directory est invisible.</strong></p>
 
-<h3 id="dhcp-dora">Le processus DORA</h3>
+<h3 id="dns-concept">Hiérarchie, Zones et Enregistrements (Records)</h3>
+<p>Le DNS fonctionne de manière hiérarchique, de la racine (root) vers les domaines spécifiques.</p>
 
-| Étape | Émetteur | Message |
-| --- | --- | --- |
-| **Discover** | Client | "Y a-t-il un serveur DHCP sur le réseau ?" (broadcast) |
-| **Offer** | Serveur | "Voici une adresse IP disponible." |
-| **Request** | Client | "J'accepte cette offre." |
-| **Acknowledge** | Serveur | "C'est confirmé. Bail accordé." |
+**Les types d'enregistrements indispensables :**
+- **A** (Nom ➔ IP) : Le plus courant.
+- **CNAME** : Un alias pour pointer vers un autre nom.
+- **MX** : Pour localiser le serveur de messagerie du domaine.
+- **SRV** : **Vital pour Windows** : permet de localiser les contrôleurs de domaine (Kerberos, LDAP).
+- **PTR** : L'inverse (IP ➔ Nom), utilisé dans les <strong>Zones de recherche inversée</strong>.
 
-<h3 id="dhcp-excl">Exclusions et réservations</h3>
+**Zones de recherche :**
+- **Directe** : On cherche l'IP à partir du Nom.
+- **Inversée** : On cherche le Nom à partir de l'IP (essentiel pour les logs et la sécurité).
 
-- **Exclusion** : plage d'adresses retirée de la distribution automatique (ex : adresses réservées aux serveurs statiques).
-- **Réservation** : associe une adresse IP fixe à l'adresse MAC d'un équipement précis. Cet équipement recevra toujours la même IP.
+<h3 id="dns-context">Diagnostic et Performance DNS</h3>
+<p>Le dépannage DNS est le quotidien du TSSR. Voici les points de contrôle "Expert" :</p>
 
-![Etendue DHCP](../../../image/Service%20microsoft/etendue-dhcp.png)
-</section>
-
-<section id="dns-content">
-<h2 id="dns">9. Service DNS</h2>
-
-Le DNS (Domain Name System) traduit les noms de domaine lisibles (ex : <code>www.example.com</code>) en adresses IP (ex : <code>155.67.55.1</code>), et inversement.
-
-<h3 id="dns-hierarchie">La hiérarchie DNS</h3>
+- **Ordre de résolution** : Windows regarde d'abord son **Cache local**, puis son fichier **Hosts**, et enfin interroge le **Serveur DNS**. Vider le cache (`ipconfig /flushdns`) est souvent le premier réflexe de diagnostic.
+- **Redirecteurs** : Pour que vos serveurs résolvent les noms Internet sans exposer tout l'annuaire, on configure des <strong>redirecteurs</strong> vers des DNS publics sécurisés (8.8.8.8, 1.1.1.1).
+- **Transfert de zone (Maître/Esclave)** : Pour la haute disponibilité, on duplique la zone sur un serveur esclave (en lecture seule). En environnement AD, ce processus est remplacé par la <strong>réplication intégrée à l'annuaire</strong>, plus sûre et automatique.
 
 ```text
-. (racine)
-└── .com / .fr / .org  (TLD)
-    └── example.com    (domaine)
-        └── www        (hôte)
+Ordre de résolution Windows :
+Cache local ➔ Fichier Hosts ➔ Serveur DNS
 ```
 
-> Chaque niveau ne connaît que le niveau suivant. Il renvoie la requête vers le bon serveur jusqu'à résolution finale.
+</section>
 
-![Hiérarchie DNS](../../../image/Service%20microsoft/hierarchie-dns.png)
+<section id="unite7-content">
+<h2 id="unite7">7. Gestion des Impressions</h2>
 
-<h3 id="dns-enregistrements">Les principaux enregistrements DNS</h3>
+<h3 id="print-theory">Théorie : Centralisation des flux et des pilotes</h3>
+<p>Le serveur d'impression agit comme un mandataire. Il reçoit les documents des clients, les stocke dans une file d'attente (Spoule) et les envoie à l'imprimante physique quand elle est prête.</p>
 
-| Type | Rôle |
-| --- | --- |
-| **A / AAAA** | Associe un nom à une adresse IPv4 / IPv6 |
-| **CNAME** | Alias pointant vers un autre nom (ex : <code>www</code> → <code>serveur01</code>) |
-| **MX** | Indique le serveur de messagerie du domaine |
-| **SRV** | Localise les services AD (contrôleurs de domaine, etc.) |
+<h3 id="print-concept">Optimisation des spouleurs et Pools</h3>
+<p>L'administration centralisée permet d'offrir une flexibilité impossible à gérer poste par poste.</p>
 
-<h3 id="dns-serveurs">Serveur primaire et secondaire</h3>
+- **Pool d'imprimantes** : On regroupe plusieurs imprimantes physiques identiques derrière un seul nom logique. Le serveur répartit la charge automatiquement entre les machines disponibles.
+- **Isolement des pilotes** : Le serveur d'impression Windows Server permet d'isoler les pilotes (drivers). Si le pilote d'une imprimante plante, il ne fait pas tomber l'intégralité du service d'impression pour les autres utilisateurs.
 
-- **Serveur primaire** : contient la zone DNS en lecture/écriture. C'est la source officielle des enregistrements.
-- **Serveur secondaire** : copie en lecture seule du serveur primaire. Assure la disponibilité en cas de panne du primaire.
+<h3 id="print-context">Maintenance et continuité d'impression</h3>
+<p>En entreprise, l'impression reste un service critique souvent sujet à incidents.</p>
+
+- **Diagnostic rapide** : Le premier réflexe face à une file d'attente bloquée est le redémarrage du service **Spouleur d'impression** (Spooler). Cela vide les fichiers temporaires et réinitialise les connexions réseau vers les imprimantes.
+- **Publication dans l'annuaire** : Lister les imprimantes dans l'Active Directory permet à l'utilisateur de les trouver "en un clic" via son explorateur, sans avoir à connaître l'adresse IP de la machine physique.
+- **Gestion des droits** : Utiliser les permissions (Imprimer, Gérer les documents, Gérer l'imprimante) permet de déléguer la gestion des déblocages de papier ou d'encre à des référents de service sans leur donner de droits administrateur.
 
 </section>

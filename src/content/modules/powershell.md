@@ -320,7 +320,7 @@ foreach ($s in $servicesArretes) {
 
 ```powershell
 Get-Content "Log_Geant.log" | ForEach-Object {
-    # Action on each line ($_)
+    # Action sur chaque ligne ($_)
 }
 ```
 
