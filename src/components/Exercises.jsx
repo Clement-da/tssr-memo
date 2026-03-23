@@ -6,6 +6,8 @@ export default function Exercises({ module }) {
     const state = useStore(appStore);
     const [selectedExercise, setSelectedExercise] = useState(null);
     const [showCorrection, setShowCorrection] = useState(false);
+    const [userInput, setUserInput] = useState('');
+    const [feedback, setFeedback] = useState(null);
 
     const exercises = module.exercises || [];
     const moduleId = module.id;
@@ -14,6 +16,38 @@ export default function Exercises({ module }) {
     const handleSelect = (ex) => {
         setSelectedExercise(ex);
         setShowCorrection(false);
+        setUserInput('');
+        setFeedback(null);
+    };
+
+    const normalize = (str) => str.toLowerCase().trim().replace(/\s+/g, ' ');
+
+    const checkAnswer = () => {
+        if (!userInput.trim()) return;
+
+        const correct = selectedExercise.correction;
+        const input = userInput.trim();
+
+        if (input === correct) {
+            setFeedback({ type: 'success', message: '✅ Parfait ! Réponse exacte.' });
+            updateExerciseStatus(moduleId, selectedExercise.id, 'done');
+        } else if (normalize(input) === normalize(correct)) {
+            setFeedback({ 
+                type: 'warning', 
+                message: `⚠️ C'est la bonne réponse sur le fond, mais attention : Linux est "Case Sensitive" (sensible à la casse).\nLa réponse exacte est : ${correct}` 
+            });
+            updateExerciseStatus(moduleId, selectedExercise.id, 'done');
+        } else {
+            // Simple check for partial match / typos (simplistic fuzzy)
+            const inputLower = normalize(input);
+            const correctLower = normalize(correct);
+            
+            if (correctLower.includes(inputLower) && inputLower.length > 3) {
+                setFeedback({ type: 'info', message: '🔍 Tu brûles ! Ta réponse est incomplète ou comporte une petite erreur.' });
+            } else {
+                setFeedback({ type: 'error', message: '❌ Ce n\'est pas tout à fait ça. Réessaie ou regarde la correction.' });
+            }
+        }
     };
 
     const toggleDone = (exId) => {
@@ -50,63 +84,78 @@ export default function Exercises({ module }) {
 
             <div className="exercise-content">
                 {selectedExercise ? (
-                    <article className="card exercise-detail">
+                    <article className="card exercise-detail animate-fade-in">
                         <div className="exercise-header">
-                            <h2>{selectedExercise.title}</h2>
+                            <div>
+                                <h2>{selectedExercise.title}</h2>
+                                <p className="exercise-desc">{selectedExercise.description}</p>
+                            </div>
                             <div className="exercise-meta">
                                 <span className="difficulty">Difficulté : {renderStars(selectedExercise.stars)}</span>
-                                <button 
-                                    className={`btn ${exerciseProgress[selectedExercise.id] === 'done' ? 'btn-success' : 'btn-outline'}`}
-                                    onClick={() => toggleDone(selectedExercise.id)}
-                                >
-                                    {exerciseProgress[selectedExercise.id] === 'done' ? 'Terminé' : 'Marquer comme fait'}
-                                </button>
                             </div>
                         </div>
 
                         <div className="exercise-body">
-                            <section className="exercise-section">
-                                <h3>Objectif</h3>
-                                <p>{selectedExercise.description}</p>
-                            </section>
-
                             <section className="exercise-section">
                                 <h3>Énoncé</h3>
                                 <p className="instruction-text">{selectedExercise.instruction}</p>
                             </section>
 
                             <section className="exercise-section">
-                                <h3>Indice</h3>
-                                <p className="hint-text">💡 {selectedExercise.hint}</p>
-                            </section>
-
-                            <div className="correction-area">
-                                <button 
-                                    className="btn btn-primary" 
-                                    onClick={() => setShowCorrection(!showCorrection)}
-                                >
-                                    {showCorrection ? 'Cacher la correction' : 'Voir la correction'}
-                                </button>
-
-                                {showCorrection && (
-                                    <div className="correction-content animate-fade-in">
-                                        <h3>Correction</h3>
-                                        <pre className="code-block language-powershell">
-                                            <code>{selectedExercise.correction}</code>
-                                        </pre>
-                                        <h4>Explication</h4>
-                                        <p>{selectedExercise.explanation}</p>
+                                <h3>Ta réponse</h3>
+                                <div className="response-group">
+                                    <input 
+                                        type="text" 
+                                        className="response-input"
+                                        placeholder="Saisissez votre réponse ici..."
+                                        value={userInput}
+                                        onChange={(e) => setUserInput(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+                                    />
+                                    <button className="btn btn-primary" onClick={checkAnswer}>Valider</button>
+                                </div>
+                                {feedback && (
+                                    <div className={`feedback-message ${feedback.type} animate-slide-up`}>
+                                        {feedback.message}
                                     </div>
                                 )}
-                            </div>
+                            </section>
+
+                            <section className="exercise-section">
+                                <button 
+                                    className="btn btn-link" 
+                                    onClick={() => setShowCorrection(!showCorrection)}
+                                >
+                                    💡 {showCorrection ? 'Cacher l\'indice et la correction' : 'Besoin d\'un indice ou de la correction ?'}
+                                </button>
+                                
+                                {showCorrection && (
+                                    <div className="correction-box animate-fade-in">
+                                        <p className="hint-text"><strong>Indice :</strong> {selectedExercise.hint}</p>
+                                        <div className="correction-content">
+                                            <h3>Correction officielle</h3>
+                                            <pre className="code-block language-bash">
+                                                <code>{selectedExercise.correction}</code>
+                                            </pre>
+                                            <h4>Pourquoi ?</h4>
+                                            <p>{selectedExercise.explanation}</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </section>
                         </div>
                     </article>
                 ) : (
                     <div className="card empty-state">
-                        <p>Sélectionnez un exercice dans la liste pour commencer.</p>
+                        <div className="welcome-exercise">
+                            <span className="welcome-icon">👨‍💻</span>
+                            <h3>Prêt pour la pratique ?</h3>
+                            <p>Sélectionnez un exercice pour tester vos connaissances sur les services Linux.</p>
+                        </div>
                     </div>
                 )}
             </div>
+
 
             <style jsx>{`
                 .exercises-container {
@@ -158,12 +207,14 @@ export default function Exercises({ module }) {
                 }
 
                 .exercise-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
                     border-bottom: 1px solid var(--border-color);
                     padding-bottom: var(--space-4);
                     margin-bottom: var(--space-4);
+                }
+
+                .exercise-desc {
+                    color: var(--text-secondary);
+                    font-size: 0.95em;
                 }
 
                 .exercise-meta {
@@ -173,37 +224,111 @@ export default function Exercises({ module }) {
                 }
 
                 .exercise-section {
-                    margin-bottom: var(--space-6);
+                    margin-bottom: var(--space-8);
                 }
 
                 .instruction-text {
                     font-size: 1.1em;
-                    background: var(--bg-tertiary);
+                    background: var(--bg-secondary);
                     padding: var(--space-4);
                     border-left: 4px solid var(--accent-primary);
                     border-radius: var(--radius-sm);
+                    color: var(--text-primary);
+                }
+
+                .response-group {
+                    display: flex;
+                    gap: var(--space-2);
+                    margin-bottom: var(--space-4);
+                }
+
+                .response-input {
+                    flex: 1;
+                    padding: var(--space-3);
+                    border: 2px solid var(--border-color);
+                    border-radius: var(--radius-md);
+                    background: var(--bg-tertiary);
+                    color: var(--text-primary);
+                    font-family: var(--font-mono);
+                    font-size: 1rem;
+                    transition: border-color 0.2s;
+                }
+
+                .response-input:focus {
+                    outline: none;
+                    border-color: var(--accent-primary);
+                }
+
+                .feedback-message {
+                    padding: var(--space-4);
+                    border-radius: var(--radius-md);
+                    margin-top: var(--space-3);
+                    font-weight: 500;
+                    white-space: pre-line;
+                }
+
+                .feedback-message.success {
+                    background: rgba(34, 197, 94, 0.1);
+                    color: #22c55e;
+                    border: 1px solid #22c55e;
+                }
+
+                .feedback-message.warning {
+                    background: rgba(234, 179, 8, 0.1);
+                    color: #eab308;
+                    border: 1px solid #eab308;
+                }
+
+                .feedback-message.info {
+                    background: rgba(59, 130, 246, 0.1);
+                    color: #3b82f6;
+                    border: 1px solid #3b82f6;
+                }
+
+                .feedback-message.error {
+                    background: rgba(239, 68, 68, 0.1);
+                    color: #ef4444;
+                    border: 1px solid #ef4444;
+                }
+
+                .btn-link {
+                    background: none;
+                    border: none;
+                    color: var(--accent-primary);
+                    text-decoration: underline;
+                    cursor: pointer;
+                    padding: 0;
+                    font-size: 1em;
+                }
+
+                .correction-box {
+                    margin-top: var(--space-4);
+                    padding: var(--space-4);
+                    background: var(--bg-secondary);
+                    border-radius: var(--radius-md);
                 }
 
                 .hint-text {
                     font-style: italic;
                     color: var(--text-secondary);
+                    margin-bottom: var(--space-4);
                 }
 
-                .correction-area {
-                    margin-top: var(--space-8);
-                    padding-top: var(--space-6);
-                    border-top: 1px solid var(--border-color);
+                .welcome-exercise {
+                    text-align: center;
                 }
 
-                .correction-content {
-                    margin-top: var(--space-4);
+                .welcome-icon {
+                    font-size: 4rem;
+                    display: block;
+                    margin-bottom: var(--space-4);
                 }
 
                 .empty-state {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 300px;
+                    height: 400px;
                     color: var(--text-secondary);
                 }
 
@@ -212,7 +337,21 @@ export default function Exercises({ module }) {
                         grid-template-columns: 1fr;
                     }
                 }
+
+                .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+                .animate-slide-up { animation: slideUp 0.3s ease-out; }
+
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+
+                @keyframes slideUp {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
             `}</style>
+
         </div>
     );
 }

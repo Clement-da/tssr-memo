@@ -12,6 +12,6 @@ import { module6 } from './module6_data.js';
 import { module11 } from './module11_data.js';
 import { module13 } from './module13_data.js';
 import { moduleLinux } from './module_linux_data.js';
+import { module10 } from './module10_data.js';
 
-export const MODULES = [module1, module2, module3, module4, module5, module6, module11, module13, moduleLinux];
-
+export const MODULES = [module1, module2, module3, module4, module5, module6, module10, module11, module13, moduleLinux];
