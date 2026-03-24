@@ -5,6 +5,10 @@
     padding: 0 var(--space-4);
 }
 
+.container.container--wide {
+    max-width: 1400px;
+}
+
 /* App Skeleton Layout */
 body {
     display: flex;

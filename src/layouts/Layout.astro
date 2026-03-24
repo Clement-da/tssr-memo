@@ -30,7 +30,7 @@ const { title = "TSSR Memo - Plateforme de Révision" } = Astro.props;
         </div>
     </header>
 
-    <main class="container">
+    <main class={`container ${Astro.props.containerClass || ''}`}>
         <div id="app-content">
             <slot />
         </div>

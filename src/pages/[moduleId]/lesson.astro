@@ -21,7 +21,10 @@ const { Content } = await render(entry);
 const showSubnetCalc = (entry.body && entry.body.includes('id="subnet-calculator-container"')) || moduleId === 'infra_reseaux';
 ---
 
-<Layout title={`Leçon - ${entry.data.title}`}>
+<Layout 
+    title={`Leçon - ${entry.data.title}`}
+    containerClass=""
+>
     <Lesson 
         client:load 
         moduleId={moduleId} 

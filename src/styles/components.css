@@ -760,3 +760,42 @@
     font-style: italic;
 }
 
+/* RAID Visualizers and Hover Effects */
+.raid-visualizer {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.raid-image-preview {
+    position: absolute;
+    bottom: 140%; /* Un peu plus haut pour dégager la ligne */
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100; /* Très haut pour passer devant tout */
+    background: #1e2e4a;
+    border: 3px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    transform: translateY(15px) scale(0.95);
+    width: max-content; /* S'adapte à la taille de l'image interne */
+}
+
+.raid-visualizer:hover .raid-image-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.raid-image-preview img {
+    display: block;
+    max-width: none !important; /* Empêche de forcer une largeur par le parent */
+    width: auto; /* Respecte l'attribut width de img */
+    margin: 0 !important;
+    background: white;
+    border-radius: var(--radius-md);
+}
