@@ -16,7 +16,11 @@ icon: "🌐"
             <li><a href="#unite1">1. Interfaces Réseau</a>
                 <ol>
                     <li><a href="#net-theory">Nommage prévisible</a></li>
+<<<<<<< HEAD
                     <li><a href="#net-config">Configuration nmcli</a></li>
+=======
+                    <li><a href="#net-config">Concepts : nmcli vs interfaces</a></li>
+>>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
                     <li><a href="#net-context">Le double attachement</a></li>
                 </ol>
             </li>
@@ -181,7 +185,11 @@ ip route show
 <p>Le remplacement légitime de l'insécurisé protocole Telnet, SSH, crée un tunnel de commande entièrement chiffré de bout en bout. Sur Debian, la distinction de paquet est claire entre le listener réseau <code>openssh-server</code> (port 22) et l'outil natif de connexion <code>openssh-client</code>.</p>
 
 <h3 id="ssh-keys">Concepts : Authentification par clés</h3>
+<<<<<<< HEAD
 <p>L'utilisation de paires de clés (publique/privée) contourne la majority des failles d'ingénierie sociale (brute force) :</p>
+=======
+<p>L'utilisation de paires de clés (publique/privée) contourne la majorité des failles d'ingénierie sociale (brute force) :</p>
+>>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
 
 ```bash
 # 1. Génération de clé sur la machine technicien (client)

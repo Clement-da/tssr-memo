@@ -102,7 +102,11 @@ export const module10 = {
     {
       id: 'q12',
       question: 'En architecture DNS, à quoi sert le mécanisme d\' "allow-transfer" ?',
+<<<<<<< HEAD
       options: ['À transférer la zone vers un serveur DNS secondaire pour créer de la redondance', 'À autoriser les transferts de fichiers FTP', 'À relayer les requêtes du réseau invité'],
+=======
+      options: ['À transférer la zone vers un serveur DNS secondaire pour créer de la redondance', 'À autoriser les transferts de fichiers FTP', 'À rediriger le trafic HTTP', 'À relayer les requêtes du réseau invité'],
+>>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
       correctIndex: 0,
       explanation: 'Le transfert de zone permet de cloner la base DNS du serveur primaire vers le serveur distant secondaire, pour la tolérance aux pannes.'
     }
@@ -110,6 +114,7 @@ export const module10 = {
   exercises: [
     {
       id: 'ex1',
+<<<<<<< HEAD
       title: 'Configuration de l\'étendue DHCP',
       stars: 1,
       description: 'Définir une plage d\'adresses pour le VLAN Utilisateurs.',
@@ -157,6 +162,55 @@ export const module10 = {
       hint: 'Le paramètre commence par Password...',
       correction: 'PasswordAuthentication no',
       explanation: 'En passant ce paramètre à no, le serveur SSH refusera toute saisie de mot de passe, même si celui-ci est correct, imposant ainsi l\'usage d\'une clé préalablement autorisée.'
+=======
+      title: 'Plage DHCP Dynamique',
+      stars: 1,
+      description: 'Distribuer des adresses au VLAN Étudiants.',
+      instruction: 'Scénario : Votre serveur DHCP doit délivrer des adresses au VLAN 20. Quelle directive de configuration dans `/etc/dhcp/dhcpd.conf` permet de définir la plage de 192.168.20.50 à 192.168.20.100 ?',
+      hint: 'Utilisez le mot-clé "range".',
+      correction: 'range 192.168.20.50 192.168.20.100;',
+      explanation: 'La directive range définit les bornes (début et fin) du pool d\'adressage dynamique géré par le démon isc-dhcp-server.'
+    },
+    {
+      id: 'ex2',
+      title: 'Relais DHCP Inter-VLAN',
+      stars: 2,
+      description: 'Aider les clients à trouver le serveur.',
+      instruction: 'Scénario : Le serveur DHCP est centralisé sur un LAN différent du client. Quel fichier de configuration Debian permet d\'activer le "Relais DHCP" en précisant les interfaces d\'écoute ?',
+      hint: 'C\'est un fichier dans /etc/default/.',
+      correction: '/etc/default/isc-dhcp-relay',
+      explanation: 'Ce fichier configure le démon relayeur pour qu\'il transmette les requêtes broadcast DHCP des clients vers le serveur unicast distant.'
+    },
+    {
+      id: 'ex3',
+      title: 'Déclaration de Zone Master BIND',
+      stars: 2,
+      description: 'Enregistrer un nouveau domaine local.',
+      instruction: 'Scénario : Vous voulez créer le domaine "campus.lan" sur votre serveur BIND9. Écrivez le bloc de définition de zone (type maître) à insérer dans `named.conf.local`.',
+      hint: 'Utilisez zone "domaine" { type master; file "..."; };',
+      correction: 'zone "campus.lan" { type master; file "/etc/bind/db.campus.lan"; };',
+      explanation: 'Cette structure indique à BIND qu\'il est l\'autorité principale (master) pour ce domaine et pointe vers le fichier d\'enregistrements.'
+    },
+    {
+      id: 'ex4',
+      title: 'Validation de Zone DNS',
+      stars: 2,
+      description: 'Vérifier la syntaxe du fichier de zone.',
+      instruction: 'Scénario : Vous venez de modifier le fichier `/etc/bind/db.demo.lan`. Quelle commande permet de vérifier que ce fichier pour la zone "demo.lan" n\'a pas d\'erreur de syntaxe avant de redémarrer BIND ?',
+      hint: 'Utilisez l\'utilitaire named-checkzone.',
+      correction: 'named-checkzone demo.lan /etc/bind/db.demo.lan',
+      explanation: 'Cette commande vérifie la structure du fichier SOA, les points finaux et les numéros de série pour éviter les pannes de service.'
+    },
+    {
+      id: 'ex5',
+      title: 'Sécurisation SSH Hardening',
+      stars: 3,
+      description: 'Désactiver totalement l\'authentification par mot de passe.',
+      instruction: 'Scénario : Pour bloquer les attaques par force brute, vous décidez d\'interdire les mots de passe sur SSH. Quel paramètre du fichier `/etc/ssh/sshd_config` devez-vous passer à "no" ?',
+      hint: 'C\'est le paramètre PasswordAuthentication.',
+      correction: 'PasswordAuthentication no',
+      explanation: 'En désactivant cette directive, le serveur SSH exigera obligatoirement une clé cryptographique valide pour autoriser la connexion.'
+>>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
     }
   ]
 };

@@ -184,7 +184,11 @@ En entreprise, **Veeam Backup & Replication** est l'acteur dominant pour les adm
 | **SAN (Storage Area Network)** | Blocs (iSCSI, Fibre Channel). Réseau très haut débit dédié. | Accès bas-niveau par blocs, supporte la redondance VMware/Datacenter. | Équipement coûteux (Switch FC, HBA) et l'administration est avancée. |
 
 <h3 id="stock-context">Expertise : Le choix technologique adéquat</h3>
+<<<<<<< HEAD
 <p>Pour un PRA qui nécessite de la bande passante et des IOPS garanties pour l'hyperviseur, on investit sur du SAN iSCSI or FC. En revanche, pour conserver les dumps des bases MySQL froides en mode offline, l'export sur Bandes Magnétiques LTO est peu coûteux au Téraoctet et propose l'assurance d'une longévité énorme pour les rétentions légales (Air-Gap natif de 10 ans sur les étagères d'un coffre).</p>
+=======
+<p>Pour un PRA qui nécessite de la bande passante et des IOPS garanties pour l'hyperviseur, on investit sur du SAN iSCSI ou FC. En revanche, pour conserver les dumps des bases MySQL froides en mode offline, l'export sur Bandes Magnétiques LTO est peu coûteux au Téraoctet et propose l'assurance d'une longévité énorme pour les rétentions légales (Air-Gap natif de 10 ans sur les étagères d'un coffre).</p>
+>>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
 </section>
 
 <section id="unite5-content">
