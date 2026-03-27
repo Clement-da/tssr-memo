@@ -1,0 +1,569 @@
+
+=== administration-linux.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Introduction & Arborescence</a>
+                <ol>
+                    <li><a href="#intro-theory">La philosophie Linux</a></li>
+                    <li><a href="#intro-concept">Navigation : pwd, cd, ls</a></li>
+                    <li><a href="#intro-context">Linux dans l'infrastructure</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Manipulation de Fichiers</a>
+                <ol>
+                    <li><a href="#file-theory">Le cycle de vie du fichier</a></li>
+                    <li><a href="#file-concept">CRUD : cp, mv, rm, touch</a></li>
+                    <li><a href="#file-read">Lecture : cat, less, tail -f</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. Droits & Permissions</a>
+                <ol>
+                    <li><a href="#rights-theory">Le modèle UGO (User-Group-Other)</a></li>
+                    <li><a href="#rights-concept">Changer les droits : chmod, chown</a></li>
+                    <li><a href="#rights-context">Sécurisation et privilèges</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">4. Gestion Système & Réseau</a>
+                <ol>
+                    <li><a href="#sys-theory">Processus et Ressources</a></li>
+                    <li><a href="#sys-net">Diagnostic Réseau : ip, ping, ss</a></li>
+                    <li><a href="#sys-context">Dépannage de service</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">5. Stockage & Archivage</a>
+                <ol>
+                    <li><a href="#disk-theory">Analyse de l'espace disque</a></li>
+                    <li><a href="#disk-archive">Sauvegarde : tar et gzip</a></li>
+                    <li><a href="#disk-context">Gestion des alertes de saturation</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">6. Puissance du Flux (Pipeline)</a>
+                <ol>
+                    <li><a href="#pipe-theory">L'enchaînement des commandes (|)</a></li>
+                    <li><a href="#pipe-concept">Filtrage : grep, awk, sed</a></li>
+                    <li><a href="#pipe-context">Extraction de données métier</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== base_reseaux.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#osi">1. Le modèle OSI</a>
+                <ol>
+                    <li><a href="#osi-logic">Théorie & Pourquoi 7 couches ?</a></li>
+                    <li><a href="#encapsulation">Encapsulation & PDU</a></li>
+                    <li><a href="#7couches">Les 7 couches en détail</a></li>
+                    <li><a href="#diag-osi">Diagnostic par couches</a></li>
+                </ol>
+            </li>
+            <li><a href="#unites">2. Unités informatiques</a>
+                <ol>
+                    <li><a href="#bit-octet">Bit vs Octet</a></li>
+                    <li><a href="#debit-stockage">Débit vs Stockage</a></li>
+                </ol>
+            </li>
+            <li><a href="#ipv4">3. Adressage IPv4</a>
+                <ol>
+                    <li><a href="#ip-structure">Structure (Réseau + Hôte)</a></li>
+                    <li><a href="#masque-cidr">Masque & Notation CIDR</a></li>
+                    <li><a href="#adresses-speciales">Adresses spéciales & Privées</a></li>
+                </ol>
+            </li>
+            <li><a href="#calcul">4. Calcul de sous-réseaux</a>
+                <ol>
+                    <li><a href="#calcul-method">Méthodologie du calcul</a></li>
+                    <li><a href="#exemple-calcul">Exemple pas à pas</a></li>
+                </ol>
+            </li>
+            <li><a href="#communication">5. Communication réseau</a>
+                <ol>
+                    <li><a href="#comm-lan">Communication LAN (MAC/ARP)</a></li>
+                    <li><a href="#comm-wan">Communication WAN (Passerelle)</a></li>
+                    <li><a href="#routage">Théorie du routage</a></li>
+                </ol>
+            </li>
+            <li><a href="#commandes">6. Commandes réseau</a></li>
+            <li><a href="#ipv6">7. IPv6</a>
+                <ol>
+                    <li><a href="#ipv6-theory">Pourquoi l'IPv6 ?</a></li>
+                    <li><a href="#ipv6-format">Format & Simplification</a></li>
+                    <li><a href="#ipv6-types">Types d'adresses IPv6</a></li>
+                </ol>
+            </li>
+            <li><a href="#subnet-tool">8. 🧮 Calculateur</a></li>
+        </ol>
+    </div>
+
+=== infra_reseaux.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Configuration initiale (Cisco)</a>
+                <ol>
+                    <li><a href="#ios-modes">Les modes de l'IOS</a></li>
+                    <li><a href="#basic-config">Sécurisation de base</a></li>
+                    <li><a href="#save-config">Sauvegarde</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Commutation (Switching) & VLANs</a>
+                <ol>
+                    <li><a href="#vlan-theory">Théorie des VLANs</a></li>
+                    <li><a href="#vlan-8021q">Le Tagging 802.1Q</a></li>
+                    <li><a href="#mode-ports">Modes Access vs Trunk</a></li>
+                    <li><a href="#vlan-inter-routing">Routage Inter-VLAN</a></li>
+                    <li><a href="#config-vlan">Pratique & Commandes</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. Routage IP</a>
+                <ol>
+                    <li><a href="#routing-logic">Théorie du routage</a></li>
+                    <li><a href="#static-routing">Routage Statique</a></li>
+                    <li><a href="#dynamic-routing">Routage Dynamique (OSPF)</a></li>
+                    <li><a href="#diag-routing">Outils de diagnostic</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">4. Réseaux Wi-Fi</a>
+                <ol>
+                    <li><a href="#wifi-theory">Principes du Wi-Fi</a></li>
+                    <li><a href="#wifi-standards">Normes & Débits</a></li>
+                    <li><a href="#wifi-security">Chiffrement (WPA2/WPA3)</a></li>
+                    <li><a href="#wifi-arch">Architectures AP & WLC</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">5. Sécurité : ACLs</a>
+                <ol>
+                    <li><a href="#acl-theory">Théorie du filtrage</a></li>
+                    <li><a href="#acl-types">Standard vs Étendue</a></li>
+                    <li><a href="#acl-rules">Règles & Application</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">6. NAT (Network Address Translation)</a>
+                <ol>
+                    <li><a href="#nat-purpose">Théorie du NAT</a></li>
+                    <li><a href="#pat">Concept du PAT (Overload)</a></li>
+                    <li><a href="#nat-config">Pratique & Commandes</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== messagerie.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#intro">1. Introduction</a></li>
+            <li><a href="#roles">2. Les quatre rôles fondamentaux</a></li>
+            <li><a href="#protocoles">3. Protocoles et ports</a></li>
+            <li><a href="#trajet">4. Trajet d'un e-mail</a>
+                <ol>
+                    <li><a href="#etape1">1. Rédaction et envoi</a></li>
+                    <li><a href="#etape4">4. Résolution DNS</a></li>
+                    <li><a href="#etape8">8. Localisation de la boîte</a></li>
+                </ol>
+            </li>
+            <li><a href="#schema">5. Schéma récapitulatif</a></li>
+            <li><a href="#points-cles">6. Points clés à retenir</a></li>
+        </ol>
+    </div>
+
+=== powershell.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Introduction & Cmdlets</a>
+                <ol>
+                    <li><a href="#cmdlet-theory">Théorie : L'écosystème PowerShell</a></li>
+                    <li><a href="#cmdlet-definition">Structure Verbe-Nom</a></li>
+                    <li><a href="#execution-policy">Politique d'exécution</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Aide & Syntaxe</a>
+                <ol>
+                    <li><a href="#help-system">Le système d'aide (Get-Help)</a></li>
+                    <li><a href="#modules-ps">Modules et Extensions</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. Pipeline & Objets</a>
+                <ol>
+                    <li><a href="#pipeline-theory">Théorie : Pipeline d'objets (.NET)</a></li>
+                    <li><a href="#filtering-sorting">Filtrage & Tri (Where/Select)</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">4. Variables & Opérateurs</a>
+                <ol>
+                    <li><a href="#ps-variables">Déclaration ($)</a></li>
+                    <li><a href="#ps-operators">Opérateurs (-eq, -gt, etc.)</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">5. Automatisation & Boucles</a>
+                <ol>
+                    <li><a href="#ps-if">La condition If / Else</a></li>
+                    <li><a href="#ps-case">Le Switch</a></li>
+                    <li><a href="#ps-loop-for">La boucle For</a></li>
+                    <li><a href="#ps-loop-foreach">La boucle ForEach</a></li>
+                    <li><a href="#ps-loop-pipeline">Le Pipeline (While Read)</a></li>
+                    <li><a href="#ps-loop-while">Les boucles While / Do-Until</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite7">6. Gestion des Erreurs</a>
+                <ol>
+                    <li><a href="#error-action">ErrorAction & Preferences</a></li>
+                    <li><a href="#try-catch">Try / Catch / Finally</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite8">7. Remoting (Gestion à distance)</a>
+                <ol>
+                    <li><a href="#remoting-theory">Théorie : WinRM & WS-MAN</a></li>
+                    <li><a href="#remoting-cmds">Commandes de session</a></li>
+                    <li><a href="#double-hop">Le problème du Double Hop</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== rds_wds_mdt.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">Vue d'ensemble</a>
+                <ol>
+                    <li><a href="#transverse-role">Le rôle des services transverses</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">RDS (Remote Desktop Services)</a>
+                <ol>
+                    <li><a href="#rds-theory">Théorie : Le Client Léger</a></li>
+                    <li><a href="#rds-roles">Les Rôles RDS</a></li>
+                    <li><a href="#rds-remoteapp">RemoteApp vs Bureau Complet</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">WDS (Windows Deployment Services)</a>
+                <ol>
+                    <li><a href="#wds-theory">Théorie : Déploiement réseau (PXE)</a></li>
+                    <li><a href="#wds-images">Les types d'images WIM</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">MDT (Microsoft Deployment Toolkit)</a>
+                <ol>
+                    <li><a href="#mdt-theory">Théorie : Automatisation post-installation</a></li>
+                    <li><a href="#wds-mdt-compare">WDS vs WDS + MDT</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">Exemple comparatif : 15 postes</a>
+                <ol>
+                    <li><a href="#scenario-wds">Sans MDT</a></li>
+                    <li><a href="#scenario-mdt">Avec MDT</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== reseaux_securite.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">Notions Fondamentales & Diagnostic</a>
+                <ol>
+                    <li><a href="#osi-flux">Théorie : L'OSI et les Flux</a></li>
+                    <li><a href="#diag-context">L'intérêt du diagnostic</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">Le Pare-feu (Firewall) & DMZ</a>
+                <ol>
+                    <li><a href="#fw-theory">Théorie : Filtrage & Actions</a></li>
+                    <li><a href="#pfsense">Concepts : pfSense & Services</a></li>
+                    <li><a href="#dmz-architecture">La Zone DMZ (Isolation)</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">NAT (Network Address Translation)</a>
+                <ol>
+                    <li><a href="#nat-theory">Théorie : Transition d'adresses</a></li>
+                    <li><a href="#nat-types">Types de NAT en entreprise</a></li>
+                    <li><a href="#nat-practical">Cas d'usage Outbound & Port Forward</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">Proxy & Portail Captif</a>
+                <ol>
+                    <li><a href="#proxy-theory">Le rôle du Proxy</a></li>
+                    <li><a href="#proxy-types">Types de Proxy</a></li>
+                    <li><a href="#proxy-context">Pourquoi un Proxy ?</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">Certificats & PKI</a>
+                <ol>
+                    <li><a href="#cert-theory">Théorie : Chiffrement</a></li>
+                    <li><a href="#crypto-logic">Fonctionnement du TLS</a></li>
+                    <li><a href="#pki-arch">Architecture PKI</a></li>
+                    <li><a href="#pki-context">L'intérêt de la PKI</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">VPN (Virtual Private Network)</a>
+                <ol>
+                    <li><a href="#vpn-theory">Théorie : Tunneling</a></li>
+                    <li><a href="#vpn-protocols">Comparatif Protocoles</a></li>
+                    <li><a href="#vpn-context">Cas d'usage VPN</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== sauvegarde-restauration.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Concepts et Enjeux</a>
+                <ol>
+                    <li><a href="#enjeux-theory">Théorie : Pérennité et Continuité</a></li>
+                    <li><a href="#rto-rpo-concept">RTO, RPO, PCA et PRA</a></li>
+                    <li><a href="#enjeux-context">L'importance du Plan de Sauvegarde</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Stratégies et Types de Sauvegardes</a>
+                <ol>
+                    <li><a href="#types-theory">Théorie : Les méthodes de copie</a></li>
+                    <li><a href="#types-concept">Complète vs Différentielle vs Incrémentale</a></li>
+                    <li><a href="#types-context">Règle 3-2-1 et Rotation GFS</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. Sauvegardes Spécifiques</a>
+                <ol>
+                    <li><a href="#spec-theory">Théorie : Cohérence des données</a></li>
+                    <li><a href="#spec-concept">Snapshots, VSS et SGBD</a></li>
+                    <li><a href="#spec-context">L'expertise "Application-aware"</a></li>
+                </ol>
+            </li>
+            <li><a href="#acteurs-backup">4. Solutions et Acteurs du Marché</a>
+                <ol>
+                    <li><a href="#acteurs-veeam">Veeam : Le Standard Industriel</a></li>
+                    <li><a href="#acteurs-alt">Alternatives : Commvault, Rubrik...</a></li>
+                    <li><a href="#acteurs-perso">Le Coin du Perso / Labo</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">5. Gestion et Architectures de Stockage</a>
+                <ol>
+                    <li><a href="#stock-theory">Les niveaux d'accessibilité (DAS, NAS, SAN)</a></li>
+                    <li><a href="#raid-concept">Les Différents Modes RAID</a></li>
+                    <li><a href="#raid-context">L'expertise : RAID != Sauvegarde</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">6. Procédures et Méthodes de Restauration</a>
+                <ol>
+                    <li><a href="#restore-theory">Théorie : La fiabilité éprouvée</a></li>
+                    <li><a href="#restore-concept">Bare-Metal Recovery (BMR)</a></li>
+                    <li><a href="#restore-context">Audits et PRA Opérationnel</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== script-bash.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Principes et Conception</a>
+                <ol>
+                    <li><a href="#conception-theory">Le rôle central du scripting</a></li>
+                    <li><a href="#conception-concept">Méthodologie et exécution</a></li>
+                    <li><a href="#conception-context">Processus de création en entreprise</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Variables et Environnement</a>
+                <ol>
+                    <li><a href="#vars-theory">Gestion de l'état</a></li>
+                    <li><a href="#vars-concept">Types de variables Bash</a></li>
+                    <li><a href="#vars-context">Automatisation paramétrée</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. Logique et Conditions</a>
+                <ol>
+                    <li><a href="#cond-theory">Théorie : L'arbre de décision</a></li>
+                    <li><a href="#cond-if">La condition "If"</a></li>
+                    <li><a href="#cond-case">Le "Case" (Menus)</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">4. Les Boucles (Itérations)</a>
+                <ol>
+                    <li><a href="#loop-theory">Théorie : L'automatisation par la répétition</a></li>
+                    <li><a href="#loop-while">La boucle "While"</a></li>
+                    <li><a href="#loop-until">La boucle "Until"</a></li>
+                    <li><a href="#loop-for">La boucle "For" (Liste)</a></li>
+                    <li><a href="#loop-read">Le Pipeline (While Read)</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">5. Couleurs dans le Shell</a>
+                <ol>
+                    <li><a href="#colors-theory">Séquences d'échappement ANSI</a></li>
+                    <li><a href="#colors-concept">Attributs et codes couleurs</a></li>
+                    <li><a href="#colors-context">Expertise : Logs formatés</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">6. Fonctions et Factorisation</a>
+                <ol>
+                    <li><a href="#func-theory">Modularité du code</a></li>
+                    <li><a href="#func-concept">Déclaration et arguments</a></li>
+                    <li><a href="#func-context">Librairies de scripts d'administration</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite7">7. Bash vs PowerShell</a>
+                <ol>
+                    <li><a href="#powershell-theory">Deux philosophies distinctes</a></li>
+                    <li><a href="#powershell-concept">Comparatif des approches</a></li>
+                    <li><a href="#powershell-context">Le choix de l'outil</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== services-microsoft.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Administration Windows Server</a>
+                <ol>
+                    <li><a href="#srv-theory">Théorie : Le rôle du serveur</a></li>
+                    <li><a href="#srv-concept">Concepts : Éditions et Modes</a></li>
+                    <li><a href="#srv-context">Le choix du socle technique</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Active Directory (AD DS)</a>
+                <ol>
+                    <li><a href="#ad-theory">Théorie : L'annuaire centralisé</a></li>
+                    <li><a href="#ad-concept">Architecture et Maîtres d'opérations</a></li>
+                    <li><a href="#ad-context">L'enjeu de la haute disponibilité</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. Utilisateurs, Groupes et AGDLP</a>
+                <ol>
+                    <li><a href="#agdlp-theory">Théorie : Gestion des identités</a></li>
+                    <li><a href="#agdlp-logic">La stratégie AGDLP</a></li>
+                    <li><a href="#agdlp-context">Pourquoi appliquer AGDLP ?</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">4. Stratégies de Groupe (GPO)</a>
+                <ol>
+                    <li><a href="#gpo-theory">Théorie : Administration centralisée</a></li>
+                    <li><a href="#gpo-logic">Ordre de priorité (LSDOU)</a></li>
+                    <li><a href="#gpo-context">L'intérêt des GPO en entreprise</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">5. Le Service DHCP</a>
+                <ol>
+                    <li><a href="#dhcp-theory">Théorie : Adressage automatique</a></li>
+                    <li><a href="#dhcp-concept">Mécanique DORA et Options</a></li>
+                    <li><a href="#dhcp-context">Architectures et Haute Disponibilité</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">6. Le Service DNS</a>
+                <ol>
+                    <li><a href="#dns-theory">Théorie : La résolution de noms</a></li>
+                    <li><a href="#dns-concept">Hiérarchie, Zones et Records</a></li>
+                    <li><a href="#dns-context">Diagnostic et Performance DNS</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite7">7. Gestion des Impressions</a>
+                <ol>
+                    <li><a href="#print-theory">Théorie : Centralisation des flux</a></li>
+                    <li><a href="#print-concept">Optimisation des spouleurs</a></li>
+                    <li><a href="#print-context">Maintenance et continuité d'impression</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== services-reseaux-linux.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. Interfaces Réseau</a>
+                <ol>
+                    <li><a href="#net-theory">Nommage prévisible</a></li>
+                    <li><a href="#net-config">Configuration nmcli</a></li>
+                    <li><a href="#net-context">Le double attachement</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Résolution Locale & Routage</a>
+                <ol>
+                    <li><a href="#route-theory">nsswitch, hostname et hosts</a></li>
+                    <li><a href="#route-config">Manipulation de la table</a></li>
+                    <li><a href="#route-context">Activation de l'ip_forward</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite3">3. NAT sous Linux</a>
+                <ol>
+                    <li><a href="#nat-theory">Translation d'adresses</a></li>
+                    <li><a href="#nat-types">SNAT, DNAT et NAT 1:1</a></li>
+                    <li><a href="#nat-context">Publication de services</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">4. Administration Sécurisée (SSH)</a>
+                <ol>
+                    <li><a href="#ssh-theory">Séparation Client/Serveur</a></li>
+                    <li><a href="#ssh-keys">Authentification par clés</a></li>
+                    <li><a href="#ssh-context">Durcissement du service</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">5. Infrastructure DHCP</a>
+                <ol>
+                    <li><a href="#dhcp-theory">Le protocole et ses ports</a></li>
+                    <li><a href="#dhcp-config">isc-dhcp-server</a></li>
+                    <li><a href="#dhcp-context">L'importance du Relay</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">6. Infrastructure DNS (BIND9)</a>
+                <ol>
+                    <li><a href="#dns-theory">Résolveur vs Autoritaire</a></li>
+                    <li><a href="#dns-config">Configuration de zone</a></li>
+                    <li><a href="#dns-context">Architecture de redondance</a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+=== systemes_microsoft.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#unite1">1. L'OS : Le Chef d'Orchestre</a>
+                <ol>
+                    <li><a href="#os-definition">Rôles & Structure</a></li>
+                    <li><a href="#waas">Windows as a Service (WaaS)</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite2">2. Éditions & Licences</a></li>
+            <li><a href="#unite2bis">3. Installation & Migration (USMT)</a></li>
+            <li><a href="#unite3">4. Stockage & Fichiers</a>
+                <ol>
+                    <li><a href="#partitionnement">MBR vs GPT</a></li>
+                    <li><a href="#filesystem">NTFS, FAT32 & ReFS</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite4">5. Utilisateurs & Groupes</a>
+                <ol>
+                    <li><a href="#accounts">Types de comptes & SID</a></li>
+                    <li><a href="#profiles">Profils Utilisateurs</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite5">6. Sécurité NTFS & Partage</a>
+                <ol>
+                    <li><a href="#ntfs-acl">ACL & Héritage</a></li>
+                    <li><a href="#sharing">Droit de Partage vs NTFS</a></li>
+                </ol>
+            </li>
+            <li><a href="#unite6">7. Bureau à distance (RDP)</a></li>
+            <li><a href="#unite7">8. Impression & Spouleur</a></li>
+            <li><a href="#unite8">9. Maintenance & Diagnostic</a></li>
+            <li><a href="#unite9">10. Déploiement : Sysprep & DISM</a></li>
+            <li><a href="#unite10">11. Le Registre Windows</a></li>
+        </ol>
+    </div>
+
+=== virtualisation.md ===
+<ol class="lesson-toc__list">
+            <li><a href="#definition">1. Définition et concepts fondamentaux</a>
+                <ol>
+                    <li><a href="#histo">Repères historiques</a></li>
+                    <li><a href="#avantages">Avantages et inconvénients</a></li>
+                </ol>
+            </li>
+            <li><a href="#hyperviseurs">2. Les hyperviseurs</a>
+                <ol>
+                    <li><a href="#type1">Type 1 — Bare Metal</a></li>
+                    <li><a href="#type2">Type 2 — Hosted</a></li>
+                </ol>
+            </li>
+            <li><a href="#solutions">3. Solutions du marché</a></li>
+            <li><a href="#postes">4. Poste de travail (Workstation)</a></li>
+            <li><a href="#serveurs">5. Virtualisation de serveurs</a></li>
+            <li><a href="#vsphere">6. Infrastructure vSphere</a>
+                <ol>
+                    <li><a href="#fonctions">Fonctions avancées</a></li>
+                    <li><a href="#licences">Licences vSphere</a></li>
+                </ol>
+            </li>
+            <li><a href="#reseau">7. Gestion des réseaux</a></li>
+            <li><a href="#stockage">8. Gestion du stockage</a></li>
+            <li><a href="#datacenter">9. Gestion du datacenter</a></li>
+            <li><a href="#modeles">10. Modèles de VM</a></li>
+            <li><a href="#migration">11. Migration de VM</a></li>
+        </ol>
+    </div>

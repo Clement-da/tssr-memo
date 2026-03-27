@@ -1,0 +1,13 @@
+﻿src/components/Exercises.jsx
+src/content/modules/reseaux_securite.md
+src/content/modules/sauvegarde-restauration.md
+src/content/modules/services-microsoft.md
+src/content/modules/services-reseaux-linux.md
+src/content/modules/systemes_microsoft.md
+src/data/module10_data.js
+src/data/module4_data.js
+src/data/modules_index.js
+src/layouts/Layout.astro
+src/pages/[moduleId]/lesson.astro
+src/styles/components.css
+src/styles/layout.css

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "base_reseaux",
+    "title": "Base des réseaux",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 0
+  },
+  {
+    "id": "infra_reseaux",
+    "title": "Infrastructure Réseaux",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 0
+  },
+  {
+    "id": "reseaux_securite",
+    "title": "Réseaux et Sécurité",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 0
+  },
+  {
+    "id": "systemes_microsoft",
+    "title": "Systèmes Clients Microsoft",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 4
+  },
+  {
+    "id": "powershell",
+    "title": "PowerShell & Scripting",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 6
+  },
+  {
+    "id": "services-microsoft",
+    "title": "Services Microsoft (AD, DNS, DHCP)",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 6
+  },
+  {
+    "id": "rds_wds_mdt",
+    "title": "RDS, WDS, MDT",
+    "flashcards": 15,
+    "quiz": 12,
+    "exercises": 5
+  },
+  {
+    "id": "script-bash",
+    "title": "Scripting Bash",
+    "flashcards": 15,
+    "quiz": 12,
+    "exercises": 5
+  },
+  {
+    "id": "services-reseaux-linux",
+    "title": "Services Réseaux Linux",
+    "flashcards": 15,
+    "quiz": 12,
+    "exercises": 5
+  },
+  {
+    "id": "virtualisation",
+    "title": "Virtualisation",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 4
+  },
+  {
+    "id": "sauvegarde-restauration",
+    "title": "Sauvegarde & Restauration",
+    "flashcards": 15,
+    "quiz": 12,
+    "exercises": 5
+  },
+  {
+    "id": "messagerie",
+    "title": "Messagerie (SMTP, IMAP, POP3)",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 4
+  },
+  {
+    "id": "administration-linux",
+    "title": "Administration Linux",
+    "flashcards": 10,
+    "quiz": 10,
+    "exercises": 4
+  }
+]

@@ -1,0 +1,57 @@
+
+> tssr-memo@1.0.0 build
+> astro build
+
+[2m11:50:49[22m [34m[content][39m Syncing content
+[2m11:50:49[22m [34m[content][39m Synced content
+[2m11:50:49[22m [34m[types][39m Generated [2m1.22s[22m
+[2m11:50:49[22m [34m[build][39m output: [34m"static"[39m
+[2m11:50:49[22m [34m[build][39m mode: [34m"static"[39m
+[2m11:50:49[22m [34m[build][39m directory: [34mC:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\dist\[39m
+[2m11:50:49[22m [34m[build][39m Collecting build info...
+[2m11:50:49[22m [34m[build][39m [32m✓ Completed in 1.27s.[39m
+[2m11:50:49[22m [34m[build][39m Building static entrypoints...
+[33m[1m11:50:52[22m [WARN] [vite][39m [33m"useEffect" is imported from external module "react" but never used in "src/components/Lesson.jsx".[39m
+[2m11:50:52[22m [34m[vite][39m [32m✓ built in 2.94s[39m
+[2m11:50:54[22m [34m[vite][39m [32m✓ built in 1.80s[39m
+[2m11:50:54[22m [34m[build][39m Rearranging server assets...
+
+[42m[30m generating static routes [39m[49m
+Error loading state TypeError: localStorage.getItem is not a function
+    at loadInitialState (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/store_CA9wNY_r.mjs:3326:36)
+    at file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/store_CA9wNY_r.mjs:3343:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async node:internal/modules/esm/loader:639:26
+    at async BuildPipeline.getModuleForRoute (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/prerender_CIqsTHyz.mjs:9848:14)
+    at async BuildPipeline.getComponentByRoute (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/prerender_CIqsTHyz.mjs:9820:20)
+    at async #getPathsForRoute (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/node_modules/astro/dist/runtime/prerender/static-paths.js:51:31)
+    at async StaticPaths.getAll (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/node_modules/astro/dist/runtime/prerender/static-paths.js:31:23)
+    at async generatePages (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/node_modules/astro/dist/core/build/generate.js:64:27)
+    at async BasicMinimalPluginContext.handler (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/node_modules/astro/dist/core/build/static-build.js:127:11)
+[2m11:50:54[22m   [34m├─[39m [2m/base_reseaux/exercises/index.html[22m(node:19912) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ [2m(+49ms)[22m 
+[2m11:50:54[22m   [34m├─[39m [2m/infra_reseaux/exercises/index.html[22m [2m(+10ms)[22m 
+[2m11:50:55[22m   [34m├─[39m [2m/reseaux_securite/exercises/index.html[22mTypeError: Cannot read properties of undefined (reading 'replace')
+    at Exercises (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/exercises_35adrZ1q.mjs:65:133)
+    at renderWithHooks (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:4647:18)
+    at renderElement (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:4785:14)
+    at retryNode (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:5503:16)
+    at performWork (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:6344:13)
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_context_frame:63:14)
+    at C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:7021:27
+[31m[1m11:50:55[22m [ERROR][39m TypeError: Cannot read properties of undefined (reading 'replace')
+    at Exercises (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/exercises_35adrZ1q.mjs:65:133)
+    at renderWithHooks (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:4647:18)
+    at renderElement (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:4785:14)
+    at retryNode (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:5503:16)
+    at performWork (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:6344:13)
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_context_frame:63:14)
+    at C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:7021:27
+[31m[1m11:50:55[22m [ERROR] [build][39m Caught error rendering /reseaux_securite/exercises: TypeError: Cannot read properties of undefined (reading 'replace')
+Cannot read properties of undefined (reading 'replace')
+  [1mStack trace:[22m
+[2m    at Exercises (file:///C:/Users/Administrateur/Desktop/Cl%C3%A9ment/Antigravity/tssr-memo/dist/.prerender/chunks/exercises_35adrZ1q.mjs:65:133)
+    at renderElement (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:4785:14)
+    at performWork (C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:6344:13)
+    at C:\Users\Administrateur\Desktop\Clément\Antigravity\tssr-memo\node_modules\react-dom\cjs\react-dom-server.node.production.js:7021:27[22m

@@ -1,0 +1,21 @@
+{
+  "name": "tssr-memo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "dev:alt": "astro dev --port 9870",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^5.0.0",
+    "@nanostores/react": "^1.0.1",
+    "astro": "^6.0.4",
+    "nanostores": "^1.2.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}

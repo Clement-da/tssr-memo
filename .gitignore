@@ -1,18 +1,30 @@
-# Ignore all by default
-*
+# Dependencies
+node_modules
 
-# Allow specific files and directories
-!index.html
-!src/
-!src/**
-!styles/
-!styles/**
-!.gitignore
+# Build output
+dist
+.astro
+.vercel
+.netlify
 
-# Ignore specific development/system files
-node_modules/
+# System files
 .DS_Store
+Thumb.db
+
+# Environment variables
+.env
+*.local
+
+# Internal / Scratch
 .gemini/
 .agent/
 content2/
 mcp_config.json
+tmp/
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
