@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { appStore, updateFlashcard } from '../store.js';
+import { appStore, updateFlashcard, addXP } from '../store.js';
 import { MODULES } from '../data/modules_index.js';
 
 export default function Flashcards({ moduleId }) {
@@ -27,6 +27,10 @@ export default function Flashcards({ moduleId }) {
         if (currentIndex < mod.flashcards.length - 1) {
             setCurrentIndex(prev => prev + 1);
         } else {
+            // Award XP only if this is the first time the user completes the session (all cards answered)
+            if (Object.keys(fcState).length < mod.flashcards.length) {
+                addXP(15);
+            }
             setShowSummary(true);
         }
     };
@@ -41,7 +45,8 @@ export default function Flashcards({ moduleId }) {
                 <h2>Session Terminée !</h2>
                 <div className="card" style={{ textAlign: 'center', marginTop: 'var(--space-6)' }}>
                     <p className="quiz-result__score" style={{ color: 'var(--accent-success)' }}>{known} / {total}</p>
-                    <p style={{ marginBottom: 'var(--space-4)', color: 'var(--text-secondary)' }}>cartes maîtrisées</p>
+                    <p style={{ marginBottom: 'var(--space-2)', color: 'var(--text-secondary)' }}>cartes maîtrisées</p>
+                    <p style={{ color: 'var(--accent-primary)', fontWeight: 700, marginBottom: 'var(--space-4)' }}>+15 XP gagnés</p>
                     <div className="progress-bar-container" style={{ height: '12px', maxWidth: '400px', margin: 'var(--space-4) auto' }}>
                         <div className="progress-bar-fill" style={{ width: `${pct}%` }}></div>
                     </div>

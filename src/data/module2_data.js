@@ -152,5 +152,66 @@ export const module2 = {
             front: "Quel protocole Wi-Fi est obligatoire en entreprise pour l'authentification ?",
             back: "WPA2/WPA3 + 802.1X (RADIUS)\n\nChaque utilisateur s'authentifie avec ses propres identifiants.\nLe point d'accès interroge un serveur RADIUS → autorisation ou refus.\nUne clé dynamique unique est générée à chaque connexion.\n\nJamais de clé partagée (PSK) en environnement professionnel.\nWEP = absolument interdit."
         }
+    ],
+
+    exercises: [
+        {
+            id: 'm2_ex1',
+            title: 'Initialisation Console',
+            stars: 1,
+            description: 'Configuration du mot de passe console.',
+            instruction: 'Quelles sont les commandes pour mettre un mot de passe console "Cisco" ?',
+            hint: 'line console 0, password, login.',
+            correction: 'line console 0\npassword Cisco\nlogin',
+            explanation: 'La commande login est nécessaire pour forcer la demande du mot de passe.'
+        },
+        {
+            id: 'm2_ex2',
+            title: 'Mode Privilège',
+            stars: 1,
+            description: 'Configuration du enable secret.',
+            instruction: 'Quelle commande permet de mettre un mot de passe chiffré "Class" pour le mode privilège ?',
+            hint: 'enable secret.',
+            correction: 'enable secret Class',
+            explanation: '`enable secret` est préférable à `enable password` car il utilise un hachage plus fort.'
+        },
+        {
+            id: 'm2_ex3',
+            title: 'Diagnostic Interface',
+            stars: 2,
+            description: 'Vérification de l\'état des ports.',
+            instruction: 'Quelle commande résumée permet de voir l\'état (up/down) et l\'IP de toutes les interfaces d\'un routeur ?',
+            hint: 'show ip int brief.',
+            correction: 'show ip interface brief',
+            explanation: 'Commande essentielle pour un diagnostic rapide en début de dépannage.'
+        },
+        {
+            id: 'm2_ex-gen',
+            title: 'Expert Cisco IOS (Générateur)',
+            stars: 5,
+            description: 'Générateur de scénarios de configuration et dépannage Cisco.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Un port est passé en mode "err-disabled". Comment le réactiver manuellement ?',
+                    hint: 'shutdown / no shutdown.',
+                    correction: 'shutdown\nno shutdown',
+                    explanation: 'La séquence d\'arrêt/démarrage réinitialise l\'état de l\'interface.'
+                },
+                {
+                    instruction: 'Scénario : Sauvegardez la configuration active vers la configuration de démarrage.',
+                    hint: 'copy running startup.',
+                    correction: 'copy running-config startup-config',
+                    explanation: 'La configuration est copiée de la RAM vers la NVRAM.'
+                },
+                {
+                    instruction: 'Scénario : Vous voulez créer le VLAN 10 nommé "Commercial". Quelles sont les commandes ?',
+                    hint: 'vlan 10, name Commercial.',
+                    correction: 'vlan 10\nname Commercial',
+                    explanation: 'La commande "name" est facultative mais fortement recommandée pour la documentation.'
+                }
+            ]
+        }
     ]
 };
+

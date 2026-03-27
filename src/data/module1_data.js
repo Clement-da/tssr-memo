@@ -146,5 +146,81 @@ export const module1 = {
             front: "Qu'est-ce que le surréseau (supernetting) et quand l'utilise-t-on ?",
             back: "Le surréseau regroupe plusieurs réseaux contigus sous un masque moins restrictif pour simplifier les tables de routage.\n\nExemple :\n192.168.0.0/24 + 192.168.1.0/24 → 192.168.0.0/23\n(510 hôtes, broadcast 192.168.1.255)\n\nUsage : FAI, backbone, grandes entreprises."
         }
+    ],
+
+    exercises: [
+        {
+            id: 'm1_ex1',
+            title: 'Configuration d\'IP Broadcast',
+            stars: 1,
+            description: 'Déterminer l\'adresse nécessaire pour contacter tous les hôtes d\'un segment.',
+            instruction: 'Scénario : Vous configurez une passerelle pour le réseau 192.168.10.0/24. Pour un test de monitoring, vous devez envoyer un paquet à "tout le monde" sur ce segment. Quelle adresse IP spécifique ciblez-vous ?',
+            hint: 'Le dernier octet d\'un masque CIDR /24 doit être mis à 1 (en binaire).',
+            correction: '192.168.10.255',
+            explanation: 'Dans un réseau /24, l\'adresse de broadcast (diffusion) est toujours le dernier octet à .255.'
+        },
+        {
+            id: 'm1_ex2',
+            title: 'Audit de Connectivité (ISO)',
+            stars: 2,
+            description: 'Utiliser la méthode descendante pour isoler une panne réseau.',
+            instruction: 'Scénario : Un technicien rapporte qu\'un poste n\'accède plus aux ressources Web. Un ping vers l\'adresse IP de la passerelle (192.168.1.1) répond parfaitement, mais le ping vers 8.8.8.8 échoue "Délai dépassé". À quelle couche du modèle OSI situez-vous l\'analyse du problème ?',
+            hint: 'Si la communication locale (ARP/MAC) est validée, cherchez le routage.',
+            correction: 'Couche 3 (Réseau)',
+            explanation: 'Le ping vers la passerelle valide les couches 1 (physique) et 2 (liaison). L\'échec vers l\'extérieur indique un problème de table de routage, de gateway ou de NAT IP, soit la couche 3.'
+        },
+        {
+            id: 'm1_ex-gen',
+            title: 'Générateur de Sous-Réseau',
+            stars: 4,
+            description: 'Générateur de scénarios de découpage IP (VLSM / Subnetting).',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Vous avez le réseau 192.168.1.0/24. Vous devez créer 2 sous-réseaux. Quel sera le nouveau masque en notation CIDR ?',
+                    hint: 'Pour 2 réseaux, il faut emprunter 1 bit (2¹ = 2).',
+                    correction: '/25',
+                    explanation: 'En empruntant 1 bit au masque d\'origine (/24), on obtient /25. Chaque sous-réseau dispose de 126 hôtes.'
+                },
+                {
+                    instruction: 'Scénario : Combien d\'hôtes utilisables peut-on adresser dans un réseau avec un masque /27 ?',
+                    hint: 'Calculez 2^(32-27) - 2.',
+                    correction: '30',
+                    explanation: '32 - 27 = 5 bits hôtes. 2⁵ = 32. On retire l\'adresse réseau et le broadcast, soit 30 hôtes.'
+                },
+                {
+                    instruction: 'Scénario : Quelle est l\'adresse réseau du poste 172.16.50.40 avec un masque /26 ?',
+                    hint: '/26 signifie que les sous-réseaux progressent de 64 en 64 (256 - 192).',
+                    correction: '172.16.50.0',
+                    explanation: 'Le premier sous-réseau commence à .0 et finit à .63. L\'IP .40 appartient donc au réseau .0.'
+                },
+                {
+                    instruction: 'Scénario : Quelle est l\'adresse de broadcast du réseau 10.0.0.128/25 ?',
+                    hint: 'Le /25 se termine à 128 + 127.',
+                    correction: '10.0.0.255',
+                    explanation: 'Un /25 divise le dernier octet en deux (0-127 et 128-255). Le broadcast du second segment est .255.'
+                },
+                {
+                    instruction: 'Scénario : Vous avez besoin de 50 hôtes dans un sous-réseau. Quel est le masque CIDR minimal ?',
+                    hint: '2^6 = 64 (et 2^5 = 32).',
+                    correction: '/26',
+                    explanation: 'Un masque /26 offre 2^(32-26)-2 = 62 adresses utilisables, ce qui couvre les 50 hôtes demandés.'
+                },
+                {
+                    instruction: 'Scénario : Quelle est la passerelle (Gateway) par défaut classique pour le réseau 192.168.1.0/24 ?',
+                    hint: 'C\'est généralement la première adresse utilisable.',
+                    correction: '192.168.1.1',
+                    explanation: 'Bien que non obligatoire, la convention veut que la première IP utilisable (ou la dernière) soit la passerelle.'
+                },
+                {
+                    instruction: 'Scénario : Un client Windows a l\'IP 169.254.10.20. Quel est son problème ?',
+                    hint: 'Automatic Private IP Addressing.',
+                    correction: 'Le serveur DHCP ne répond pas',
+                    explanation: 'La plage 169.254.0.0/16 (APIPA) est auto-attribuée par l\'OS quand le DHCP échoue.'
+                }
+            ]
+        }
     ]
 };
+
+

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
-import { appStore, updateLessonStatus } from '../store.js';
+import { appStore, updateLessonStatus, addXP } from '../store.js';
 import { MODULES } from '../data/modules_index.js';
 import SubnetCalculator from './SubnetCalculator.jsx';
 
@@ -12,9 +12,10 @@ export default function Lesson({ moduleId, title, showSubnetCalc, children }) {
     const handleComplete = () => {
         if (!state.lessons?.[moduleId]) {
             updateLessonStatus(moduleId, true);
+            addXP(20);
             setNotification({
                 type: 'success',
-                message: 'Excellent ! Leçon terminée. Passez au quiz pour tester vos connaissances.'
+                message: 'Excellent ! Leçon terminée (+20 XP). Passez au quiz pour tester vos connaissances.'
             });
         }
     };

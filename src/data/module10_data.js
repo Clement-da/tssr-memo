@@ -102,11 +102,7 @@ export const module10 = {
     {
       id: 'q12',
       question: 'En architecture DNS, à quoi sert le mécanisme d\' "allow-transfer" ?',
-<<<<<<< HEAD
-      options: ['À transférer la zone vers un serveur DNS secondaire pour créer de la redondance', 'À autoriser les transferts de fichiers FTP', 'À relayer les requêtes du réseau invité'],
-=======
       options: ['À transférer la zone vers un serveur DNS secondaire pour créer de la redondance', 'À autoriser les transferts de fichiers FTP', 'À rediriger le trafic HTTP', 'À relayer les requêtes du réseau invité'],
->>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
       correctIndex: 0,
       explanation: 'Le transfert de zone permet de cloner la base DNS du serveur primaire vers le serveur distant secondaire, pour la tolérance aux pannes.'
     }
@@ -114,55 +110,6 @@ export const module10 = {
   exercises: [
     {
       id: 'ex1',
-<<<<<<< HEAD
-      title: 'Configuration de l\'étendue DHCP',
-      stars: 1,
-      description: 'Définir une plage d\'adresses pour le VLAN Utilisateurs.',
-      instruction: 'Donnez la directive de configuration à ajouter dans /etc/dhcp/dhcpd.conf pour autoriser les baux de l\'IP 192.168.20.50 à 192.168.20.100.',
-      hint: 'Utilisez le mot-clé range.',
-      correction: 'range 192.168.20.50 192.168.20.100;',
-      explanation: 'La directive range définit les bornes (inférieure et supérieure) du pool d\'adressage dynamique géré par le démon isc-dhcp-server.'
-    },
-    {
-      id: 'ex2',
-      title: 'Mise en place du DHCP Relay',
-      stars: 2,
-      description: 'Permettre le passage du DHCP entre deux VLANs via un routeur Debian.',
-      instruction: 'Quel fichier de configuration Debian permet d\'indiquer les interfaces d\'écoute et l\'IP du serveur DHCP pour le service Relay ?',
-      hint: 'C\'est un fichier dans /etc/default/.',
-      correction: '/etc/default/isc-dhcp-relay',
-      explanation: 'Ce fichier contient les variables SERVERS (IP du serveur DHCP distant) et INTERFACES (cartes réseau concernées) indispensables au fonctionnement du relais.'
-    },
-    {
-      id: 'ex3',
-      title: 'Création d\'une zone Master DNS',
-      stars: 2,
-      description: 'Déclarer un nouveau domaine local dans BIND9.',
-      instruction: 'Écrivez le bloc de définition de zone pour "campus.lan" à insérer dans named.conf.local (type maître, fichier db.campus.lan).',
-      hint: 'Utilisez zone { type master; file "..."; };',
-      correction: 'zone "campus.lan" { type master; file "/var/cache/bind/db.campus.lan"; };',
-      explanation: 'Cette structure indique à BIND qu\'il est l\'autorité principale (master) pour ce domaine et pointe vers le fichier contenant les enregistrements.'
-    },
-    {
-      id: 'ex4',
-      title: 'Diagnostic de zone BIND',
-      stars: 2,
-      description: 'Valider la syntaxe d\'un fichier de zone complexe.',
-      instruction: 'Quelle commande permet de vérifier que le fichier "/etc/bind/db.demo.lan" pour la zone "demo.lan" n\'a pas d\'erreur de syntaxe ?',
-      hint: 'named-check...',
-      correction: 'named-checkzone demo.lan /etc/bind/db.demo.lan',
-      explanation: 'La commande named-checkzone analyse la structure du fichier (SOA, points finaux, numéros de série) et remonte les erreurs avant que le service DNS ne soit relancé ou ne plante.'
-    },
-    {
-      id: 'ex5',
-      title: 'Sécurisation SSH par Clés',
-      stars: 3,
-      description: 'Désactiver totalement l\'authentification par mot de passe.',
-      instruction: 'Quelle directive exacte dans /etc/ssh/sshd_config bloque les tentatives de connexion par mot de passe au profil des clés SSH ?',
-      hint: 'Le paramètre commence par Password...',
-      correction: 'PasswordAuthentication no',
-      explanation: 'En passant ce paramètre à no, le serveur SSH refusera toute saisie de mot de passe, même si celui-ci est correct, imposant ainsi l\'usage d\'une clé préalablement autorisée.'
-=======
       title: 'Plage DHCP Dynamique',
       stars: 1,
       description: 'Distribuer des adresses au VLAN Étudiants.',
@@ -210,7 +157,34 @@ export const module10 = {
       hint: 'C\'est le paramètre PasswordAuthentication.',
       correction: 'PasswordAuthentication no',
       explanation: 'En désactivant cette directive, le serveur SSH exigera obligatoirement une clé cryptographique valide pour autoriser la connexion.'
->>>>>>> 16497b1 (feat: synchronize local changes and documentation updates)
+    },
+    {
+      id: 'm10_ex-gen',
+      title: 'Expert Services Linux (Générateur)',
+      stars: 5,
+      description: 'Générateur de scénarios sur les services vitaux : SSH, DHCP, BIND9.',
+      isGenerator: true,
+      scenarios: [
+        {
+          instruction: 'Scénario : Un client Linux n\'obtient plus d\'IP via DHCP. Vous soupçonnez le serveur DHCP d\'être arrêté. Quelle commande permet de vérifier le statut du service `isc-dhcp-server` ?',
+          hint: 'Utilisez systemctl.',
+          correction: 'systemctl status isc-dhcp-server',
+          explanation: '`systemctl status` est la commande universelle pour interroger l\'état d\'un service sous Linux moderne (systemd).'
+        },
+        {
+          instruction: 'Scénario : Vous voulez tester si votre serveur DNS BIND9 répond bien localement pour le domaine `tssr.lan`. Quelle commande utilisez-vous ?',
+          hint: 'On utilise dig ou nslookup.',
+          correction: 'dig @localhost tssr.lan',
+          explanation: 'L\'utilisation de `@localhost` force dig à interroger le serveur DNS tournant sur la machine locale.'
+        },
+        {
+          instruction: 'Scénario : Un utilisateur ne peut pas se connecter en SSH alors que sa clé publique a été ajoutée. Les logs disent "Authentication refused: bad ownership or modes for directory /home/user/.ssh". Quel chmod appliquer au dossier .ssh ?',
+          hint: 'Le dossier .ssh doit être très sécurisé (rwx------).',
+          correction: 'chmod 700 /home/user/.ssh',
+          explanation: 'SSH refuse de fonctionner si le répertoire contenant les clés est accessible par d\'autres utilisateurs (droits trop permissifs).'
+        }
+      ]
     }
   ]
 };
+

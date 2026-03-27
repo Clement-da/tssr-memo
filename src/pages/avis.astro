@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FeedbackForm from '../components/FeedbackForm.jsx';
+---
+
+<Layout title="Donner votre avis - TSSR Memo">
+    <div class="feedback-page">
+        <header class="page-header">
+            <h1 class="page-heading">Donner votre avis</h1>
+            <p class="subtitle">Vos retours sont précieux pour améliorer la plateforme.</p>
+        </header>
+
+        <section class="feedback-intro">
+            <h2>Améliorer ensemble TSSR Memo</h2>
+            <p>
+                Ce site a été conçu pour t'aider dans tes révisions. Si tu as remarqué une erreur, si un concept n'est pas clair, ou si tu as une idée de fonctionnalité, n'hésite pas à le partager via le formulaire ci-dessous.
+            </p>
+            <p>
+                Chaque avis est lu attentivement et permet d'ajuster le contenu pour qu'il soit le plus utile possible à la communauté TSSR.
+            </p>
+        </section>
+
+        <div class="form-wrapper">
+            <FeedbackForm client:load />
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .feedback-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: var(--space-12) var(--space-4);
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    .page-header {
+        margin-bottom: var(--space-12);
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: var(--space-8);
+    }
+
+    .page-heading {
+        font-size: clamp(2rem, 6vw, 3.2rem);
+        font-weight: 700;
+        margin-bottom: var(--space-2);
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+    }
+
+    .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-family: 'Outfit', sans-serif;
+    }
+
+    section {
+        margin-bottom: var(--space-12);
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: var(--space-6);
+        color: var(--text-primary);
+        letter-spacing: -0.01em;
+        padding-left: var(--space-4);
+        border-left: 3px solid var(--accent-primary);
+        line-height: 1.2;
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-4);
+    }
+
+    .form-wrapper {
+        margin: var(--space-12) 0;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+        .feedback-page {
+            padding: var(--space-8) var(--space-4);
+        }
+        .page-heading {
+            font-size: 2.2rem;
+        }
+    }
+</style>

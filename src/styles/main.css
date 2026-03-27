@@ -12,6 +12,8 @@
     --accent-success: #22c55e; /* Green - derived from encapsulation arrows */
     --accent-danger: #ef4444; /* Red - from encapsulation arrows */
     --accent-warning: #facc15; /* Yellow - from encapsulation layers */
+    --bg-tertiary: #0f172a;
+    --border-color: rgba(255, 255, 255, 0.1);
 
     /* Typography */
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -107,4 +109,15 @@ p { margin-bottom: var(--space-4); }
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* Modal animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }

@@ -248,36 +248,36 @@ export const module9 = {
       correction: 'if [ -r /etc/shadow ]; then',
       explanation: 'Le flag -r vérifie les permissions réelles de lecture au moment de l\'exécution. Indispensable avant de tenter un parsurage de fichier sensible.'
     },
-    {
-      id: 'm9_ex3',
-      title: 'Logique de Boucle Foreach',
-      stars: 2,
-      description: 'Automatiser une action sur une liste de serveurs.',
-      instruction: 'Dans une boucle `for`, quelle variable automatique contient l\'élément de l\'itération en cours si j\'écris : `for serveur in srv1 srv2; do ... done` ?',
-      hint: 'Regardez le nom défini juste après le mot-clé for.',
-      correction: '$serveur',
-      explanation: 'La variable `serveur` prend successivement la valeur de chaque élément de la liste. On y accède avec le symbole $ à l\'intérieur du bloc do/done.'
-    },
-    {
-      id: 'm9_ex4',
-      title: 'Menu Interactif Case',
-      stars: 2,
-      description: 'Créer un menu de gestion de service simple.',
-      instruction: 'Quel symbole double permet de terminer une clause (une option) dans un bloc `case` ?',
-      hint: 'C\'est un double ponctuation.',
-      correction: ';;',
-      explanation: 'Le double point-virgule `;;` est impératif en Bash pour signaler la fin des instructions d\'un motif et sortir proprement du bloc case.'
-    },
-    {
-      id: 'm9_ex5',
-      title: 'Parsing de fichier (Expert)',
-      stars: 3,
-      description: 'Extraire les utilisateurs système du fichier passwd.',
-      instruction: 'Quelle variable d\'environnement interne faut-il modifier JUSTE AVANT un `read` pour découper une ligne selon le séparateur ":" ?',
-      hint: 'Internal Field Separator.',
-      correction: 'IFS=:',
-      explanation: 'En redéfinissant l\'IFS (Internal Field Separator), on force la commande read à ventiler les colonnes du fichier /etc/passwd dans différentes variables nommées.'
-    },
+        {
+            id: 'm9_ex3',
+            title: 'Boucle de Maintenance',
+            stars: 2,
+            description: 'Itérer sur une liste de serveurs.',
+            instruction: 'Scénario : Vous avez deux serveurs (srv1 et srv2). Écrivez la boucle `for` qui affiche "Vérification de [nom]" pour chaque serveur.',
+            hint: 'Utilisez `for srv in srv1 srv2; do ... done`.',
+            correction: 'for srv in srv1 srv2; do echo "Vérification de $srv"; done',
+            explanation: 'La boucle for permet d\'exécuter le même bloc d\'instructions pour chaque élément d\'une liste.'
+        },
+        {
+            id: 'm9_ex4',
+            title: 'Structure de Menu',
+            stars: 2,
+            description: 'Utiliser case pour un choix utilisateur.',
+            instruction: 'Scénario : Écrivez le bloc `case` qui teste la variable `$CHOIX`. Si c\'est "1", affichez "OUI". Si c\'est "2", affichez "NON". (N\'oubliez pas les fins de clauses).',
+            hint: 'N\'utilisez que les clauses 1) et 2) et les ;;.',
+            correction: 'case $CHOIX in 1) echo "OUI" ;; 2) echo "NON" ;; esac',
+            explanation: 'Le double point-virgule est le marqueur de fin de bloc dans une structure case.'
+        },
+        {
+            id: 'm9_ex5',
+            title: 'Extraction /etc/passwd',
+            stars: 3,
+            description: 'Lire un fichier avec un séparateur personnalisé.',
+            instruction: 'Scénario : Vous voulez lire une ligne et extraire le premier champ (LOGIN) d\'un fichier séparé par ":". Quelle commande de lecture avec IFS utilisez-vous ?',
+            hint: 'IFS=: read -r ...',
+            correction: 'IFS=: read -r LOGIN',
+            explanation: 'IFS redéfinit temporairement le séparateur de champ pour la commande read.'
+        },
     {
       id: 'm9_ex-gen',
       title: 'Entraînement Infini (Générateur Bash)',
@@ -314,6 +314,18 @@ export const module9 = {
           hint: 'Utilisez `read -p` pour la saisie, puis `case $choix in ... esac`. Terminez chaque sous-bloc par `;;`.',
           correction: 'read -p "Choix: " choix\ncase $choix in\n    1)\n        date\n        ;;\n    2)\n        df -h\n        ;;\n    q)\n        exit 0\n        ;;\n    *)\n        echo "Invalide"\n        ;;\nesac',
           explanation: 'La structure `case` est parfaite pour créer des menus shell textuels. Le motif `*)` agit comme solution de repli (défaut).'
+        },
+        {
+          instruction: 'Scénario : Écrivez un script qui liste tous les fichiers du dossier actuel et, pour chaque fichier, vérifie s\'il est exécutable (`-x`). Si oui, affichez "[X] nom", sinon "[ ] nom".',
+          hint: 'Utilisez `for f in *`, `if [ -x "$f" ]`, `echo`.',
+          correction: 'for f in *; do\n    if [ -x "$f" ]; then\n        echo "[X] $f"\n    else\n        echo "[ ] $f"\n    fi\ndone',
+          explanation: 'La boucle `for f in *` est le moyen le plus sûr de parcourir les fichiers sans se soucier des espaces (si on utilise les guillemets).'
+        },
+        {
+          instruction: 'Scénario : Créez une fonction `backup()` qui prend un nom de fichier en argument. Elle doit copier ce fichier vers `/tmp/backup/` en lui ajoutant le suffixe `.old`. Si le dossier `/tmp/backup/` n\'existe pas, créez-le d\'abord.',
+          hint: 'Vérifiez `[ ! -d /tmp/backup ]` puis `mkdir`. Utilisez `$1` pour le fichier.',
+          correction: 'backup() {\n    [ ! -d /tmp/backup ] && mkdir -p /tmp/backup\n    cp "$1" "/tmp/backup/$1.old"\n}',
+          explanation: 'L\'utilisation de && est une manière concise de faire un "if" sur une seule commande.'
         }
       ]
     }

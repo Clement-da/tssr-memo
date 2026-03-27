@@ -247,11 +247,38 @@ export const module12 = {
             id: 'ex-sr-5',
             title: "Incident Ransomware : Validation Immuable",
             stars: 3,
-            description: "Le serveur central a été frappé par le ransomware LockBit samedi soir. Dimanche, vous constatez que votre référentiel Veeam externe (qui montait un répertoire Windows partagé vers le lecteur z:\ du serveur de sauvegarde local) a également subi le cryptage car la machine avait les droits d'écriture sur Z:\.",
+            description: "Le serveur central a été frappé par le ransomware LockBit samedi soir. Dimanche, vous constatez que votre référentiel Veeam externe (qui montait un répertoire Windows partagé vers le lecteur z:\\ du serveur de sauvegarde local) a également subi le cryptage car la machine avait les droits d'écriture sur Z:\\.",
             instruction: "En tant qu'architecte SI pour reconstruire l'usine et son PRA, nommez techniquement la méthode ou l'isolation conceptuelle qu'il manqué dans la théorie du 3-2-1 pour empêcher ce drame.",
             hint: "L'erreur de base est de laisser le lecteur monté en permanence pour l'administrateur Windows.",
-            correction: "Il a manqué l'isolation dite logicielle (Stockage Cloud Immuable, WORM S3 Object Lock) ou physique Air-Gappée de ce fameux 1 site distant.",
-            explanation: "Si le serveur infecté possède des identifiants (ou pires, des tokens AD) qui montent le lecteur du backup BackupRepository au boot, le ransomware remontera le chemin et écrasera les VBK. La meilleure pratique exige des dépôts Linux Hardened Repository (immuables), ou d'envoyer la copie sur Amazon S3 object-lock où les droits IAM bloquent explicitement la suppression de l'archive (Write Once Read Many), ce que le Trojan ne peut pirater."
+            correction: 'Il a manqué l\'isolation dite logicielle (Stockage Cloud Immuable, WORM S3 Object Lock) ou physique Air-Gappée de ce fameux 1 site distant.',
+            explanation: 'Si le serveur infecté possède des identifiants (ou pires, des tokens AD) qui montent le lecteur du backup BackupRepository au boot, le ransomware remontera le chemin et écrasera les VBK. La meilleure pratique exige des dépôts Linux Hardened Repository (immuables), ou d\'envoyer la copie sur Amazon S3 object-lock où les droits IAM bloquent explicitement la suppression de l\'archive (Write Once Read Many), ce que le Trojan ne peut pirater.'
+        },
+        {
+            id: 'm12_ex-gen',
+            title: 'Expert Sauvegarde (Générateur)',
+            stars: 5,
+            description: 'Générateur de scénarios PRA/PCA, RAID et stratégies Backup.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Un serveur possède 4 disques de 1 To en RAID 5. Quelle est la capacité de stockage réellement utilisable ?',
+                    hint: 'La formule est (n-1) * taille.',
+                    correction: '3 To',
+                    explanation: 'En RAID 5, la valeur d\'un disque est utilisée pour la parité. On a donc 4-1 = 3 To utiles.'
+                },
+                {
+                    instruction: 'Scénario : Vous voulez mettre en place une sauvegarde qui prenne le moins de place possible chaque jour. Quel type choisissez-vous ?',
+                    hint: 'Seuls les changements depuis le dernier backup sont copiés.',
+                    correction: 'Sauvegarde incrémentale',
+                    explanation: 'L\'incrémentale ne copie que les deltas depuis la dernière sauvegarde, optimisant l\'espace disque.'
+                },
+                {
+                    instruction: 'Scénario : Un incendie ravage votre datacenter. Vos sauvegardes étaient sur une baie du même bâtiment. Quel principe de la règle 3-2-1 n\'a pas été respecté ?',
+                    hint: 'Il manque l\'externalisation.',
+                    correction: 'Le 1 (une copie hors site)',
+                    explanation: 'La règle 3-2-1 impose d\'avoir au moins une copie physiquement éloignée du site de production.'
+                }
+            ]
         }
     ]
 };

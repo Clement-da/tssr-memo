@@ -774,5 +774,62 @@ Exemple de services hébergés en DMZ :
             front: "Quelle est la politique de base pour créer les règles d'un pare-feu ?",
             back: "PRINCIPE DU MOINDRE PRIVILÈGE :\n→ Tout est REFUSÉ par défaut\n→ On autorise uniquement ce qui est NÉCESSAIRE\n\nDémarche avant de créer les règles :\n1. Analyser l'infrastructure (zones LAN/DMZ/WAN)\n2. Schématiser les flux entre zones\n3. Inventorier les services et ports\n4. Définir la politique (deny all par défaut)\n5. Documenter chaque règle (motif + date)\n\nPour tester :\n• ping, telnet <ip> <port>, curl http://...\n\nRègle implicite finale : DENY ALL\n→ Comme les ACL Cisco"
         }
+    ],
+
+    exercises: [
+        {
+            id: 'm3_ex1',
+            title: 'Analyse de Flux',
+            stars: 1,
+            description: 'Identifier un flux réseau.',
+            instruction: 'Un serveur web en DMZ (172.16.0.10) doit interroger un serveur LDAP interne (192.168.1.50). Quel port doit être ouvert sur le pare-feu interne ?',
+            hint: 'Le LDAP standard utilise le port 389.',
+            correction: 'TCP 389',
+            explanation: 'Le flux part de la DMZ vers le LAN sur le port TCP 389 (LDAP).'
+        },
+        {
+            id: 'm3_ex2',
+            title: 'Translation NAT',
+            stars: 2,
+            description: 'Choisir le bon type de NAT.',
+            instruction: 'On veut que tous les PCs du LAN (192.168.1.0/24) puissent naviguer sur le web en utilisant l\'unique adresse IP publique du routeur. Quel NAT configurer ?',
+            hint: 'On modifie la source des paquets sortants.',
+            correction: 'SNAT (ou Masquerade)',
+            explanation: 'Le Source NAT (SNAT) permet de masquer les adresses privées derrière une adresse publique.'
+        },
+        {
+            id: 'm3_ex-gen',
+            title: 'Expert Sécurité (Générateur)',
+            stars: 5,
+            description: 'Générateur de scénarios complexes : Firewall, VPN, Proxy.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Un utilisateur se plaint de ne pas pouvoir accéder à son VPN OpenVPN. Vous voyez dans les logs pfSense que le trafic arrivant sur le port UDP 1194 est "Blocked". Quelle action manque-t-il ?',
+                    hint: 'Vérifiez les règles de l\'interface WAN.',
+                    correction: 'Créer une règle Allow sur l\'interface WAN pour le port UDP 1194',
+                    explanation: 'Par défaut, pfSense bloque tout ce qui arrive sur le WAN. Il faut explicitement autoriser le port du service VPN.'
+                },
+                {
+                    instruction: 'Scénario : Vous devez isoler un serveur de base de données. Doit-il être placé en DMZ ou dans le LAN ?',
+                    hint: 'La DMZ est pour les services exposés à Internet.',
+                    correction: 'LAN (ou zone Database isolée)',
+                    explanation: 'Un serveur de base de données ne doit jamais être exposé directement. Il reste dans le LAN ou une zone privée, accessible uniquement par le serveur web (en DMZ).'
+                },
+                {
+                    instruction: 'Scénario : Quel enregistrement DNS permet de vérifier qu\'un serveur mail est autorisé à envoyer des messages pour un domaine ?',
+                    hint: 'C\'est un enregistrement de type TXT.',
+                    correction: 'SPF',
+                    explanation: 'L\'enregistrement SPF (Sender Policy Framework) liste les adresses IP autorisées à envoyer des mails pour le domaine.'
+                },
+                {
+                    instruction: 'Scénario : Un certificat SSL auto-signé provoque une erreur "Connexion non sécurisée" dans Chrome. Est-ce normal ?',
+                    hint: 'Pensez à la chaîne de confiance.',
+                    correction: 'Oui',
+                    explanation: 'Chrome ne fait pas confiance aux certificats auto-signés car ils ne sont pas validés par une autorité de certification (CA) reconnue.'
+                }
+            ]
+        }
     ]
 };
+

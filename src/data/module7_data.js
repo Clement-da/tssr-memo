@@ -1,5 +1,5 @@
 export const module7 = {
-  id: 'rds_wds_mdt',
+  id: 'rds-wds-mdt',
   title: 'RDS, WDS, MDT',
   description: 'Déploiement centralisé d\'OS, automatisation et virtualisation de bureaux Microsoft.',
   icon: '🖥️',
@@ -277,6 +277,34 @@ export const module7 = {
       hint: 'C\'est la porte sécurisée du réseau RDS pour ceux provenant du WAN.',
       correction: 'RDS Gateway (Service Passerelle Bureau à Distance)',
       explanation: 'Exposer nativement un RDP (3389) entraîne obligatoirement de graves alertes de compromissions (Ransomwares ou Bruteforce massif). Le rôle de RD Gateway tunnelise d\'une manière sûre l\'enveloppe RDP brute en une enveloppe HTTPS s\'accouplant avec un un certificat d\'autorité. Conséquences: seuls les possesseurs d\'une certification SSL accèdent à la trame RDP interne et cela permet à de passer tous les dispositifs de blocage firewall externes très contraignants limitant au strict standard Web.'
+    },
+    {
+      id: 'm7_ex-gen',
+      title: 'Expert Déploiement (Générateur)',
+      stars: 5,
+      description: 'Générateur de scénarios complexes sur WDS, MDT et RDS.',
+      isGenerator: true,
+      scenarios: [
+        {
+          instruction: 'Scénario : Un client PXE boot mais reçoit l\'erreur "PXE-E32: TFTP open timeout". Le serveur WDS est pourtant bien démarré.',
+          hint: 'Le TFTP utilise le port UDP 69.',
+          correction: 'Vérifier l\'ouverture du port UDP 69 sur le firewall ou le service TFTP du WDS',
+          explanation: 'L\'erreur TFTP timeout indique que le client ne parvient pas à télécharger le fichier d\'amorçage (wdsnbp.com).'
+        },
+        {
+          instruction: 'Scénario : Vous voulez que MDT installe Chrome automatiquement sur tous les nouveaux postes. Comment s\'appelle l\'outil où vous importez l\'exécutable et configurez la ligne de commande silencieuse ?',
+          hint: 'C\'est dans Deployment Workbench.',
+          correction: 'Applications',
+          explanation: 'Dans le Deployment Workbench, on ajoute des packages dans la section "Applications" avec des commandes du type `setup.exe /silent`.'
+        },
+        {
+          instruction: 'Scénario : Un utilisateur RDS se plaint que sa session est "gelée". Vous voulez forcer la fermeture de sa session sur le serveur pour qu\'il puisse se reconnecter proprement. Quel outil utilisez-vous ?',
+          hint: 'Gestionnaire de tâches ou Gestionnaire de serveur.',
+          correction: 'Gestionnaire de services de bureau à distance (ou Task Manager > Users)',
+          explanation: 'On peut déconnecter ou fermer la session (Log off) d\'un utilisateur spécifique depuis l\'onglet Utilisateurs du gestionnaire de tâches sur le serveur.'
+        }
+      ]
     }
   ]
 };
+

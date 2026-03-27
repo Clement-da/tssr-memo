@@ -486,7 +486,60 @@ Enter-PSSession -ComputerName SRV1                                # Session inte
             hint: 'Utilisez une propriété calculée dans Select-Object : @{Name="MB"; Expression={[math]::Round($_.WorkingSet / 1MB, 2)}}',
             correction: 'Get-Process | Where-Object { $_.WorkingSet -gt 200MB } | Select-Object Name, Id, @{Name="MemoryMB"; Expression={[math]::Round($_.WorkingSet / 1MB, 2)}} | Export-Csv -Path "$HOME\\Desktop\\ProcessAudit.csv" -NoTypeInformation',
             explanation: 'Les propriétés calculées permettent de transformer les données (octets -> Mo) avant l\'exportation finale.'
+        },
+        {
+            id: 'ex-gen-ps',
+            title: 'Entraînement Infini (Générateur PowerShell)',
+            stars: 5,
+            description: 'Un générateur qui crée à la volée des scénarios de scripting PowerShell avancés.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Créez un script qui prend un paramètre `$Dossier`. Si le dossier n\'existe pas, créez-le sans afficher de sortie. Ensuite, copiez-y tous les fichiers `.log` depuis `C:\\App\\Logs` en ignorant silencieusement les erreurs.',
+                    hint: 'Utilisez param(), Test-Path, New-Item avec Out-Null, et Copy-Item avec -ErrorAction SilentlyContinue.',
+                    correction: 'param($Dossier)\nif (-not (Test-Path $Dossier)) {\n    New-Item -ItemType Directory -Path $Dossier | Out-Null\n}\nCopy-Item -Path "C:\\App\\Logs\\*.log" -Destination $Dossier -ErrorAction SilentlyContinue',
+                    explanation: 'Un script typique d\'administration : utilisation d\'un paramètre, structure conditionnelle IF pour vérifier l\'état du système, et ErrorAction pour une exécution propre sans polluer la console.'
+                },
+                {
+                    instruction: 'Scénario : Écrivez un script qui identifie tous les services arrêtés et regroupe leurs noms. Retournez ensuite un objet personnalisé (PSCustomObject) contenant la propriété `TotalArretes` (le nombre) et `Noms` (la liste des noms).',
+                    hint: 'Filtrez Get-Service sur Status, bouclez pour extraire les noms, et créez un [PSCustomObject].',
+                    correction: '$stopped = Get-Service | Where-Object Status -eq \'Stopped\'\n$noms = foreach ($s in $stopped) { $s.Name }\n[PSCustomObject]@{\n    TotalArretes = $stopped.Count\n    Noms = $noms\n}',
+                    explanation: 'La boucle Foreach extrait une propriété spécifique (nom). Le PSCustomObject structure les résultats proprement, une pratique essentielle en automatisation.'
+                },
+                {
+                    instruction: 'Scénario : Construisez une boucle qui vérifie l\'état du service "Spooler". Tant qu\'il n\'est pas "Running", attendez 5 secondes puis tentez de le démarrer (en ignorant les erreurs).',
+                    hint: 'Utilisez une boucle while avec (Get-Service).Status -ne \'Running\', Start-Sleep -Seconds, et Start-Service.',
+                    correction: 'while ((Get-Service -Name Spooler).Status -ne \'Running\') {\n    Start-Sleep -Seconds 5\n    Start-Service -Name Spooler -ErrorAction SilentlyContinue\n}',
+                    explanation: 'La boucle while évalue la condition dynamiquement à chaque itération. Start-Sleep est crucial pour ne pas surcharger le processeur le temps que le service démarre.'
+                },
+                {
+                    instruction: 'Scénario : Considérez un fichier `C:\\users.csv` avec une colonne `Login`. Écrivez le script qui importe ce fichier et crée chaque compte localement sans mot de passe, en affichant "Création de [Login]" pour chacun.',
+                    hint: 'Utilisez Import-Csv, une boucle foreach, Write-Host et la cmdlet New-LocalUser avec -NoPassword.',
+                    correction: '$csv = Import-Csv -Path "C:\\users.csv"\nforeach ($user in $csv) {\n    Write-Host "Création de $($user.Login)"\n    New-LocalUser -Name $user.Login -NoPassword\n}',
+                    explanation: 'L\'importation de CSV automatise le traitement en lot. Les valeurs du fichier (login) deviennent des propriétés de l\'objet PowerShell directement utilisables dans la boucle.'
+                },
+                {
+                    instruction: 'Scénario : Écrivez un bloc try/catch/finally. Tentez de forcer la suppression récursive de `C:\\OldData` avec une erreur rendue bloquante. En cas d\'échec, affichez un message jaune avertissant que "Le dossier est introuvable ou verrouillé". Quel que soit le résultat, affichez "Opération terminée".',
+                    hint: 'Utilisez try/catch/finally, Remove-Item avec -Recurse -Force -ErrorAction Stop, et Write-Host avec -ForegroundColor.',
+                    correction: 'try {\n    Remove-Item -Path "C:\\OldData" -Recurse -Force -ErrorAction Stop\n}\ncatch {\n    Write-Host "Le dossier est introuvable ou verrouillé" -ForegroundColor Yellow\n}\nfinally {\n    Write-Host "Opération terminée"\n}',
+                    explanation: 'En PowerShell, `-ErrorAction Stop` est indispensable pour qu\'une erreur non critique déclenche l\'entrée dans le bloc `catch`. Le bloc `finally` s\'exécute systématiquement pour le nettoyage.'
+                },
+                {
+                    instruction: 'Scénario : Créez une fonction `Test-Port` qui prend `$IP` et `$Port` en paramètres. Elle doit retourner `$true` si le port est ouvert, sinon `$false`. Cachez l\'affichage d\'erreur.',
+                    hint: 'Utilisez `Test-NetConnection -ComputerName $IP -Port $Port -InformationLevel Quiet`.',
+                    correction: 'function Test-Port($IP, $Port) {\n    return Test-NetConnection -ComputerName $IP -Port $Port -InformationLevel Quiet\n}',
+                    explanation: 'L\'option -InformationLevel Quiet transforme la sortie complexe de TNC en un simple booléen (True/False).'
+                },
+                {
+                    instruction: 'Scénario : Parcourez tous les fichiers `.docx` de `C:\\Docs`. Pour chaque fichier, si sa taille dépasse 10 Mo, déplacez-le vers `C:\\Archives`. Affichez le nom du fichier déplacé.',
+                    hint: 'Utilisez `Get-ChildItem -Filter *.docx`, `Where-Object { $_.Length -gt 10MB }`, et `Move-Item`.',
+                    correction: 'Get-ChildItem -Path C:\\Docs -Filter *.docx | Where-Object { $_.Length -gt 10MB } | ForEach-Object {\n    Write-Host "Déplacement de $($_.Name)"\n    Move-Item -Path $_.FullName -Destination "C:\\Archives"\n}',
+                    explanation: 'L\'utilisation de $($_.Name) dans une chaîne de caractères permet d\'accéder à la propriété d\'un objet lors d\'une interpolation.'
+                }
+            ]
         }
     ]
 };
+
+
 

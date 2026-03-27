@@ -5,7 +5,7 @@
  */
 
 export const module4 = {
-    id: 'systemes_microsoft',
+    id: 'systemes-microsoft',
     title: 'Systèmes Clients Microsoft',
     icon: '💻',
     quiz: [
@@ -187,6 +187,34 @@ export const module4 = {
             hint: 'L\'acronyme est NLA.',
             correction: 'NLA (Network Level Authentication)',
             explanation: 'Le NLA protège le serveur distant en exigeant une preuve d\'identité réseau avant de consommer des ressources graphiques pour la session.'
+        },
+        {
+            id: 'm4_ex-gen',
+            title: 'Expert Windows (Générateur)',
+            stars: 5,
+            description: 'Générateur de scénarios de support et administration Windows.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Un utilisateur ne peut plus imprimer. Vous voulez vider la file d\'attente. Quelle est la commande pour ARRETER le service spouleur ?',
+                    hint: 'net stop nom_du_service.',
+                    correction: 'net stop spooler',
+                    explanation: 'L\'arrêt du service est la première étape pour vider le dossier C:\\Windows\\System32\\spool\\PRINTERS.'
+                },
+                {
+                    instruction: 'Scénario : Vous voulez voir la liste de tous les pilotes installés sur la machine Windows. Quelle commande CMD utilisez-vous ?',
+                    hint: 'C\'est une commande qui liste les drivers.',
+                    correction: 'driverquery',
+                    explanation: '`driverquery` fournit un tableau récapitulatif de tous les pilotes de périphériques chargés.'
+                },
+                {
+                    instruction: 'Scénario : Un fichier est verrouillé sur le disque C:. Vous voulez forcer la vérification du système de fichiers au prochain redémarrage. Quelle commande ?',
+                    hint: 'C\'est la commande Check Disk.',
+                    correction: 'chkdsk c: /f',
+                    explanation: 'L\'option /f (fix) demande à Windows de réparer les erreurs sur le disque spécifié.'
+                }
+            ]
         }
     ]
 };
+

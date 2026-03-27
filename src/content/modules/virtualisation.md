@@ -47,20 +47,20 @@ icon: "🖥️"
 <section id="definition-content">
 <h2 id="definition">1. Définition et concepts fondamentaux</h2>
 
-<p>La virtualisation est une technique qui permet de faire fonctionner plusieurs environnements indépendants — appelés <strong>machines virtuelles (VM)</strong> — sur un même matériel physique. Elle repose sur un logiciel appelé <strong>hyperviseur</strong>, qui découpe les ressources physiques (CPU, RAM, stockage, réseau), les attribue aux différentes VM et isole chaque VM des autres.</p>
+<p>La virtualisation est une technique qui permet de faire fonctionner plusieurs environnements indépendants — appelés machines virtuelles (VM) — sur un même matériel physique. Elle repose sur un logiciel appelé hyperviseur, qui découpe les ressources physiques (CPU, RAM, stockage, réseau), les attribue aux différentes VM et isole chaque VM des autres.</p>
 
-<p><strong>Objectif : mutualiser le matériel, optimiser son utilisation et simplifier la gestion des systèmes.</strong></p>
+<p>Objectif : mutualiser le matériel, optimiser son utilisation et simplifier la gestion des systèmes.</p>
 
-> **Exemple :** un serveur avec 64 Go de RAM peut héberger 4 VM de 16 Go chacune, chacune avec un OS différent (Windows, Linux) et un rôle différent (serveur web, base de données, messagerie).
+> Exemple : un serveur avec 64 Go de RAM peut héberger 4 VM de 16 Go chacune, chacune avec un OS différent (Windows, Linux) et un rôle différent (serveur web, base de données, messagerie).
 
-<p><strong>Cas d'usage principaux :</strong></p>
+<p>Cas d'usage principaux :</p>
 
 - Serveurs d'infrastructure (locaux ou cloud)
 - Environnements de test et de compatibilité
 - Plan de Reprise d'Activité (PRA)
 - Formation et labos
 
-<hr />
+
 
 <h3 id="histo">Repères historiques</h3>
 
@@ -73,7 +73,7 @@ icon: "🖥️"
 | 2007 | Xen rejoint Citrix, KVM intégré au noyau Linux |
 | 2009 | Le nombre de serveurs virtuels dépasse celui des serveurs physiques |
 
-<hr />
+
 
 <h3 id="avantages">Avantages et inconvénients</h3>
 
@@ -84,9 +84,9 @@ icon: "🖥️"
 | Flexibilité : snapshots, déploiement rapide, migration | Administration plus complexe (sauvegardes, réseau, PRA) |
 | Green IT : moins de serveurs physiques, moins d'énergie | — |
 
-> **Exemple :** 10 serveurs physiques remplacés par 2 hôtes + SAN. Résultat : espace réduit, coûts réduits, meilleure disponibilité.
+> Exemple : 10 serveurs physiques remplacés par 2 hôtes + SAN. Résultat : espace réduit, coûts réduits, meilleure disponibilité.
 
-<hr />
+
 
 <h3>Domaines de virtualisation</h3>
 
@@ -108,27 +108,27 @@ icon: "🖥️"
 
 <h3 id="type1">Type 1 — Bare Metal</h3>
 
-<p>Installé <strong>directement sur le matériel</strong>, sans OS intermédiaire. C'est la solution de référence pour la production.</p>
+<p>Installé directement sur le matériel, sans OS intermédiaire. C'est la solution de référence pour la production.</p>
 
-- **Exemples :** ESXi, Hyper-V, Xen, KVM
-- **Usage :** datacenters, serveurs de production
+- Exemples : ESXi, Hyper-V, Xen, KVM
+- Usage : datacenters, serveurs de production
 
 <h3 id="type2">Type 2 — Hosted</h3>
 
-<p>Installé <strong>sur un système d'exploitation existant</strong> (Windows, Linux). Moins performant qu'un Type 1, mais simple à déployer.</p>
+<p>Installé sur un système d'exploitation existant (Windows, Linux). Moins performant qu'un Type 1, mais simple à déployer.</p>
 
-- **Exemples :** VMware Workstation, VirtualBox
-- **Usage :** tests, labos, formation
+- Exemples : VMware Workstation, VirtualBox
+- Usage : tests, labos, formation
 
-> **Règle simple :** test rapide ou labo → VirtualBox. ERP d'entreprise en production → VMware ESXi.
+> Règle simple : test rapide ou labo → VirtualBox. ERP d'entreprise en production → VMware ESXi.
 
-<hr />
+
 
 <h3>Virtualisation classique vs paravirtualisation</h3>
 
-<p><strong>Virtualisation classique :</strong> la VM ignore qu'elle tourne sur un hyperviseur. Elle s'adresse aux périphériques virtuels présentés par l'hyperviseur comme s'ils étaient réels.</p>
+<p>Virtualisation classique : la VM ignore qu'elle tourne sur un hyperviseur. Elle s'adresse aux périphériques virtuels présentés par l'hyperviseur comme s'ils étaient réels.</p>
 
-<p><strong>Paravirtualisation :</strong> la VM est modifiée pour communiquer directement avec l'hyperviseur via une interface optimisée. Résultat : meilleures performances, moins d'overhead.</p>
+<p>Paravirtualisation : la VM est modifiée pour communiquer directement avec l'hyperviseur via une interface optimisée. Résultat : meilleures performances, moins d'overhead.</p>
 
 </section>
 
@@ -140,22 +140,22 @@ icon: "🖥️"
 
 | Acteur | Solution | Description |
 | :--- | :--- | :--- |
-| VMware | **ESXi** | Hyperviseur Type 1 (bare metal), base de toute infrastructure vSphere |
-| VMware | **vCenter** | Console centrale de gestion multi-ESXi : clusters, HA, DRS, vMotion |
-| VMware | **vSphere** | Suite complète (ESXi + vCenter + outils) |
-| Microsoft | **Hyper-V** | Hyperviseur Type 1 intégré à Windows Server, référence en environnement Microsoft |
-| Citrix | **XenServer** | Basé sur Xen, spécialisé dans le VDI (bureaux virtuels) |
-| Red Hat | **KVM** | Hyperviseur open source intégré au noyau Linux, massivement utilisé dans le cloud (AWS, OpenStack, GCP) |
-| — | **Proxmox VE** | Basé sur KVM + LXC, interface web complète, alternative libre à vSphere |
-| — | **QEMU** | Émulateur + hyperviseur open source, souvent couplé à KVM pour l'accélération matérielle |
+| VMware | ESXi | Hyperviseur Type 1 (bare metal), base de toute infrastructure vSphere |
+| VMware | vCenter | Console centrale de gestion multi-ESXi : clusters, HA, DRS, vMotion |
+| VMware | vSphere | Suite complète (ESXi + vCenter + outils) |
+| Microsoft | Hyper-V | Hyperviseur Type 1 intégré à Windows Server, référence en environnement Microsoft |
+| Citrix | XenServer | Basé sur Xen, spécialisé dans le VDI (bureaux virtuels) |
+| Red Hat | KVM | Hyperviseur open source intégré au noyau Linux, massivement utilisé dans le cloud (AWS, OpenStack, GCP) |
+| — | Proxmox VE | Basé sur KVM + LXC, interface web complète, alternative libre à vSphere |
+| — | QEMU | Émulateur + hyperviseur open source, souvent couplé à KVM pour l'accélération matérielle |
 
 <h3>Virtualisation de poste de travail</h3>
 
 | Acteur | Solution | Description |
 | :--- | :--- | :--- |
-| VMware | **Workstation** | Hyperviseur Type 2, Windows/Linux, idéal tests et labos |
-| Oracle | **VirtualBox** | Hyperviseur Type 2, gratuit et open source, polyvalent |
-| Microsoft | **Hyper-V (Windows 10/11 Pro)** | Version client de Hyper-V, fonctionnalités limitées par rapport à la version serveur |
+| VMware | Workstation | Hyperviseur Type 2, Windows/Linux, idéal tests et labos |
+| Oracle | VirtualBox | Hyperviseur Type 2, gratuit et open source, polyvalent |
+| Microsoft | Hyper-V (Windows 10/11 Pro) | Version client de Hyper-V, fonctionnalités limitées par rapport à la version serveur |
 
 </section>
 
@@ -165,26 +165,26 @@ icon: "🖥️"
 
 <p>VMware Workstation est un hyperviseur de Type 2 installé sur un OS hôte (Windows ou Linux). Chaque VM peut avoir son propre système d'exploitation, ses propres ressources et son propre réseau.</p>
 
-<p><strong>Usage typique :</strong> tests, labos, développement, formation.</p>
+<p>Usage typique : tests, labos, développement, formation.</p>
 
 <h3>Fonctionnalités clés</h3>
 
 | Fonctionnalité | Description |
 | :--- | :--- |
-| **Snapshots** | Sauvegarder l'état d'une VM à un instant T pour y revenir en cas de problème |
-| **Clone** | Copier rapidement une VM existante |
-| **Réseaux virtuels** | Bridge, NAT, Host-Only |
-| **Dossiers partagés** | Échange de fichiers entre l'hôte et la VM |
-| **Accélération graphique** | Support 3D pour tests applicatifs |
-| **Intégration vSphere** | Peut piloter certaines VM sur ESXi distant |
+| Snapshots | Sauvegarder l'état d'une VM à un instant T pour y revenir en cas de problème |
+| Clone | Copier rapidement une VM existante |
+| Réseaux virtuels | Bridge, NAT, Host-Only |
+| Dossiers partagés | Échange de fichiers entre l'hôte et la VM |
+| Accélération graphique | Support 3D pour tests applicatifs |
+| Intégration vSphere | Peut piloter certaines VM sur ESXi distant |
 
 <h3>Types de réseau dans Workstation</h3>
 
 | Mode | Comportement |
 | :--- | :--- |
-| **Bridge (pont)** | La VM apparaît comme une machine physique à part entière sur le réseau de l'hôte (elle obtient sa propre IP) |
-| **NAT** | La VM partage l'IP de l'hôte pour accéder au réseau. L'extérieur ne voit que l'hôte |
-| **Host-Only** | La VM communique uniquement avec l'hôte et les autres VM en mode host-only — aucun accès au réseau externe |
+| Bridge (pont) | La VM apparaît comme une machine physique à part entière sur le réseau de l'hôte (elle obtient sa propre IP) |
+| NAT | La VM partage l'IP de l'hôte pour accéder au réseau. L'extérieur ne voit que l'hôte |
+| Host-Only | La VM communique uniquement avec l'hôte et les autres VM en mode host-only — aucun accès au réseau externe |
 
 <h3>Avantages / Inconvénients</h3>
 
@@ -205,18 +205,18 @@ icon: "🖥️"
 
 | Type | Caractéristiques | Avantages | Inconvénients |
 | :--- | :--- | :--- | :--- |
-| **Tour** | Format classique, au sol | Faible coût, simple à mettre en place | Faible densité, câblage moins propre |
-| **Rack (1U/2U...)** | S'intègre en baie 19" (jusqu'à ~42U par armoire) | Standard datacenter, câblage propre | Nécessite baie, PDU, réseau structuré |
-| **Lame (Blade)** | Très forte densité dans un châssis partagé | Mutualise alimentation et refroidissement, densité maximale | Châssis coûteux, forte concentration thermique |
+| Tour | Format classique, au sol | Faible coût, simple à mettre en place | Faible densité, câblage moins propre |
+| Rack (1U/2U...) | S'intègre en baie 19" (jusqu'à ~42U par armoire) | Standard datacenter, câblage propre | Nécessite baie, PDU, réseau structuré |
+| Lame (Blade) | Très forte densité dans un châssis partagé | Mutualise alimentation et refroidissement, densité maximale | Châssis coûteux, forte concentration thermique |
 
 <h3>Prérequis CPU pour la virtualisation</h3>
 
 | Fonctionnalité | Intel | AMD | Rôle |
 | :--- | :--- | :--- | :--- |
-| **Virtualisation matérielle** | VT-x | AMD-V | Permet l'exécution d'OS invités — prérequis absolu |
-| **SLAT** (Second Level Address Translation) | EPT | NPT / RVI | Tables de pages matérielles pour les VM — réduit l'overhead mémoire et améliore les performances |
+| Virtualisation matérielle | VT-x | AMD-V | Permet l'exécution d'OS invités — prérequis absolu |
+| SLAT (Second Level Address Translation) | EPT | NPT / RVI | Tables de pages matérielles pour les VM — réduit l'overhead mémoire et améliore les performances |
 
-> **IMPORTANT :** Ces options doivent être activées dans le BIOS/UEFI avant d'installer un hyperviseur.
+> IMPORTANT : Ces options doivent être activées dans le BIOS/UEFI avant d'installer un hyperviseur.
 
 </section>
 
@@ -236,19 +236,19 @@ icon: "🖥️"
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>vSphere</strong></td>
+                    <td>vSphere</td>
                     <td>Nom de la suite complète de virtualisation VMware (ESXi + vCenter + outils)</td>
                 </tr>
                 <tr>
-                    <td><strong>ESXi</strong></td>
+                    <td>ESXi</td>
                     <td>Hyperviseur Type 1 installé sur les serveurs physiques — exécute les VM</td>
                 </tr>
                 <tr>
-                    <td><strong>vCenter</strong></td>
+                    <td>vCenter</td>
                     <td>Console centrale d'administration de plusieurs ESXi (datacenters, clusters, HA, DRS, vMotion)</td>
                 </tr>
                 <tr>
-                    <td><strong>Client vSphere / Web Client</strong></td>
+                    <td>Client vSphere / Web Client</td>
                     <td>Interface d'administration — se connecte à un ESXi seul ou à un vCenter</td>
                 </tr>
             </tbody>
@@ -263,38 +263,38 @@ icon: "🖥️"
 
 | Fonction | Rôle | Prérequis |
 | :--- | :--- | :--- |
-| **vMotion** | Migration à chaud d'une VM d'un ESXi à un autre, sans interruption | Stockage partagé entre les hôtes, CPU compatibles, licence vCenter |
-| **Storage vMotion** | Déplacement à chaud du stockage d'une VM vers un autre datastore | VM en fonctionnement, licence vCenter |
-| **DRS** | Répartition automatique des VM selon la charge des hôtes (utilise vMotion) | Cluster vCenter configuré |
-| **Storage DRS** | Répartition automatique du stockage entre datastores d'un même cluster | Datastores regroupés en datastore cluster |
-| **HA (High Availability)** | Redémarre automatiquement les VM sur un autre hôte en cas de panne | Stockage partagé, cluster configuré, politique de failover définie |
-| **FT (Fault Tolerance)** | VM "miroir" sur un second hôte — zéro interruption en cas de panne | Très gourmand en réseau et CPU, réservé aux VM ultra-critiques |
-| **DPM** | Met en veille ou réveille des hôtes selon la charge globale | Pour réduire la consommation en heures creuses |
+| vMotion | Migration à chaud d'une VM d'un ESXi à un autre, sans interruption | Stockage partagé entre les hôtes, CPU compatibles, licence vCenter |
+| Storage vMotion | Déplacement à chaud du stockage d'une VM vers un autre datastore | VM en fonctionnement, licence vCenter |
+| DRS | Répartition automatique des VM selon la charge des hôtes (utilise vMotion) | Cluster vCenter configuré |
+| Storage DRS | Répartition automatique du stockage entre datastores d'un même cluster | Datastores regroupés en datastore cluster |
+| HA (High Availability) | Redémarre automatiquement les VM sur un autre hôte en cas de panne | Stockage partagé, cluster configuré, politique de failover définie |
+| FT (Fault Tolerance) | VM "miroir" sur un second hôte — zéro interruption en cas de panne | Très gourmand en réseau et CPU, réservé aux VM ultra-critiques |
+| DPM | Met en veille ou réveille des hôtes selon la charge globale | Pour réduire la consommation en heures creuses |
 
-> **NOTE :** vMotion et Storage vMotion sont les fondations : sans eux, DRS et Storage DRS n'ont pas de mécanisme pour déplacer les VM.
+> NOTE : vMotion et Storage vMotion sont les fondations : sans eux, DRS et Storage DRS n'ont pas de mécanisme pour déplacer les VM.
 
 <h3 id="licences">Licences vSphere</h3>
 
 | Option | Pour qui | Ce que ça apporte |
 | :--- | :--- | :--- |
-| **ESXi gratuit** | Labo, très petite structure | Hyperviseur fonctionnel, mais pas de vCenter ni vMotion ni HA — gestion manuelle uniquement |
-| **vSphere Essentials** | Petites entreprises | Jusqu'à 3 hôtes + vCenter Foundation (admin centralisée) |
-| **vSphere Essentials Plus** | PME voulant de la disponibilité | Ajoute HA et vMotion — vraie continuité de service |
-| **vSphere Standard / Enterprise Plus / Platinum** | Environnements exigeants | Fonctions avancées complètes (DRS, Storage DRS, FT...) selon édition |
+| ESXi gratuit | Labo, très petite structure | Hyperviseur fonctionnel, mais pas de vCenter ni vMotion ni HA — gestion manuelle uniquement |
+| vSphere Essentials | Petites entreprises | Jusqu'à 3 hôtes + vCenter Foundation (admin centralisée) |
+| vSphere Essentials Plus | PME voulant de la disponibilité | Ajoute HA et vMotion — vraie continuité de service |
+| vSphere Standard / Enterprise Plus / Platinum | Environnements exigeants | Fonctions avancées complètes (DRS, Storage DRS, FT...) selon édition |
 
 <h3>vCenter Server vs vCSA</h3>
 
-| Caractéristique | **vCSA** (Appliance) | **vCenter Server** (Windows) |
+| Caractéristique | vCSA (Appliance) | vCenter Server (Windows) |
 | :--- | :--- | :--- |
-| **Déploiement** | VM Linux préconfigurée par VMware, prête à l'emploi | Installation sur Windows Server 64 bits |
-| **Capacité** | Jusqu'à 5 ESXi / 50 VM (version d'entrée) | Jusqu'à 1000 ESXi / 10 000 VM |
-| **Avantages** | Déploiement rapide, simple à maintenir | Capacité de gestion massive |
-| **Inconvénients** | Prise en charge limitée | Plus complexe, coûteux à maintenir |
+| Déploiement | VM Linux préconfigurée par VMware, prête à l'emploi | Installation sur Windows Server 64 bits |
+| Capacité | Jusqu'à 5 ESXi / 50 VM (version d'entrée) | Jusqu'à 1000 ESXi / 10 000 VM |
+| Avantages | Déploiement rapide, simple à maintenir | Capacité de gestion massive |
+| Inconvénients | Prise en charge limitée | Plus complexe, coûteux à maintenir |
 
-<p><strong>Ports d'accès :</strong></p>
+<p>Ports d'accès :</p>
 
-- vCSA : port **5480** (interface d'administration de l'appliance)
-- vSphere Web Client : ports **443** et **9443**
+- vCSA : port 5480 (interface d'administration de l'appliance)
+- vSphere Web Client : ports 443 et 9443
 
 </section>
 
@@ -302,16 +302,16 @@ icon: "🖥️"
 <section id="reseau-content">
 <h2 id="reseau">7. Gestion des réseaux dans vSphere</h2>
 
-<p>Un <strong>VLAN (Virtual LAN)</strong> segmente un réseau physique en domaines logiques isolés. Les machines de VLANs différents ne peuvent pas communiquer sans routage.</p>
+<p>Un VLAN (Virtual LAN) segmente un réseau physique en domaines logiques isolés. Les machines de VLANs différents ne peuvent pas communiquer sans routage.</p>
 
-<p><strong>Intérêts des VLANs :</strong></p>
+<p>Intérêts des VLANs :</p>
 
 - Sécurité par isolation logique
 - Réduction du trafic broadcast
 - Priorisation des flux (QoS 802.1p)
 - Propagation cohérente sur plusieurs switches via les ports trunk
 
-<p><strong>Niveaux d'affectation VLAN :</strong></p>
+<p>Niveaux d'affectation VLAN :</p>
 
 | Niveau | Critère d'affectation | Usage |
 | :--- | :--- | :--- |
@@ -319,7 +319,7 @@ icon: "🖥️"
 | Niveau 2 | Adresse MAC de l'équipement | Moins courant |
 | Niveau 3 | Adresse IP de l'équipement | Rare |
 
-<p><strong>Tag 802.1Q</strong> — 4 octets ajoutés au header Ethernet pour identifier le VLAN :</p>
+<p>Tag 802.1Q — 4 octets ajoutés au header Ethernet pour identifier le VLAN :</p>
 
 | Champ | Taille | Valeur / Rôle |
 | :--- | :--- | :--- |
@@ -328,7 +328,7 @@ icon: "🖥️"
 | CFI/DEI | 1 bit | Compatibilité et marquage de rejet |
 | VLAN ID | 12 bits | Identifiant du VLAN (1 à 4094) |
 
-<hr />
+
 
 <h3>Switchs virtuels VMware</h3>
 
@@ -336,19 +336,19 @@ icon: "🖥️"
 
 | Terme | Définition |
 | :--- | :--- |
-| **vNIC** | Carte réseau virtuelle d'une VM |
-| **VMkernel (vmkX)** | Interface réseau de l'hôte ESXi lui-même (management, vMotion, iSCSI, FT...) |
-| **pNIC / vmnicX** | Carte réseau physique de l'hôte (uplink vers le réseau physique) |
-| **vSS** | vSphere Standard Switch — switch virtuel local à un seul hôte |
-| **vDS** | vSphere Distributed Switch — switch virtuel distribué, géré centralement par vCenter |
-| **Port Group** | "Prise logique" sur un vSwitch : définit le type, les politiques et le VLAN ID |
+| vNIC | Carte réseau virtuelle d'une VM |
+| VMkernel (vmkX) | Interface réseau de l'hôte ESXi lui-même (management, vMotion, iSCSI, FT...) |
+| pNIC / vmnicX | Carte réseau physique de l'hôte (uplink vers le réseau physique) |
+| vSS | vSphere Standard Switch — switch virtuel local à un seul hôte |
+| vDS | vSphere Distributed Switch — switch virtuel distribué, géré centralement par vCenter |
+| Port Group | "Prise logique" sur un vSwitch : définit le type, les politiques et le VLAN ID |
 
-<p><strong>Deux types de Port Groups :</strong></p>
+<p>Deux types de Port Groups :</p>
 
-- **Port Group VM** → pour les vNIC des machines virtuelles
-- **Port Group VMkernel** → pour les besoins de l'infrastructure (management, vMotion, stockage, FT)
+- Port Group VM → pour les vNIC des machines virtuelles
+- Port Group VMkernel → pour les besoins de l'infrastructure (management, vMotion, stockage, FT)
 
-<p><strong>Chemin du trafic réseau dans vSphere :</strong></p>
+<p>Chemin du trafic réseau dans vSphere :</p>
 
 <pre><code>VM (vNIC) → Port Group (VLAN) → vSwitch (vSS ou vDS) → pNIC (vmnicX) → Switch physique (trunk) → Réseau</code></pre>
 
@@ -358,8 +358,8 @@ icon: "🖥️"
 
 | Objectif | Mode | Prérequis |
 | :--- | :--- | :--- |
-| Tolérance de panne | **Actif/Passif** — une carte active, une en standby | Au moins 2 vmnic reliés au vSwitch |
-| Débit cumulé | **Actif/Actif** — plusieurs cartes actives simultanément | Support LACP/EtherChannel côté switch physique |
+| Tolérance de panne | Actif/Passif — une carte active, une en standby | Au moins 2 vmnic reliés au vSwitch |
+| Débit cumulé | Actif/Actif — plusieurs cartes actives simultanément | Support LACP/EtherChannel côté switch physique |
 
 </section>
 
@@ -371,41 +371,41 @@ icon: "🖥️"
 
 | Mode | Description | Protocoles | Usage typique |
 | :--- | :--- | :--- | :--- |
-| **Bloc** | Accès direct à des blocs de données bruts (comme un disque dur local) | SCSI, iSCSI, Fibre Channel | Bases de données, VM de production |
-| **Fichier** | Accès à un partage réseau (répertoires et fichiers) | NFS, SMB/CIFS | ISO, sauvegardes, templates |
+| Bloc | Accès direct à des blocs de données bruts (comme un disque dur local) | SCSI, iSCSI, Fibre Channel | Bases de données, VM de production |
+| Fichier | Accès à un partage réseau (répertoires et fichiers) | NFS, SMB/CIFS | ISO, sauvegardes, templates |
 
-<hr />
+
 
 <h3>Comparatif DAS / NAS / SAN</h3>
 
 | Solution | Mode | Partageable | Coût / Complexité | Usage typique |
 | :--- | :--- | :--- | :--- | :--- |
-| **DAS** | Bloc | Non | Faible | Homelabs, serveurs isolés |
-| **NAS** | Fichier | Oui (via IP) | Moyen | Partages, sauvegardes, ISO |
-| **SAN** | Bloc | Oui (réseau dédié) | Élevé | Datacenters, VM critiques, vMotion |
+| DAS | Bloc | Non | Faible | Homelabs, serveurs isolés |
+| NAS | Fichier | Oui (via IP) | Moyen | Partages, sauvegardes, ISO |
+| SAN | Bloc | Oui (réseau dédié) | Élevé | Datacenters, VM critiques, vMotion |
 
-<p><strong>DAS (Direct Attached Storage) :</strong> Stockage connecté directement au serveur (SSD NVMe, SAS). Seul ce serveur peut l'utiliser. Latence faible, mais non partageable entre hôtes.</p>
+<p>DAS (Direct Attached Storage) : Stockage connecté directement au serveur (SSD NVMe, SAS). Seul ce serveur peut l'utiliser. Latence faible, mais non partageable entre hôtes.</p>
 
-<p><strong>NAS (Network Attached Storage) :</strong> Serveur de fichiers sur le réseau, accessible via NFS ou SMB. Accessible par plusieurs machines. Adapté aux sauvegardes et au stockage secondaire.</p>
+<p>NAS (Network Attached Storage) : Serveur de fichiers sur le réseau, accessible via NFS ou SMB. Accessible par plusieurs machines. Adapté aux sauvegardes et au stockage secondaire.</p>
 
-<p><strong>SAN (Storage Area Network) :</strong> Réseau dédié au stockage, exposant des disques en mode bloc à plusieurs serveurs. Très haute performance et redondance. Indispensable pour vMotion.</p>
+<p>SAN (Storage Area Network) : Réseau dédié au stockage, exposant des disques en mode bloc à plusieurs serveurs. Très haute performance et redondance. Indispensable pour vMotion.</p>
 
-<p><strong>Protocoles SAN :</strong></p>
+<p>Protocoles SAN :</p>
 
-- **Fibre Channel (FC)** : réseau fibre optique dédié — performances maximales
-- **iSCSI** : SCSI encapsulé sur IP via Ethernet — plus économique, largement utilisé en virtualisation
-- **FCoE** : Fibre Channel over Ethernet — mix des deux
+- Fibre Channel (FC) : réseau fibre optique dédié — performances maximales
+- iSCSI : SCSI encapsulé sur IP via Ethernet — plus économique, largement utilisé en virtualisation
+- FCoE : Fibre Channel over Ethernet — mix des deux
 
-<p><strong>Lexique iSCSI :</strong></p>
+<p>Lexique iSCSI :</p>
 
 | Terme | Définition |
 | :--- | :--- |
-| **LUN** (Logical Unit Number) | Unité de stockage exposée par une baie SAN |
-| **Target** | Élément qui met à disposition l'espace disque (la baie) |
-| **Initiator** | Élément qui accède à l'espace disque (l'hôte ESXi) |
-| **HBA** (Host Bus Adapter) | Carte dédiée Fibre Channel pour accéder au SAN |
+| LUN (Logical Unit Number) | Unité de stockage exposée par une baie SAN |
+| Target | Élément qui met à disposition l'espace disque (la baie) |
+| Initiator | Élément qui accède à l'espace disque (l'hôte ESXi) |
+| HBA (Host Bus Adapter) | Carte dédiée Fibre Channel pour accéder au SAN |
 
-<hr />
+
 
 <h3>Stockage dans vSphere</h3>
 
@@ -418,41 +418,41 @@ icon: "🖥️"
 | CNA | Carte réseau + stockage (FCoE) | Broadcom CNA |
 | Adaptateur logiciel | Implémenté par ESXi | iSCSI software initiator |
 
-> **Règle pratique :** SAN FC → HBA. iSCSI → carte réseau dédiée ou adaptateur logiciel. Toujours prévoir 2 cartes pour la redondance.
+> Règle pratique : SAN FC → HBA. iSCSI → carte réseau dédiée ou adaptateur logiciel. Toujours prévoir 2 cartes pour la redondance.
 
 <h4>Datastores</h4>
 
-<p>Un <strong>datastore</strong> est un conteneur logique dans lequel vSphere stocke les fichiers des VM (VMDK, .vmx, ISO, snapshots...).</p>
+<p>Un datastore est un conteneur logique dans lequel vSphere stocke les fichiers des VM (VMDK, .vmx, ISO, snapshots...).</p>
 
 | Type | Mode | Usage |
 | :--- | :--- | :--- |
-| **VMFS** | Bloc | Stockage principal des VM — accès concurrent par plusieurs ESXi |
-| **NFS** | Fichier | ISO, templates, sauvegardes |
-| **RDM** (Raw Device Mapping) | Bloc direct | Clusters Microsoft, besoins SAN spécifiques |
+| VMFS | Bloc | Stockage principal des VM — accès concurrent par plusieurs ESXi |
+| NFS | Fichier | ISO, templates, sauvegardes |
+| RDM (Raw Device Mapping) | Bloc direct | Clusters Microsoft, besoins SAN spécifiques |
 
-<p><strong>Versions VMFS :</strong></p>
+<p>Versions VMFS :</p>
 
 | Version | vSphere min | Taille max | Partition | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | VMFS 5 | 5.x | 64 To | GPT | Blocs 1 Mo, défrag manuelle |
 | VMFS 6 | 6.5+ | 64 To | GPT | Optimisé SSD, défrag auto, snapshots améliorés |
 
-<hr />
+
 
 <h4>Disques de VM</h4>
 
-<p><strong>Format VMDK</strong> (standard) : Format virtuel géré par vSphere, limité à 2 To par disque.</p>
+<p>Format VMDK (standard) : Format virtuel géré par vSphere, limité à 2 To par disque.</p>
 
-<p><strong>RDM (Raw Device Mapping) :</strong> Accès direct d'une VM à un LUN SAN. Utilisé pour les clusters Microsoft ou besoins SAN spécifiques.</p>
+<p>RDM (Raw Device Mapping) : Accès direct d'une VM à un LUN SAN. Utilisé pour les clusters Microsoft ou besoins SAN spécifiques.</p>
 
-<p><strong>Types de provisionnement :</strong></p>
+<p>Types de provisionnement :</p>
 
 | Mode | Espace alloué | Avantages | Inconvénients |
 | :--- | :--- | :--- | :--- |
-| **Thick** (statique) | Réservé dès la création | Performances stables, pas de sur-allocation | Gaspillage d'espace inutilisé |
-| **Thin** (dynamique) | Alloué à la demande | Optimise l'espace utilisé | Risque de saturation du datastore |
+| Thick (statique) | Réservé dès la création | Performances stables, pas de sur-allocation | Gaspillage d'espace inutilisé |
+| Thin (dynamique) | Alloué à la demande | Optimise l'espace utilisé | Risque de saturation du datastore |
 
-<hr />
+
 
 <h4>Chaîne complète du stockage dans vSphere</h4>
 
@@ -472,40 +472,40 @@ icon: "🖥️"
 <section id="datacenter-content">
 <h2 id="datacenter">9. Gestion du datacenter</h2>
 
-<p>Un <strong>pool de ressources</strong> est un objet logique auquel on affecte une partie des ressources CPU et RAM d'un hôte ou d'un cluster.</p>
+<p>Un pool de ressources est un objet logique auquel on affecte une partie des ressources CPU et RAM d'un hôte ou d'un cluster.</p>
 
-<p><strong>Cas d'usage :</strong></p>
+<p>Cas d'usage :</p>
 
 - Réserver des ressources pour des VM critiques de production
 - Limiter les ressources d'un environnement de test
 - Garantir une disponibilité minimale (QoS)
 
-> **Overcommit :** possibilité d'allouer plus de ressources que l'hôte n'en possède physiquement. Les pools permettent de prioriser les VM critiques en cas de saturation.
+> Overcommit : possibilité d'allouer plus de ressources que l'hôte n'en possède physiquement. Les pools permettent de prioriser les VM critiques en cas de saturation.
 
-<p><strong>Exemple :</strong> cluster de 384 Go total. Pool PROD (200 Go réservés), Pool TEST (limité à 80 Go), Pool LAB (priorité basse).</p>
+<p>Exemple : cluster de 384 Go total. Pool PROD (200 Go réservés), Pool TEST (limité à 80 Go), Pool LAB (priorité basse).</p>
 
-<hr />
+
 
 <h3>Utilisateurs, groupes et privilèges dans vCenter</h3>
 
-<p><strong>Portée des accès :</strong></p>
+<p>Portée des accès :</p>
 
-- **Utilisateur vCenter** : accès global (datacenter, cluster, VM, datastores).
-- **Utilisateur ESXi** : accès local à un hôte unique.
+- Utilisateur vCenter : accès global (datacenter, cluster, VM, datastores).
+- Utilisateur ESXi : accès local à un hôte unique.
 
-<p><strong>Modèle RBAC (Role-Based Access Control) :</strong></p>
+<p>Modèle RBAC (Role-Based Access Control) :</p>
 
-- **Utilisateur :** Compte individuel.
-- **Groupe :** Ensemble d'utilisateurs.
-- **Rôle :** Ensemble de privilèges (Administrateur, Opérateur VM, Lecture seule).
-- **Héritage :** Les droits s'appliquent automatiquement aux objets enfants.
+- Utilisateur : Compte individuel.
+- Groupe : Ensemble d'utilisateurs.
+- Rôle : Ensemble de privilèges (Administrateur, Opérateur VM, Lecture seule).
+- Héritage : Les droits s'appliquent automatiquement aux objets enfants.
 
-<p><strong>Méthodologie recommandée :</strong></p>
+<p>Méthodologie recommandée :</p>
 
-1. Créer les **utilisateurs**.
-2. Créer les **groupes** et y affecter les utilisateurs.
-3. Créer des **rôles** avec les privilèges nécessaires.
-4. Associer **groupes + rôles** aux objets concernés.
+1. Créer les utilisateurs.
+2. Créer les groupes et y affecter les utilisateurs.
+3. Créer des rôles avec les privilèges nécessaires.
+4. Associer groupes + rôles aux objets concernés.
 
 </section>
 
@@ -519,14 +519,14 @@ icon: "🖥️"
 
 | Format | Description |
 | :--- | :--- |
-| **OVF** | Standard ouvert composé de plusieurs fichiers |
-| **OVA** | Archive compressée d'un OVF (fichier unique) |
+| OVF | Standard ouvert composé de plusieurs fichiers |
+| OVA | Archive compressée d'un OVF (fichier unique) |
 
-<p><strong>Usage :</strong> import/export entre plateformes différentes (VMware, VirtualBox, Xen).</p>
+<p>Usage : import/export entre plateformes différentes (VMware, VirtualBox, Xen).</p>
 
 <h3>VMTX — Format vSphere</h3>
 
-<p>Format natif VMware permettant la <strong>personnalisation automatique</strong> au déploiement (Nom, IP, SID Windows, domaine Active Directory).</p>
+<p>Format natif VMware permettant la personnalisation automatique au déploiement (Nom, IP, SID Windows, domaine Active Directory).</p>
 
 <h3>Comparatif</h3>
 
@@ -535,7 +535,7 @@ icon: "🖥️"
 | OVF / OVA | Universel (multi-hyper) | Basique | Import/export externe |
 | VMTX | vSphere uniquement | Avancée (Sysprep, IP, SID) | Déploiement industriel interne |
 
-> **IMPORTANT :** Lors du déploiement d'un modèle Windows, vSphere lance **Sysprep** pour régénérer le SID et éviter les conflits réseau.
+> IMPORTANT : Lors du déploiement d'un modèle Windows, vSphere lance Sysprep pour régénérer le SID et éviter les conflits réseau.
 
 </section>
 
@@ -547,42 +547,33 @@ icon: "🖥️"
 
 <h3>vMotion — Migration de calcul</h3>
 
-<p>Déplace la <strong>mémoire et l'exécution</strong> d'une VM d'un hôte ESXi à un autre <strong>sans interruption de service</strong>.</p>
+<p>Déplace la mémoire et l'exécution d'une VM d'un hôte ESXi à un autre sans interruption de service.</p>
 
-<p><strong>Prérequis :</strong></p>
+<p>Prérequis :</p>
 
 - Stockage partagé entre les deux hôtes (SAN ou NAS)
 - CPU compatibles entre les hôtes
 - Licence vCenter requise
 
-<p><strong>Usage :</strong></p>
+<p>Usage :</p>
 
 - Libérer un hôte avant maintenance
 - Équilibrer la charge (ou laisser DRS le faire automatiquement)
 
-> **Exemple :** la VM "ERP" est déplacée de ESXi-1 vers ESXi-2 sans que les utilisateurs connectés ne remarquent quoi que ce soit.
+> Exemple : la VM "ERP" est déplacée de ESXi-1 vers ESXi-2 sans que les utilisateurs connectés ne remarquent quoi que ce soit.
 
-<hr />
+
 
 <h3>Storage vMotion — Migration de stockage</h3>
 
-<p>Déplace les <strong>fichiers de la VM</strong> (VMDK, configuration, snapshots) d'un datastore vers un autre, à chaud.</p>
+<p>Déplace les fichiers de la VM (VMDK, configuration, snapshots) d'un datastore vers un autre, à chaud.</p>
 
-<p><strong>Usage :</strong></p>
-
-- Migrer d'un stockage lent (HDD) vers un stockage rapide (SSD)
-- Libérer de l'espace sur un datastore saturé
-- Changer de type de stockage (SAN, NAS, vSAN) sans arrêt
-
-> **Exemple :** la VM "ERP" continue de fonctionner pendant que son disque passe de "Datastore_HDD" à "Datastore_SSD".
-
-</section>
-/p>
+<p>Usage :</p>
 
 - Migrer d'un stockage lent (HDD) vers un stockage rapide (SSD)
 - Libérer de l'espace sur un datastore saturé
 - Changer de type de stockage (SAN, NAS, vSAN) sans arrêt
 
-> **Exemple :** la VM "ERP" continue de fonctionner pendant que son disque passe de "Datastore_HDD" à "Datastore_SSD".
+> Exemple : la VM "ERP" continue de fonctionner pendant que son disque passe de "Datastore_HDD" à "Datastore_SSD".
 
 </section>

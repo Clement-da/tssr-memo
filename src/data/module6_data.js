@@ -193,6 +193,34 @@ export const module6 = {
       hint: 'Active Directory repose entièrement sur un service fondamental pour sa localisation des ressources.',
       correction: 'La cause principale est un mauvais serveur DNS configuré sur la carte IPv4 du poste client. (Le client utilise souvent la box FAI, incapable de connaître "entreprise.local").\n\nPour tester en ligne de commande :\nping entreprise.local\nou via PowerShell :\nResolve-DnsName -Name _ldap._tcp.dc._msdcs.entreprise.local -Type SRV',
       explanation: 'Pour devenir membre d\'un domaine, un poste client doit savoir localiser un contrôleur de domaine en contactant le DNS pour lire les enregistrements SRV (_ldap._tcp, etc.). Un DNS externe répondra par une erreur (NXDOMAIN).'
+    },
+    {
+      id: 'm6_ex-gen',
+      title: 'Expert Infrastructure MS (Générateur)',
+      stars: 5,
+      description: 'Générateur de scénarios complexes sur Active Directory, DNS, DHCP et GPO.',
+      isGenerator: true,
+      scenarios: [
+        {
+          instruction: 'Scénario : Un utilisateur du domaine ne peut pas ouvrir sa session car le mot de passe a expiré. Quel rôle FSMO est responsable de la réplication prioritaire des changements de mots de passe ?',
+          hint: 'Primary Domain Controller.',
+          correction: 'Émulateur PDC',
+          explanation: 'L\'émulateur PDC est le maître du temps et des mots de passe. C\'est lui qui reçoit en priorité les mises à jour de password.'
+        },
+        {
+          instruction: 'Scénario : Vous voulez voir quelle GPO s\'applique réellement à un utilisateur sur son poste. Quelle commande MS-DOS lancez-vous ?',
+          hint: 'gpresult /r.',
+          correction: 'gpresult /r',
+          explanation: '`gpresult /r` (pour ROP - Resultant Set of Policy) affiche les GPO appliquées à l\'objet utilisateur et à l\'objet ordinateur.'
+        },
+        {
+          instruction: 'Scénario : Un nouveau VLAN a été créé. Les postes reçoivent une IP APIPA (169.254.x.x). Le serveur DHCP est sur un autre VLAN. Quel service manque sur le switch/routeur ?',
+          hint: 'Relais DHCP ou IP Helper.',
+          correction: 'Agent Relais DHCP (IP Helper)',
+          explanation: 'L\'agent relais permet de transmettre les diffusions (broadcasts) DHCP à travers les routeurs vers le serveur DHCP distant.'
+        }
+      ]
     }
   ]
 };
+

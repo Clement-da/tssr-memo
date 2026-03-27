@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { appStore, updateQuizScore } from '../store.js';
+import { appStore, updateQuizScore, addXP } from '../store.js';
 import { MODULES } from '../data/modules_index.js';
 
 export default function Quiz({ moduleId }) {
@@ -32,19 +32,34 @@ export default function Quiz({ moduleId }) {
             setSelectedOption(null);
             setIsAnswered(false);
         } else {
+            // Calculate final score including the current answer
+            const finalScore = selectedOption === questionObj.correctIndex ? score + 1 : score;
+            
             // Save score if it's the best one
             const prevQuiz = state.quizzes[mod.id];
-            if (!prevQuiz || score > prevQuiz.score) {
-                updateQuizScore(mod.id, score, mod.quiz.length);
+            if (!prevQuiz || finalScore > prevQuiz.score) {
+                updateQuizScore(mod.id, finalScore, mod.quiz.length);
             }
+            
+            // Award XP: +10 per correct answer, only for the PROGRESS (improvement over previous best)
+            const prevBest = prevQuiz ? prevQuiz.score : 0;
+            const improvement = finalScore - prevBest;
+            
+            if (improvement > 0) {
+                addXP(improvement * 10);
+            }
+            
             setShowResults(true);
         }
     };
 
     if (showResults) {
-        const finalScore = score;
+        // Use the actual final score for display
+        const prevQuiz = state.quizzes[mod.id];
+        const finalScore = prevQuiz ? prevQuiz.score : score;
         const percentage = Math.round((finalScore / mod.quiz.length) * 100);
         const passed = percentage >= 70;
+        const xpEarned = finalScore * 10;
 
         return (
             <div className="quiz-results">
@@ -55,6 +70,9 @@ export default function Quiz({ moduleId }) {
                     </p>
                     <p className="quiz-result__percent" style={{ color: passed ? 'var(--accent-success)' : 'var(--accent-warning)' }}>
                         {percentage}%
+                    </p>
+                    <p className="quiz-xp-earned" style={{ marginTop: 'var(--space-3)', color: 'var(--accent-primary)', fontWeight: 700, fontSize: '1.1rem' }}>
+                        +{xpEarned} XP gagnés
                     </p>
                     <p style={{ marginTop: 'var(--space-4)' }}>
                         {passed
@@ -81,7 +99,7 @@ export default function Quiz({ moduleId }) {
                 </span>
             </div>
 
-            <div className="quiz-progress-bar">
+            <div className="quiz-progress-bar" role="progressbar" aria-valuenow={Math.round((currentIndex / mod.quiz.length) * 100)} aria-valuemin="0" aria-valuemax="100">
                 <div className="quiz-progress-fill" style={{ width: `${(currentIndex / mod.quiz.length) * 100}%` }}></div>
             </div>
 

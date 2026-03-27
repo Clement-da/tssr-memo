@@ -148,6 +148,33 @@ export const module13 = {
             hint: 'Le port 110 est affilié un archaïsme et la conservation ou le mode est non partagé.',
             correction: 'L\'ancienne mise en structure paramètre Outlook sur POP3 (Port 110) en le configurant. Par nature, la commande de communication par défaut de POP3 est de télécharger localement vers le MUA (Outlook d\'ordinateur lourd fixe) les dossiers complets avant de supprimer immédiatement (ou passé des délais initiaux) les courriels du serveur MDA réseau central. Résultat : Ils ne sont techniquement et globalement plus joignables ni existants sur le serveur web où le smartphone cherche à interagir. La correction idéale exige la transition ou migration totale du compte de messagerie en le reconfigurant avec IMAP ou IMAPS (ou le moderne ActiveSync / MAPI pour l\'intranet de la suite Exchange). Ainsi tout mouvement de courrier sera synchronisé et conservé par structure du côté serveur par défaut et répercuté mutuellement pour les deux supports connectés !',
             explanation: 'POP3 peut être contourné ou triché avec le paramètre "Laisser une copie sur le serveur" du client MUA, mais ça n\'a que peu de valeur au vu de l\'avantage inhérent constant du IMAPS de surmonter la désynchronisation des classeurs en lecture ou archives depuis les supports multipliés aujourd\'hui en Télétravail et Nomadisme technologiques !'
+        },
+        {
+            id: 'm13_ex-gen',
+            title: 'Expert Messagerie (Générateur)',
+            stars: 5,
+            description: 'Générateur de scénarios sur les flux SMTP, DNS MX et sécurisation.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Un serveur MTA externe (Internet) tente de livrer un mail à votre domaine. Quel port du firewall doit être ouvert vers votre relais SMTP en DMZ ?',
+                    hint: 'C\'est le port standard du SMTP inter-serveur.',
+                    correction: 'TCP 25',
+                    explanation: 'Le port 25 est utilisé pour le transfert de mail entre serveurs (Relay).'
+                },
+                {
+                    instruction: 'Scénario : Vous configurez Outlook pour un utilisateur. Il veut que ses mails soient synchronisés sur son PC et son téléphone. Quel protocole de RECEPTION choisissez-vous ?',
+                    hint: 'Pensez à la synchronisation (POP3 vs IMAP).',
+                    correction: 'IMAP (ou IMAPS)',
+                    explanation: 'IMAP laisse les messages sur le serveur et synchronise les états (lu/non lu) entre tous les appareils.'
+                },
+                {
+                    instruction: 'Scénario : Quel enregistrement DNS est indispensable pour qu\'un serveur distant sache vers quelle IP envoyer les mails de votre domaine ?',
+                    hint: 'Mail Exchange.',
+                    correction: 'MX',
+                    explanation: 'Le champ MX (Mail eXchange) indique au monde entier quel serveur gère le courrier entrant pour un domaine.'
+                }
+            ]
         }
     ]
 };

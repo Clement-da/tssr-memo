@@ -148,6 +148,34 @@ export const module11 = {
             hint: 'Typiquement, en virtualisation VMware, High = 8000, Normal = 4000 (ratio de 2:1).',
             correction: 'En cas de contention (manque de ressources), la VM configurée en Parts Hautes (SRV-BDD-CEO) obtiendra deux fois plus (ratio 8000 contre 4000) de temps CPU qu\'une VM en part Normale.',
             explanation: 'Si les ressources ne sont pas suffisantes pour tout le monde, le gestionnaire du noyau ESXi coupe ou suspend la VM avec un ratio bas en favorisant l\'accès immédiat pour les VM "High" prioritaires.'
+        },
+        {
+            id: 'm11_ex-gen',
+            title: 'Expert Virtualisation (Générateur)',
+            stars: 5,
+            description: 'Générateur de scénarios complexes sur VMware vSphere, vMotion et HA.',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Vous voulez déplacer une VM d\'un hôte ESXi à un autre sans l\'éteindre. Quelle technologie VMware utilisez-vous ?',
+                    hint: 'C\'est la migration à chaud.',
+                    correction: 'vMotion',
+                    explanation: 'vMotion déplace l\'état de la RAM de la VM via le réseau VMkernel.'
+                },
+                {
+                    instruction: 'Scénario : Un hôte ESXi subit une panne matérielle totale. Les VM qui tournaient dessus redémarrent automatiquement sur les autres hôtes. Quelle fonction a agi ?',
+                    hint: 'Haute Disponibilité.',
+                    correction: 'HA (High Availability)',
+                    explanation: 'HA surveille les hôtes et redémarre les VM en cas de crash de l\'hôte primaire.'
+                },
+                {
+                    instruction: 'Scénario : Vous voulez qu\'une VM ait une IP sur le même réseau que votre PC physique. Quel mode réseau choisissez-vous dans VMware ?',
+                    hint: 'Pont réseau.',
+                    correction: 'Bridge (ou Accès par pont)',
+                    explanation: 'En mode Bridge, la VM est rattachée directement à la carte réseau physique et se comporte comme un équipement réel du LAN.'
+                }
+            ]
         }
     ]
 };
+

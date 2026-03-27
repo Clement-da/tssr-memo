@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Dashboard from '../components/Dashboard.jsx';
+import { getCollection, render } from 'astro:content';
+
+const entries = await getCollection('modules');
+const searchIndex = await Promise.all(entries.map(async (entry) => {
+    const { headings } = await render(entry);
+    
+    // Manually extract headings if the standard parser missed them (e.g. HTML headers like <h3 id="cond-case">)
+    const extraHeadings = [];
+    if (entry.body) {
+        // Regex to find headers: <hx id="slug">Title</hx>
+        const hRegex = /<(h[1-6])\s+id="([^"]+)">([^<]+)<\/\1>/gi;
+        let m;
+        while ((m = hRegex.exec(entry.body)) !== null) {
+            const level = parseInt(m[1][1]);
+            const slug = m[2];
+            const text = m[3].replace(/&[^;]+;/g, '').trim(); // Remove HTML entities
+            
+            // Check if already in Astro's headings list
+            if (!headings.some(h => h.slug === slug)) {
+                extraHeadings.push({ text, slug, depth: level });
+            }
+        }
+    }
+
+    return {
+        id: entry.id,
+        title: entry.data.title,
+        icon: entry.data.icon,
+        headings: [...headings, ...extraHeadings]
+    };
+}));
+---
+
+<Layout title="Tableau de Bord - TSSR Memo">
+    <Dashboard client:load searchIndex={searchIndex} />
+</Layout>

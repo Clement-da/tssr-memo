@@ -5,7 +5,7 @@
 
 export const moduleLinux = {
     id: 'administration-linux',
-    title: 'Administration Linux',
+    title: 'Base Linux',
     icon: '🐧',
     quiz: [
         {
@@ -163,6 +163,34 @@ export const moduleLinux = {
             hint: 'L\'outil `ss` est le plus rapide pour cela.',
             correction: 'ss -tulnp | grep :22',
             explanation: 'L\'option -p de ss affiche le nom du programme. On filtre sur le port 22 pour isoler la ligne du service SSH.'
+        },
+        {
+            id: 'm_linux_ex-gen',
+            title: 'Générateur de Commandes Shell',
+            stars: 5,
+            description: 'Générateur de défis Linux (gestion fichiers, droits, processus).',
+            isGenerator: true,
+            scenarios: [
+                {
+                    instruction: 'Scénario : Vous voulez créer une archive nommée `audit.tar.gz` contenant tous les fichiers du répertoire `/var/log`. Quelle commande utilisez-vous ?',
+                    hint: 'Utilisez tar avec les options -c (create), -z (gzip), -v (verbose) et -f (file).',
+                    correction: 'tar -czvf audit.tar.gz /var/log',
+                    explanation: 'La commande tar regroupe et compresse les fichiers en un seul point de sauvegarde.'
+                },
+                {
+                    instruction: 'Scénario : Vous voulez voir en temps réel les lignes qui s\'ajoutent au fichier `/var/log/auth.log`. Quelle commande utilisez-vous ?',
+                    hint: 'Utilisez l\'option -f pour "follow".',
+                    correction: 'tail -f /var/log/auth.log',
+                    explanation: '`tail -f` est indispensable pour surveiller les événements système au moment où ils se produisent.'
+                },
+                {
+                    instruction: 'Scénario : Modifiez les droits du fichier `secret.txt` pour que seul le propriétaire puisse le lire et y écrire, et personne d\'autre.',
+                    hint: 'En octal, c\'est 600.',
+                    correction: 'chmod 600 secret.txt',
+                    explanation: '600 signifie rw-------. C\'est le droit minimal pour un fichier confidentiel.'
+                }
+            ]
         }
     ]
 };
+
