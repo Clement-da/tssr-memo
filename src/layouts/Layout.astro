@@ -48,5 +48,19 @@ const { title = "TSSR Memo - Plateforme de Révision" } = Astro.props;
             <p>&copy; 2026 TSSR Memo - Devenir Technicien en Systèmes et Réseaux</p>
         </div>
     </footer>
+    <style is:global>
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.3s;
+        }
+    </style>
+    <script>
+        document.addEventListener('click', (e) => {
+            const img = e.target;
+            if (img && img.closest('.lesson-content') && img.tagName === 'IMG') {
+                window.open(img.src, '_blank');
+            }
+        });
+    </script>
 </body>
 </html>

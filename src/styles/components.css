@@ -332,12 +332,13 @@
 }
 
 .lesson-content img {
-    background: #ffffff; /* White background to pop the diagrams */
+    background: #ffffff;
     padding: var(--space-2);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     margin: var(--space-4) auto;
     max-width: 100%;
+    cursor: zoom-in; /* Indicate it can be viewed larger */
 }
 
 /* Quiz top bar & progress */
@@ -984,11 +985,38 @@
         border-radius: 0;
     }
 
+    .lesson-content img {
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0;
+        margin: var(--space-4) 0;
+        width: 100%; /* Force fill width */
+    }
+
     .lesson-content table {
         display: block;
+        width: 100%;
         overflow-x: auto;
-        white-space: nowrap;
         -webkit-overflow-scrolling: touch;
+        font-size: 0.8rem;
+        margin: var(--space-4) 0;
+        border: 1px solid var(--border-color);
+    }
+
+    .lesson-content th, .lesson-content td {
+        padding: var(--space-2); /* Smaller padding */
+        min-width: 120px; /* Ensure content doesn't squeeze too much, forcing scroll */
+    }
+
+    .lesson-content td:first-child, 
+    .lesson-content th:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 10;
+        background: var(--bg-surface-hover);
+        min-width: 100px;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
     }
 
     .lesson-header {
