@@ -23,13 +23,15 @@ body {
 }
 
 .app-header {
-    background-color: var(--bg-surface);
-    border-bottom: 1px solid var(--bg-surface-hover);
+    background-color: var(--bg-surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
     padding: var(--space-4) 0;
     position: sticky;
     top: 0;
-    z-index: 100;
-    box-shadow: var(--shadow-sm);
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -272,11 +274,31 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
     .app-header {
         padding: var(--space-2) 0;
     }
 
     .logo-text {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+    }
+
+    /* Better touch targets for buttons on mobile */
+    .btn {
+        padding-top: 14px;
+        padding-bottom: 14px;
+        width: 100%; /* Force full-width buttons for easier tapping */
+    }
+
+    .module-card__actions {
+        flex-direction: column;
+    }
+
+    .module-card__header h3 {
+        font-size: 1.1rem;
     }
 }

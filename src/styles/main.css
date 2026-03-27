@@ -1,43 +1,55 @@
 :root {
-    /* Color Palette - Dark Theme matching the images (Teal, Green, Red) */
-    --bg-main: #0b1120; /* Deep blue/slate */
-    --bg-surface: #152238; /* Lighter slate with blue tint */
-    --bg-surface-hover: #1e2e4a; 
+    /* Refined Modern Palette - Deep Indigo & Slate Hybrid */
+    --bg-main: #0B0E14; /* Deep Slate (not pure black) */
+    --bg-surface: #151B28; /* Slightly lighter surface */
+    --bg-surface-hover: #1E2535; 
+    --bg-surface-glass: rgba(21, 27, 40, 0.7);
     
-    --text-primary: #f8fafc; /* Slate 50 */
-    --text-secondary: #94a3b8; /* Slate 400 */
+    --text-primary: #F8FAFC; 
+    --text-secondary: #94A3B8; 
+    --text-muted: #64748B;
     
-    --accent-primary: #14b8a6; /* Teal - derived from OSI borders */
-    --accent-primary-hover: #0d9488; 
-    --accent-success: #22c55e; /* Green - derived from encapsulation arrows */
-    --accent-danger: #ef4444; /* Red - from encapsulation arrows */
-    --accent-warning: #facc15; /* Yellow - from encapsulation layers */
-    --bg-tertiary: #0f172a;
-    --border-color: rgba(255, 255, 255, 0.1);
+    --accent-primary: #3B82F6; /* Modern Electric Blue (Confirmed by user) */
+    --accent-primary-hover: #2563EB; 
+    --accent-primary-light: rgba(59, 130, 246, 0.1);
+    
+    --accent-success: #10B981; /* Emerald Green (Inspi Duolingo) */
+    --accent-success-hover: #059669;
+    
+    --accent-danger: #EF4444; 
+    --accent-warning: #F59E0B; /* Amber (Notion style) */
+    
+    --bg-tertiary: #0F172A;
+    --border-color: rgba(255, 255, 255, 0.08);
 
-    /* Typography */
+    /* Typography from Layout.astro */
+    --font-heading: 'Outfit', 'Inter', system-ui, sans-serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     
-    /* Spacing Scale */
+    /* Spacing */
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 0.75rem;
     --space-4: 1rem;
     --space-6: 1.5rem;
     --space-8: 2rem;
+    --space-10: 2.5rem;
     --space-12: 3rem;
 
-    /* Borders & Shadows */
+    /* Modern Borders & Shadows */
     --radius-md: 0.5rem;
     --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
     --radius-full: 9999px;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    
+    --shadow-soft: 0 4px 20px -1px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
 
-    /* Transitions */
+    /* Transitions - Modern Cubic-Bezier */
     --transition-fast: 150ms ease;
-    --transition-normal: 250ms ease;
+    --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* CSS Reset */

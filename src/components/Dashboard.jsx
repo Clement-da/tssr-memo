@@ -99,13 +99,13 @@ export default function Dashboard({ searchIndex = [] }) {
                             width: '100%',
                             padding: 'var(--space-4) var(--space-4) var(--space-4) 3rem',
                             fontSize: '1.1rem',
-                            backgroundColor: 'var(--bg-surface)',
+                            backgroundColor: 'var(--bg-main)',
                             border: '1.5px solid var(--border-color)',
-                            borderRadius: 'var(--radius-lg)',
+                            borderRadius: 'var(--radius-xl)',
                             color: 'var(--text-primary)',
                             outline: 'none',
-                            boxShadow: isFocused ? '0 0 0 3px rgba(20, 184, 166, 0.2)' : 'none',
-                            transition: 'all 0.2s ease',
+                            boxShadow: isFocused ? '0 0 0 4px var(--accent-primary-light)' : 'none',
+                            transition: 'all 0.3s ease',
                             borderColor: isFocused ? 'var(--accent-primary)' : 'var(--border-color)'
                         }}
                     />
@@ -163,11 +163,11 @@ export default function Dashboard({ searchIndex = [] }) {
                         onClick={() => setShowResetModal(true)}
                         className="btn btn-outline"
                         style={{ 
-                            fontSize: '0.8rem', 
-                            padding: '4px 14px', 
-                            borderColor: 'var(--accent-warning)', 
-                            color: 'var(--accent-warning)',
-                            backgroundColor: 'transparent',
+                            fontSize: '0.75rem', 
+                            padding: '6px 16px', 
+                            borderColor: 'transparent', 
+                            color: 'var(--text-muted)',
+                            backgroundColor: 'rgba(255,255,255,0.05)',
                             borderRadius: 'var(--radius-full)',
                             transition: 'all 0.2s ease',
                             cursor: 'pointer',
@@ -176,12 +176,12 @@ export default function Dashboard({ searchIndex = [] }) {
                             gap: '6px'
                         }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.backgroundColor = 'var(--accent-warning)';
-                            e.currentTarget.style.color = '#fff';
+                            e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+                            e.currentTarget.style.color = 'var(--accent-danger)';
                         }}
                         onMouseOut={(e) => {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                            e.currentTarget.style.color = 'var(--accent-warning)';
+                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                            e.currentTarget.style.color = 'var(--text-muted)';
                         }}
                     >
                         <span>↺</span> Réinitialiser
@@ -194,29 +194,40 @@ export default function Dashboard({ searchIndex = [] }) {
             </div>
 
             <div className="card" style={{ marginBottom: 'var(--space-10)' }}>
-                <h3 style={{ marginBottom: 'var(--space-4)', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span>🏆</span> Mes Badges TSSR
-                </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <span style={{ fontSize: '1.5rem', background: 'var(--accent-primary-light)', padding: '8px', borderRadius: '12px' }}>🏆</span>
+                        <div>
+                            <h3 style={{ margin: 0, fontSize: '1.25rem' }}>Mes Badges TSSR</h3>
+                            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Collection • {state.badges.length}/{BADGE_DEFINITIONS.length} débloqués</p>
+                        </div>
+                    </div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
                     {BADGE_DEFINITIONS.map(badge => {
                         const isUnlocked = state.badges.includes(badge.id);
                         return (
                             <div key={badge.id} style={{
                                 padding: 'var(--space-4)',
-                                background: isUnlocked ? 'rgba(20, 184, 166, 0.05)' : 'var(--bg-base)',
-                                border: `1px solid ${isUnlocked ? 'var(--accent-primary)' : 'var(--border-color)'}`,
-                                borderRadius: 'var(--radius-lg)',
+                                background: isUnlocked ? 'var(--bg-surface-hover)' : 'rgba(255,255,255,0.02)',
+                                border: `1.5px solid ${isUnlocked ? 'var(--accent-primary)' : 'rgba(255,255,255,0.05)'}`,
+                                borderRadius: 'var(--radius-xl)',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 'var(--space-3)',
-                                opacity: isUnlocked ? 1 : 0.4,
+                                gap: 'var(--space-4)',
+                                opacity: isUnlocked ? 1 : 0.3,
                                 filter: isUnlocked ? 'none' : 'grayscale(1)',
-                                transition: 'all 0.3s ease'
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                position: 'relative',
+                                overflow: 'hidden'
                             }}>
-                                <span style={{ fontSize: '2rem' }}>{badge.icon}</span>
+                                {isUnlocked && (
+                                    <div style={{ position: 'absolute', top: -10, right: -10, width: '40px', height: '40px', background: 'var(--accent-primary)', opacity: 0.1, borderRadius: '50%' }}></div>
+                                )}
+                                <span style={{ fontSize: '2.5rem', transform: isUnlocked ? 'scale(1.1)' : 'scale(1)' }}>{badge.icon}</span>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <span style={{ fontWeight: 700, fontSize: '0.9rem', color: isUnlocked ? 'var(--accent-primary)' : 'var(--text-primary)' }}>{badge.name}</span>
-                                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{badge.description}</span>
+                                    <span style={{ fontWeight: 800, fontSize: '0.95rem', color: isUnlocked ? 'var(--text-primary)' : 'var(--text-muted)' }}>{badge.name}</span>
+                                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.3 }}>{badge.description}</span>
                                 </div>
                             </div>
                         );
