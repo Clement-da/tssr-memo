@@ -28,8 +28,8 @@ const { title = "TSSR Memo - Plateforme de Révision" } = Astro.props;
             </a>
             <div style="display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap;">
                 <nav aria-label="Navigation principale" class="header-nav">
-                    <a href="/dashboard" class={`nav-btn ${Astro.url.pathname.includes('/dashboard') ? 'active' : ''}`}>Révisions</a>
-                    <a href="/" class={`nav-btn ${Astro.url.pathname === '/' ? 'active' : ''}`}>À propos</a>
+                    <a href="/" class={`nav-btn ${Astro.url.pathname === '/' ? 'active' : ''}`}>Révisions</a>
+                    <a href="/a-propos" class={`nav-btn ${Astro.url.pathname === '/a-propos' ? 'active' : ''}`}>À propos</a>
                     <a href="/avis" class={`nav-btn ${Astro.url.pathname === '/avis' ? 'active' : ''}`}>Avis</a>
                 </nav>
                 <UserStats client:load />
